@@ -5,7 +5,6 @@ import {
   Text,
   List,
   ListItem,
-  Icon,
   Container,
   Left,
   Right,
@@ -15,8 +14,9 @@ import {
 
 import styles from "./style";
 import { onSignOut } from '../auth/chk';
+import { FontAwesome } from '@expo/vector-icons';
 
-const drawerCover = require("../../assets/images/drawer-cover.png");
+const drawerCover = require("../../assets/drawer-cover.png");
 // const drawerImage = require("../../../assets/logo.png");
 const datas = [
   {
@@ -87,7 +87,7 @@ class SideBar extends Component {
                 onPress={() => this.props.navigation.navigate(data.route)}
               >
                 <Left>
-                  <Icon
+                  <FontAwesome
                     active
                     name={data.icon}
                     style={{ color: "#000", fontSize: 26, width: 30 }}

@@ -8,8 +8,7 @@ import {
   Input,
   Label,
   Button,
-  Text,
-  Icon
+  Text
 } from 'native-base';
 
 export default class Signup extends Component {
@@ -42,7 +41,7 @@ export default class Signup extends Component {
 const styles = StyleSheet.create({
   strix: {
     fontSize: 70,
-    fontFamily: 'pacifico',
+    // fontFamily: 'pacifico',
     textAlign: 'center',
     marginTop: 50,
     marginBottom: 30

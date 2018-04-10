@@ -9,7 +9,6 @@ import {
   Left,
   Right,
   Body,
-  Icon,
   Text,
   Card,
   CardItem,
@@ -18,6 +17,7 @@ import {
   FooterTab
 } from 'native-base';
 import Style from '../style';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default class Home extends Component {
   render() {
@@ -28,7 +28,7 @@ export default class Home extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-              <Icon name='menu' style={Style.black} />
+              <FontAwesome name='navicon' style={Style.black} />
             </Button>
           </Left>
           <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -36,7 +36,7 @@ export default class Home extends Component {
           </Body>
           <Right style={{ flex: 1 }}>
             <Button transparent>
-              <Icon name='search' style={Style.black} />
+              <FontAwesome name='search' style={Style.black} />
             </Button>
           </Right>
         </Header>
@@ -47,25 +47,25 @@ export default class Home extends Component {
           <Card>
             <CardItem>
               <Left>
-                <Thumbnail source={require("../../assets/images/logo.png")} />
+                <Thumbnail source={require("../../assets/logo.png")} />
                 <Body>
                   <Text>John</Text>
                 </Body>
               </Left>
             </CardItem>
             <CardItem cardBody>
-              <Image source={require("../../assets/images/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/>
+              <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/>
             </CardItem>
             <CardItem>
               <Left>
                 <Button transparent>
-                  <Icon active name="thumbs-up" />
+                  <FontAwesome name='thumbs-o-up' />
                   <Text>12 Likes</Text>
                 </Button>
               </Left>
               <Body>
                 <Button transparent>
-                  <Icon active name="chatbubbles" />
+                  <FontAwesome name='comments-o' />
                   <Text>4 Comments</Text>
                 </Button>
               </Body>
@@ -78,16 +78,16 @@ export default class Home extends Component {
         <Footer>
           <FooterTab style={Style.bgBlack}>
             <Button>
-              <Icon name='camera' style={Style.white} />
+              <FontAwesome name='camera' style={Style.white} />
             </Button>
             <Button>
-              <Icon name='person' style={Style.white} />
+              <FontAwesome name='user' style={Style.white} />
             </Button>
             <Button>
-              <Icon name='apps' style={Style.white} />
+              <FontAwesome name='th' style={Style.white} />
             </Button>
             <Button>
-              <Icon name='navigate' style={Style.white} />
+              <FontAwesome name='heart-o' style={Style.white} />
             </Button>
           </FooterTab>
         </Footer>

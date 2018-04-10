@@ -1,23 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import {
-  Container,
-  Header,
-  Left,
-  Right,
-  Body,
-  Title,
-  Text,
-  Content
-} from 'native-base';
+import Router from './components/router';
 import { AppLoading } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
-  
+
     this.state = { loading: true };
   }
   async componentWillMount() {
@@ -28,30 +16,11 @@ class App extends React.Component {
     this.setState({ loading: false });
   }
   render() {
-    if (this.state.loading) {
+    if(this.state.loading) {
       return <AppLoading/>
     }
     return(
-      <Container>
-        <Header>
-          <Left>
-            <Ionicons name="md-checkmark-circle" size={32} color="green" />
-          </Left>
-          <Body>
-            <Title>Strix</Title>
-          </Body>
-          <Right/>
-        </Header>
-        <Content>
-          <Text>This is a test for native-base</Text>
-        </Content>
-      </Container>
-    )
+      <Router/>
+    );
   }
 }
-
-export default StackNavigator({
-  Home: {
-    screen: App,
-  },
-});

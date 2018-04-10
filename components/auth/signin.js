@@ -8,8 +8,7 @@ import {
   Input,
   Label,
   Button,
-  Text,
-  Icon
+  Text
 } from 'native-base';
 
 import { onSignIn } from './chk';
@@ -44,7 +43,7 @@ export default class Signin extends Component {
 const styles = StyleSheet.create({
   strix: {
     fontSize: 70,
-    fontFamily: 'pacifico',
+    // fontFamily: 'pacifico',
     textAlign: 'center',
     marginTop: 50,
     marginBottom: 30
