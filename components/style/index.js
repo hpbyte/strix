@@ -23,7 +23,7 @@ export default {
       color: '#000'
     },
     title: {
-      fontFamily: 'pacifico',
+      // fontFamily: 'pacifico',
       fontSize: 32,
       color: '#000'
     }
