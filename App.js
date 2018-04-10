@@ -12,6 +12,7 @@ import {
   Content
 } from 'native-base';
 import { AppLoading } from 'expo';
+import { Ionicons } from '@expo/vector-icons';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,7 +34,9 @@ class App extends React.Component {
     return(
       <Container>
         <Header>
-          <Left/>
+          <Left>
+            <Ionicons name="md-checkmark-circle" size={32} color="green" />
+          </Left>
           <Body>
             <Title>Strix</Title>
           </Body>
