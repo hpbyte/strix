@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StatusBar } from 'react-native';
+import { Image } from 'react-native';
 import {
   Container,
   Header,
@@ -17,7 +17,7 @@ import {
   FooterTab
 } from 'native-base';
 import Style from '../style';
-import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 export default class Home extends Component {
   render() {
@@ -28,7 +28,7 @@ export default class Home extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-              <FontAwesome name='navicon' style={Style.black} />
+              <Ionicons name='md-menu' size={25} style={Style.black} />
             </Button>
           </Left>
           <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -36,14 +36,11 @@ export default class Home extends Component {
           </Body>
           <Right style={{ flex: 1 }}>
             <Button transparent>
-              <FontAwesome name='search' style={Style.black} />
+              <Ionicons name='ios-search' size={25} style={Style.black} />
             </Button>
           </Right>
         </Header>
         <Content>
-          <StatusBar
-            barStyle='light-content'
-            backgroundColor='#000' />
           <Card>
             <CardItem>
               <Left>
@@ -59,13 +56,13 @@ export default class Home extends Component {
             <CardItem>
               <Left>
                 <Button transparent>
-                  <FontAwesome name='thumbs-o-up' />
+                  <Ionicons name='md-thumbs-up' size={23} />
                   <Text>12 Likes</Text>
                 </Button>
               </Left>
               <Body>
                 <Button transparent>
-                  <FontAwesome name='comments-o' />
+                  <Ionicons name='ios-chatbubbles' size={23} />
                   <Text>4 Comments</Text>
                 </Button>
               </Body>
@@ -89,13 +86,13 @@ export default class Home extends Component {
             <CardItem>
               <Left>
                 <Button transparent>
-                  <FontAwesome name='thumbs-o-up' />
+                  <Ionicons name='md-thumbs-up' size={23} />
                   <Text>12 Likes</Text>
                 </Button>
               </Left>
               <Body>
                 <Button transparent>
-                  <FontAwesome name='comments-o' />
+                  <Ionicons name='ios-chatbubbles' size={23} />
                   <Text>4 Comments</Text>
                 </Button>
               </Body>
@@ -119,13 +116,13 @@ export default class Home extends Component {
             <CardItem>
               <Left>
                 <Button transparent>
-                  <FontAwesome name='thumbs-o-up' />
+                  <Ionicons name='md-thumbs-up' size={23} />
                   <Text>12 Likes</Text>
                 </Button>
               </Left>
               <Body>
                 <Button transparent>
-                  <FontAwesome name='comments-o' />
+                  <Ionicons name='ios-chatbubbles' size={23} />
                   <Text>4 Comments</Text>
                 </Button>
               </Body>
@@ -138,16 +135,16 @@ export default class Home extends Component {
         <Footer>
           <FooterTab style={Style.bgBlack}>
             <Button>
-              <FontAwesome name='camera' style={Style.white} />
+              <Ionicons name='ios-camera' size={25} style={Style.white} />
             </Button>
             <Button>
-              <FontAwesome name='user' style={Style.white} />
+              <Ionicons name='ios-person' size={25} style={Style.white} />
             </Button>
             <Button>
-              <FontAwesome name='th' style={Style.white} />
+              <Ionicons name='ios-apps' size={25} style={Style.white} />
             </Button>
             <Button>
-              <FontAwesome name='heart-o' style={Style.white} />
+              <Ionicons name='ios-heart' size={25} style={Style.white} />
             </Button>
           </FooterTab>
         </Footer>

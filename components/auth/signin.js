@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   Container,
   Content,
@@ -18,9 +18,6 @@ export default class Signin extends Component {
     return(
       <Container>
         <Content>
-          <StatusBar
-            barStyle="light-content"
-            backgroundColor="#000" />
           <Text style={styles.strix}>Strix</Text>
           <Item rounded style={styles.item} >
             <Input style={styles.input} placeholder="Username" />

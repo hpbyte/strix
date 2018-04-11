@@ -14,7 +14,7 @@ import {
 
 import styles from "./style";
 import { onSignOut } from '../auth/chk';
-import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const drawerCover = require("../../assets/drawer-cover.png");
 // const drawerImage = require("../../../assets/logo.png");
@@ -22,39 +22,39 @@ const datas = [
   {
     name: "Home",
     route: "Home",
-    icon: "home",
+    icon: "ios-home",
     bg: "#C5F442"
   },
   {
     name: "Signin",
     route: "Signin",
-    icon: "paper-plane",
+    icon: "ios-paper-plane",
     bg: "#C5F442"
   },
   {
     name: "Activity",
     route: "Activity",
-    icon: "paper-plane",
+    icon: "ios-paper-plane",
     bg: "#C5F442"
   },
   {
     name: "Notifications",
     route: "Notifications",
-    icon: "notifications",
+    icon: "ios-notifications",
     bg: "#477EEA",
     types: "8"
   },
   {
     name: "Profile",
     route: "Profile",
-    icon: "person",
+    icon: "ios-person",
     bg: "#DA4437",
     types: "4"
   },
   {
     name: "Settings",
     route: "Settings",
-    icon: "settings",
+    icon: "ios-settings",
     bg: "#4DCAE0"
   }
 ];
@@ -87,7 +87,7 @@ class SideBar extends Component {
                 onPress={() => this.props.navigation.navigate(data.route)}
               >
                 <Left>
-                  <FontAwesome
+                  <Ionicons
                     active
                     name={data.icon}
                     style={{ color: "#000", fontSize: 26, width: 30 }}
