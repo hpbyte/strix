@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   TabNavigator,
-  DrawerNavigator,
   StackNavigator
 } from 'react-navigation';
 import {
@@ -12,7 +11,7 @@ import {
 } from 'native-base';
 
 import Style from './style';
-import SideBar from './sidebar';
+import Profile from './profile/profile';
 import Signup from './auth/signup';
 import Signin from './auth/signin';
 import Home from './home/home';
@@ -49,12 +48,14 @@ export const Taber = TabNavigator(
   }
 );
 
-export const Drawer = DrawerNavigator(
+export const Stacker = StackNavigator(
   {
-    Home: { screen: Home }
+    Home: { screen: Home },
+    Profile: { screen: Profile }
   },
   {
-    contentComponent: props => <SideBar {...props} />
+    headerMode: 'none',
+    initialRouteName: 'Home'
   }
 );
 
@@ -62,7 +63,7 @@ export const createRootNavigator = (signedIn = false) => {
   return StackNavigator(
     {
       SignedOut: { screen: Taber },
-      SignedIn: { screen: Drawer }
+      SignedIn: { screen: Stacker }
     },
     {
       headerMode: 'none',

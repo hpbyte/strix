@@ -27,8 +27,8 @@ export default class Home extends Component {
           <Left style={{ flex: 1 }}>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-              <Ionicons name='md-menu' size={25} style={Style.black} />
+              onPress={() => this.props.navigation.navigate('Profile')}>
+              <Ionicons name='ios-person' size={26} style={Style.black} />
             </Button>
           </Left>
           <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -36,7 +36,7 @@ export default class Home extends Component {
           </Body>
           <Right style={{ flex: 1 }}>
             <Button transparent>
-              <Ionicons name='ios-search' size={25} style={Style.black} />
+              <Ionicons name='ios-search' size={26} style={Style.black} />
             </Button>
           </Right>
         </Header>
@@ -78,7 +78,7 @@ export default class Home extends Component {
               <Ionicons name='ios-camera' size={25} style={Style.white} />
             </Button>
             <Button>
-              <Ionicons name='ios-person' size={25} style={Style.white} />
+              <Ionicons name='md-menu' size={25} style={Style.white} />
             </Button>
             <Button>
               <Ionicons name='ios-apps' size={25} style={Style.white} />
