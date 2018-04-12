@@ -1,22 +1,23 @@
 import React from 'react';
 import { createRootNavigator } from './components/router';
 import { isSignedIn } from './components/auth/chk';
-import { AppLoading } from 'expo';
+import { AppLoading, Font } from 'expo';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       loading: true,
       signedIn: false,
       checkedSignIn: false
     };
   }
   async componentWillMount() {
-    await Expo.Font.loadAsync({
+    await Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+      'pacifico': require('./assets/fonts/pacifico.ttf'),
     });
 
     isSignedIn()

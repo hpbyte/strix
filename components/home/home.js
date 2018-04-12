@@ -71,66 +71,6 @@ export default class Home extends Component {
               </Right>
             </CardItem>
           </Card>
-          <Card>
-            <CardItem>
-              <Left>
-                <Thumbnail source={require("../../assets/logo.png")} />
-                <Body>
-                  <Text>John</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent>
-                  <Ionicons name='md-thumbs-up' size={23} />
-                  <Text>12 Likes</Text>
-                </Button>
-              </Left>
-              <Body>
-                <Button transparent>
-                  <Ionicons name='ios-chatbubbles' size={23} />
-                  <Text>4 Comments</Text>
-                </Button>
-              </Body>
-              <Right>
-                <Text>11h ago</Text>
-              </Right>
-            </CardItem>
-          </Card>
-          <Card>
-            <CardItem>
-              <Left>
-                <Thumbnail source={require("../../assets/logo.png")} />
-                <Body>
-                  <Text>John</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent>
-                  <Ionicons name='md-thumbs-up' size={23} />
-                  <Text>12 Likes</Text>
-                </Button>
-              </Left>
-              <Body>
-                <Button transparent>
-                  <Ionicons name='ios-chatbubbles' size={23} />
-                  <Text>4 Comments</Text>
-                </Button>
-              </Body>
-              <Right>
-                <Text>11h ago</Text>
-              </Right>
-            </CardItem>
-          </Card>
         </Content>
         <Footer>
           <FooterTab style={Style.bgBlack}>
