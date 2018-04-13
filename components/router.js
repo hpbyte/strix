@@ -57,6 +57,7 @@ export const Stacker = StackNavigator(
   },
   {
     headerMode: 'none',
+    mode: 'modal',
     initialRouteName: 'Home'
   }
 );
@@ -68,6 +69,9 @@ export const MainTaber = TabNavigator(
   },
   {
     tabBarPosition: 'bottom',
+    tabBarOptions: {
+      activeTintColor: '#ea0404'
+    },
     tabBarComponent: props => {
       return(
         <Footer>

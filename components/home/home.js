@@ -49,7 +49,8 @@ export default class Home extends Component {
               </Left>
             </CardItem>
             <CardItem cardBody>
-              <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/>
+              {/* <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/> */}
+              <Text>this is a text message</Text>
             </CardItem>
             <CardItem>
               <Left>

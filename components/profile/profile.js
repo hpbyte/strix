@@ -26,7 +26,7 @@ export default class Profile extends Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate('Home')}>
+              onPress={() => this.props.navigation.goBack()}>
               <Ionicons name='ios-arrow-back' size={26} />
             </Button>
           </Left>
