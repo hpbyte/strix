@@ -18,16 +18,16 @@ export default class Signup extends Component {
         <Content>
           <Text style={styles.strix}>Strix</Text>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Username" />
+            <Input style={styles.input} placeholder="Name" />
+          </Item>
+          <Item rounded style={styles.item} >
+            <Input style={styles.input} placeholder="Email" />
           </Item>
           <Item rounded style={styles.item} >
             <Input style={styles.input} placeholder="Password" />
           </Item>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Username" />
-          </Item>
-          <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Password" />
+            <Input style={styles.input} placeholder="Date Of Birth" />
           </Item>
           <Button rounded dark style={styles.btnLogin}>
             <Text style={styles.txtLogin}>Login</Text>

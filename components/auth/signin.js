@@ -20,7 +20,7 @@ export default class Signin extends Component {
         <Content>
           <Text style={styles.strix}>Strix</Text>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Username" />
+            <Input style={styles.input} placeholder="Email" />
           </Item>
           <Item rounded style={styles.item} >
             <Input style={styles.input} placeholder="Password" />
