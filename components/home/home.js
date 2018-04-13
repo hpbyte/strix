@@ -26,7 +26,7 @@ export default class Home extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.navigate('Profile')}>
-              <Ionicons name='ios-person' size={26} style={Style.black} />
+              <Ionicons name='md-person' size={26} style={Style.black} />
             </Button>
           </Left>
           <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -48,23 +48,23 @@ export default class Home extends Component {
                 </Body>
               </Left>
             </CardItem>
-            <CardItem cardBody>
+            <CardItem>
               {/* <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/> */}
-              <Text>this is a text message</Text>
+              <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in v
+                oluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, 
+                sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
             </CardItem>
             <CardItem>
               <Left>
                 <Button transparent>
-                  <Ionicons name='md-thumbs-up' size={23} />
-                  <Text>12 Likes</Text>
+                  <Ionicons name='ios-chatbubbles' size={23} />
+                  <Text>4 Answers</Text>
                 </Button>
               </Left>
-              <Body>
-                <Button transparent>
-                  <Ionicons name='ios-chatbubbles' size={23} />
-                  <Text>4 Comments</Text>
-                </Button>
-              </Body>
               <Right>
                 <Text>11h ago</Text>
               </Right>

@@ -25,6 +25,7 @@ export const AuthTaber = TabNavigator(
   },
   {
     tabBarPosition: 'bottom',
+    swipeEnabled: true,
     tabBarComponent: props => {
       return(
         <Footer>
@@ -69,9 +70,7 @@ export const MainTaber = TabNavigator(
   },
   {
     tabBarPosition: 'bottom',
-    tabBarOptions: {
-      activeTintColor: '#ea0404'
-    },
+    swipeEnabled: true,
     tabBarComponent: props => {
       return(
         <Footer>
@@ -79,12 +78,12 @@ export const MainTaber = TabNavigator(
             <Button
               vertical
               onPress={() => props.navigation.navigate('Stacker')}>
-              <Ionicons name='ios-home' size={25} style={Style.white} />
+              <Ionicons name='ios-school' size={25} style={Style.white} />
             </Button>
             <Button
               vertical
               onPress={() => props.navigation.navigate('Leaderboard')}>
-              <Ionicons name='ios-list-box' size={25} style={Style.white} />
+              <Ionicons name='ios-list-box-outline' size={25} style={Style.white} />
             </Button>
             <Button
               vertical
