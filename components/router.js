@@ -15,7 +15,7 @@ import Style from './style';
 import Profile from './profile/profile';
 import Signup from './auth/signup';
 import Signin from './auth/signin';
-import Home from './home/home';
+import Home from './clusters';
 import Leaderboard from './leaderboard/leaderboard';
 
 export const AuthTaber = TabNavigator(

@@ -16,7 +16,6 @@ import {
 import { onSignOut } from '../auth/chk';
 import { Ionicons } from '@expo/vector-icons';
 import Style from '../style';
-import Home from '../home/home';
 
 export default class Profile extends Component {
   render() {
