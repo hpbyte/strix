@@ -12,9 +12,7 @@ import {
   Text,
   Card,
   CardItem,
-  Thumbnail,
-  Footer,
-  FooterTab
+  Thumbnail
 } from 'native-base';
 import Style from '../style';
 import { Ionicons } from '@expo/vector-icons';
@@ -72,22 +70,6 @@ export default class Home extends Component {
             </CardItem>
           </Card>
         </Content>
-        <Footer>
-          <FooterTab style={Style.bgBlack}>
-            <Button>
-              <Ionicons name='ios-camera' size={25} style={Style.white} />
-            </Button>
-            <Button>
-              <Ionicons name='md-menu' size={25} style={Style.white} />
-            </Button>
-            <Button>
-              <Ionicons name='ios-apps' size={25} style={Style.white} />
-            </Button>
-            <Button>
-              <Ionicons name='ios-heart' size={25} style={Style.white} />
-            </Button>
-          </FooterTab>
-        </Footer>
       </Container>
     );
   }
