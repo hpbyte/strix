@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import {
   Container,
   Header,
@@ -38,12 +39,12 @@ export default class Clusters extends Component {
         </Header>
         <Content>
           <Card>
-            <CardItem header>
-              <Text>Lorem ipsum dolor sit amet.</Text>
+            <CardItem header style={Style.bgRed}>
+              <Text style={Style.white}>Lorem ipsum dolor sit amet.</Text>
             </CardItem>
-            <CardItem>
+            <CardItem  style={Style.bgRed}>
               <Body>
-                <Text>
+                <Text style={Style.white}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A omnis quas ipsum, assumenda sunt possimus suscipit accusamus magnam cupiditate esse?
                 </Text>
               </Body>

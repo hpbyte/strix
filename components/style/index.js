@@ -13,6 +13,9 @@ export default {
     bgBlack: {
       backgroundColor: '#000'
     },
+    bgRed: {
+      backgroundColor: '#c80202'
+    },
     red: {
       color: '#c80202'
     },
