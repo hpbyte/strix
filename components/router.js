@@ -16,7 +16,7 @@ import Signup from './auth/signup';
 import Signin from './auth/signin';
 import Home from './home/home';
 
-export const Taber = TabNavigator(
+export const AuthTaber = TabNavigator(
   {
     Signin: { screen: Signin },
     Signup: { screen: Signup }
@@ -62,7 +62,7 @@ export const Stacker = StackNavigator(
 export const createRootNavigator = (signedIn = false) => {
   return StackNavigator(
     {
-      SignedOut: { screen: Taber },
+      SignedOut: { screen: AuthTaber },
       SignedIn: { screen: Stacker }
     },
     {
