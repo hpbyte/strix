@@ -10,26 +10,44 @@ import {
   Button,
   Text
 } from 'native-base';
-
-import { onSignIn } from './chk';
+import firebaseService from '../service/firebase';
 
 export default class Signin extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { email: '', password: '', error: '', loading: false };
+  }
+
+  onSigninPress() {
+    this.setState({ error: '', loading: true });
+
+    const { email, password } = this.state;
+
+    firebaseService.auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        // this.state({ error: '', loading: false });
+        this.props.navigation.navigate("SignedIn")
+      })
+      .catch((err) => {
+        alert(err);
+      })
+  }
+
   render() {
     return(
       <Container>
         <Content>
           <Text style={styles.strix}>Strix</Text>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Email" />
+            <Input value={this.state.email} onChangeText={email => this.setState({email})} style={styles.input} placeholder="Email" />
           </Item>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Password" />
+            <Input value={this.state.password} onChangeText={password => this.setState({password})} secureTextEntry={true} style={styles.input} placeholder="Password" />
           </Item>
           <Button rounded dark style={styles.btnLogin}
-            onPress={() => {
-              onSignIn().then(() => this.props.navigation.navigate("SignedIn"));
-            }}>
-            <Text style={styles.txtLogin}>Login</Text>
+            onPress={this.onSigninPress.bind(this)}>
+            <Text style={styles.txtLogin}>Ok Go</Text>
           </Button>
         </Content>
       </Container>

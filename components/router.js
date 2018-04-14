@@ -1,15 +1,11 @@
 import React from 'react';
-import {
-  TabNavigator,
-  StackNavigator
-} from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import {
   Footer,
   FooterTab,
   Button,
   Text
 } from 'native-base';
-
 import { Ionicons } from '@expo/vector-icons';
 import Style from './style';
 import Profile from './profile/profile';

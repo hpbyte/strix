@@ -30,7 +30,7 @@ export default class Signup extends Component {
             <Input style={styles.input} placeholder="Date Of Birth" />
           </Item>
           <Button rounded dark style={styles.btnLogin}>
-            <Text style={styles.txtLogin}>Login</Text>
+            <Text style={styles.txtLogin}>Ok Go</Text>
           </Button>
         </Content>
       </Container>

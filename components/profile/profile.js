@@ -13,7 +13,7 @@ import {
   Text,
   Button
 } from 'native-base';
-import { onSignOut } from '../auth/chk';
+import { onSignOut } from '../auth/check';
 import { Ionicons } from '@expo/vector-icons';
 import Style from '../style';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRootNavigator } from './components/router';
-import { isSignedIn } from './components/auth/chk';
+import { isSignedIn } from './components/auth/check';
 import { AppLoading, Font } from 'expo';
 
 export default class App extends React.Component {
