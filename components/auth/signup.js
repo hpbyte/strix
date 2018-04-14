@@ -10,8 +10,29 @@ import {
   Button,
   Text
 } from 'native-base';
+import firebaseService from '../service/firebase';
 
 export default class Signup extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { email: '', password: '', error: '', loading: false };
+  }
+
+  onSignupPress() {
+    this.setState({ error: '', loading: true });
+    const { email, password } = this.state;
+
+    firebaseService.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        alert('Signup Successful!');
+        this.props.navigation.navigate('SignedIn');
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
   render() {
     return(
       <Container>
@@ -21,15 +42,22 @@ export default class Signup extends Component {
             <Input style={styles.input} placeholder="Name" />
           </Item>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Email" />
+            <Input 
+              value={this.state.email} 
+              onChangeText={email => this.setState({email})} 
+              style={styles.input} placeholder="Email" />
           </Item>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Password" />
+            <Input 
+              value={this.state.password} 
+              onChangeText={password => this.setState({password})} 
+              secureTextEntry style={styles.input} placeholder="Password" />
           </Item>
           <Item rounded style={styles.item} >
             <Input style={styles.input} placeholder="Date Of Birth" />
           </Item>
-          <Button rounded dark style={styles.btnLogin}>
+          <Button rounded dark style={styles.btnLogin}
+            onPress={this.onSignupPress.bind(this)}>
             <Text style={styles.txtLogin}>Ok Go</Text>
           </Button>
         </Content>

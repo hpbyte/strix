@@ -21,12 +21,12 @@ export default class Signin extends Component {
 
   onSigninPress() {
     this.setState({ error: '', loading: true });
-
     const { email, password } = this.state;
 
     firebaseService.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
         // this.state({ error: '', loading: false });
+        alert('Logged In')
         this.props.navigation.navigate("SignedIn")
       })
       .catch((err) => {
@@ -40,10 +40,17 @@ export default class Signin extends Component {
         <Content>
           <Text style={styles.strix}>Strix</Text>
           <Item rounded style={styles.item} >
-            <Input value={this.state.email} onChangeText={email => this.setState({email})} style={styles.input} placeholder="Email" />
+            <Input 
+              value={this.state.email} 
+              onChangeText={email => this.setState({email})} 
+              style={styles.input} placeholder="Email" />
           </Item>
           <Item rounded style={styles.item} >
-            <Input value={this.state.password} onChangeText={password => this.setState({password})} secureTextEntry={true} style={styles.input} placeholder="Password" />
+            <Input 
+              value={this.state.password} 
+              onChangeText={password => this.setState({password})} 
+              secureTextEntry={true} style={styles.input}
+              placeholder="Password" />
           </Item>
           <Button rounded dark style={styles.btnLogin}
             onPress={this.onSigninPress.bind(this)}>
