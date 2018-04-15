@@ -13,11 +13,27 @@ import {
   Text,
   Button
 } from 'native-base';
-import { onSignOut } from '../auth/check';
 import { Ionicons } from '@expo/vector-icons';
 import Style from '../style';
+import firebaseService from '../service/firebase';
 
 export default class Profile extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { email: firebaseService.auth().currentUser.email }
+  }
+
+  onSignOut() {
+    firebaseService.auth().signOut()
+      .then(() => {
+        this.props.navigation.navigate('SignedOut')
+      })
+      .catch((error) => {
+        alert(error)
+      });
+  }
+
   render() {
     return(
       <Container>
@@ -42,6 +58,7 @@ export default class Profile extends Component {
               </Left>
               <Body>
                 <Text>James</Text>
+                <Text>{this.state.email}</Text>
                 <Text note>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, inventore.</Text>
               </Body>
               <Right>
@@ -50,10 +67,7 @@ export default class Profile extends Component {
             </ListItem>
             <ListItem>
               <Button
-                onPress={() => {
-                  onSignOut().then(() => this.props.navigation.navigate('SignedOut'))
-                }}
-                >
+                onPress={this.onSignOut.bind(this)} >
                 <Text>Logout</Text>
               </Button>
             </ListItem>

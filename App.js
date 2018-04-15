@@ -20,9 +20,12 @@ export default class App extends React.Component {
       'pacifico': require('./assets/fonts/pacifico.ttf'),
     });
 
-    isSignedIn()
-      .then(res => this.setState({signedIn: res, checkedSignIn: true  }))
-      .catch(err => alert('An error occurred!'));
+    // isSignedIn()
+    //   .then(res => this.setState({signedIn: res, checkedSignIn: true  }))
+    //   .catch(err => alert('An error occurred!'));
+    if(isSignedIn()) {
+      this.setState({ signedIn: true, checkedSignIn: true })
+    }
 
     this.setState({ loading: false });
   }

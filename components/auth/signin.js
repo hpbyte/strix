@@ -25,12 +25,13 @@ export default class Signin extends Component {
 
     firebaseService.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
-        // this.state({ error: '', loading: false });
-        alert('Logged In')
+        this.setState({ error: '', loading: false });
+        // alert('Logged In')
         this.props.navigation.navigate("SignedIn")
       })
       .catch((err) => {
-        alert(err);
+        // alert(err);
+        this.setState({ error: err })
       })
   }
 
