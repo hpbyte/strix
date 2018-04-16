@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRootNavigator } from './components/router';
-import { isSignedIn } from './components/auth/check';
 import { AppLoading, Font } from 'expo';
+import firebaseService from './components/service/firebase';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -9,28 +9,30 @@ export default class App extends React.Component {
 
     this.state = {
       loading: true,
-      signedIn: false,
-      checkedSignIn: false
+      signedIn: false
     };
   }
+  
   async componentWillMount() {
     await Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
       'pacifico': require('./assets/fonts/pacifico.ttf'),
     });
-
-    // isSignedIn()
-    //   .then(res => this.setState({signedIn: res, checkedSignIn: true  }))
-    //   .catch(err => alert('An error occurred!'));
-    if(isSignedIn()) {
-      this.setState({ signedIn: true, checkedSignIn: true })
-    }
-
+  
     this.setState({ loading: false });
   }
+
+  componentDidMount() {
+    firebaseService.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.setState({ signedIn: true });
+      }
+    })
+  }
+
   render() {
-    const { checkedSignIn, signedIn, loading } = this.state;
+    const { signedIn, loading } = this.state;
 
     if(loading) {
       return <AppLoading/>

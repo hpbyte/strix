@@ -21,7 +21,11 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { email: firebaseService.auth().currentUser.email }
+    this.state = { email: '' }
+  }
+
+  componentDidMount() {
+    this.setState({ email: firebaseService.auth().currentUser.email })
   }
 
   onSignOut() {
