@@ -2,16 +2,37 @@ import React, {Component} from 'react';
 import {
   Container,
   Header,
+  Content,
   Left,
   Right,
   Body,
   Title,
   Button,
-  Content,
+  List,
+  ListItem,
+  Card,
+  CardItem,
+  Thumbnail,
   Text
 } from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import Style from '../style';
+
+const data = [
+  'Monkey D. Luffy',
+  'Roronoa Zorro',
+  'Sanji',
+  'Tony Tony Chopper',
+  'Nami',
+  'Usopp',
+  'Franky',
+  'Brook',
+  'Nico Robin',
+  'Trafalgar D. Water Law',
+  'Gold D. Roger',
+  'Portgas D. Ace'
+];
+const dataIndex = 0;
 
 export default class Leaderboard extends Component {
   render() {
@@ -30,20 +51,31 @@ export default class Leaderboard extends Component {
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-            <Title style={Style.title}>Strix</Title>
+            <Title style={Style.title}>LeaderBoard</Title>
           </Body>
           <Right style={{ flex: 1 }}>
-            <Button
-              transparent>
+            <Button transparent>
               <Ionicons name='ios-search' size={26} style={Style.black}/>
             </Button>
           </Right>
         </Header>
         <Content>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam distinctio ratione totam, ea accusamus laboriosam iure, excepturi atque praesentium amet!
-          </Text>
+          <List
+            dataArray={data}
+            renderRow={(item) => 
+              <ListItem>
+                <Thumbnail square size={80} source={require('../../assets/logo.png')} />
+                <Body>
+                  <Text>{item}</Text>
+                </Body>
+                <Right>
+                  <Text style={Style.blue}>{++dataIndex}</Text>
+                </Right>
+              </ListItem>
+            }>
+          </List>
         </Content>
-      </Container>);
+      </Container>
+      );
   }
 }

@@ -73,9 +73,7 @@ export default class Profile extends Component {
                 <Text>{this.state.email}</Text>
                 <Text note>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, inventore.</Text>
               </Body>
-              <Right>
-                <Text note>3:23 pm</Text>
-              </Right>
+              <Right/>
             </ListItem>
             <ListItem>
               <Button

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import {
   Container,
   Header,
@@ -15,6 +15,7 @@ import {
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import Style from '../style';
+const dimensions = Dimensions.get('window')
 
 export default class Clusters extends Component {
   render() {
@@ -37,8 +38,32 @@ export default class Clusters extends Component {
             </Button>
           </Right>
         </Header>
-        <Content>
-          <Card>
+        <Content style={style.cardContainer}>
+          <Card style={style.clusterCard}>
+            <CardItem header style={Style.bgRed}>
+              <Text style={Style.white}>{dimensions.height} {dimensions.width}</Text>
+            </CardItem>
+            <CardItem  style={Style.bgRed}>
+              <Body>
+                <Text style={Style.white}>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. A omnis quas ipsum, assumenda sunt possimus suscipit accusamus magnam cupiditate esse?
+                </Text>
+              </Body>
+            </CardItem>
+          </Card>
+          <Card style={style.clusterCard}>
+            <CardItem header style={Style.bgRed}>
+              <Text style={Style.white}>Lorem ipsum dolor sit amet.</Text>
+            </CardItem>
+            <CardItem  style={Style.bgRed}>
+              <Body>
+                <Text style={Style.white}>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. A omnis quas ipsum, assumenda sunt possimus suscipit accusamus magnam cupiditate esse?
+                </Text>
+              </Body>
+            </CardItem>
+          </Card>
+          <Card style={style.clusterCard}>
             <CardItem header style={Style.bgRed}>
               <Text style={Style.white}>Lorem ipsum dolor sit amet.</Text>
             </CardItem>
@@ -55,3 +80,14 @@ export default class Clusters extends Component {
     );
   }
 }
+
+const style = StyleSheet.create({
+  cardContainer: {
+    flex: 1, 
+    flexDirection: 'row'
+  },
+  clusterCard: {
+    width: 190,
+    height: 200
+  }
+});

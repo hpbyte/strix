@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
-  Container,
-  Content,
   Form,
   Item,
   Input,
@@ -37,28 +35,26 @@ export default class Signin extends Component {
 
   render() {
     return(
-      <Container>
-        <Content>
-          <Text style={styles.strix}>Strix</Text>
-          <Item rounded style={styles.item} >
-            <Input 
-              value={this.state.email} 
-              onChangeText={email => this.setState({email})} 
-              style={styles.input} placeholder="Email" />
-          </Item>
-          <Item rounded style={styles.item} >
-            <Input 
-              value={this.state.password} 
-              onChangeText={password => this.setState({password})} 
-              secureTextEntry={true} style={styles.input}
-              placeholder="Password" />
-          </Item>
-          <Button rounded dark style={styles.btnLogin}
-            onPress={this.onSigninPress.bind(this)}>
-            <Text style={styles.txtLogin}>Ok Go</Text>
-          </Button>
-        </Content>
-      </Container>
+      <View>
+        <Text style={styles.strix}>Strix</Text>
+        <Item rounded style={styles.item} >
+          <Input 
+            value={this.state.email} 
+            onChangeText={email => this.setState({email})} 
+            style={styles.input} placeholder="Email" />
+        </Item>
+        <Item rounded style={styles.item} >
+          <Input 
+            value={this.state.password} 
+            onChangeText={password => this.setState({password})} 
+            secureTextEntry={true} style={styles.input}
+            placeholder="Password" />
+        </Item>
+        <Button rounded dark style={styles.btnLogin}
+          onPress={this.onSigninPress.bind(this)}>
+          <Text style={styles.txtLogin}>Ok Go</Text>
+        </Button>
+      </View>
     );
   }
 }

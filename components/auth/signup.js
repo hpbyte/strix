@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
-  Container,
-  Content,
   Form,
   Item,
   Input,
@@ -33,6 +31,7 @@ export default class Signup extends Component {
 
     firebaseService.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
+        // add it to the database
         FIREBASE.ref('users/'+firebaseService.auth().currentUser.uid).set(
           {
             name: name,
@@ -53,39 +52,37 @@ export default class Signup extends Component {
 
   render() {
     return(
-      <Container>
-        <Content>
-          <Text style={styles.strix}>Strix</Text>
-          <Item rounded style={styles.item} >
-            <Input 
-              value={this.state.name}
-              onChangeText={name => this.setState({name})}
-              style={styles.input} placeholder="Name" />
-          </Item>
-          <Item rounded style={styles.item} >
-            <Input 
-              value={this.state.email} 
-              onChangeText={email => this.setState({email})} 
-              style={styles.input} placeholder="Email" />
-          </Item>
-          <Item rounded style={styles.item} >
-            <Input 
-              value={this.state.password} 
-              onChangeText={password => this.setState({password})} 
-              secureTextEntry style={styles.input} placeholder="Password" />
-          </Item>
-          <Item rounded style={styles.item} >
-            <Input
-              value={this.state.dob}
-              onChangeText={dob => this.setState({dob})}
-              style={styles.input} placeholder="Date Of Birth" />
-          </Item>
-          <Button rounded dark style={styles.btnLogin}
-            onPress={this.onSignupPress.bind(this)}>
-            <Text style={styles.txtLogin}>Ok Go</Text>
-          </Button>
-        </Content>
-      </Container>
+      <View>
+        <Text style={styles.strix}>Strix</Text>
+        <Item rounded style={styles.item} >
+          <Input 
+            value={this.state.name}
+            onChangeText={name => this.setState({name})}
+            style={styles.input} placeholder="Name" />
+        </Item>
+        <Item rounded style={styles.item} >
+          <Input 
+            value={this.state.email} 
+            onChangeText={email => this.setState({email})} 
+            style={styles.input} placeholder="Email" />
+        </Item>
+        <Item rounded style={styles.item} >
+          <Input 
+            value={this.state.password} 
+            onChangeText={password => this.setState({password})} 
+            secureTextEntry style={styles.input} placeholder="Password" />
+        </Item>
+        <Item rounded style={styles.item} >
+          <Input
+            value={this.state.dob}
+            onChangeText={dob => this.setState({dob})}
+            style={styles.input} placeholder="Date Of Birth" />
+        </Item>
+        <Button rounded dark style={styles.btnLogin}
+          onPress={this.onSignupPress.bind(this)}>
+          <Text style={styles.txtLogin}>Ok Go</Text>
+        </Button>
+      </View>
     );
   }
 }

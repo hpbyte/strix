@@ -47,21 +47,9 @@ export const AuthTaber = TabNavigator(
   }
 );
 
-export const Stacker = StackNavigator(
+export const MenuTaber = TabNavigator(
   {
     Home: { screen: Home },
-    Profile: { screen: Profile }
-  },
-  {
-    headerMode: 'none',
-    mode: 'modal',
-    initialRouteName: 'Home'
-  }
-);
-
-export const MainTaber = TabNavigator(
-  {
-    Stacker: { screen: Stacker },
     Leaderboard: { screen: Leaderboard }
   },
   {
@@ -73,7 +61,7 @@ export const MainTaber = TabNavigator(
           <FooterTab style={Style.bgBlack}>
             <Button
               vertical
-              onPress={() => props.navigation.navigate('Stacker')}>
+              onPress={() => props.navigation.navigate('Home')}>
               <Ionicons name='ios-school' size={25} style={Style.white} />
             </Button>
             <Button
@@ -98,11 +86,23 @@ export const MainTaber = TabNavigator(
   }
 );
 
+export const MainStacker = StackNavigator(
+  {
+    MenuTaber: { screen: MenuTaber },
+    Profile: { screen: Profile }
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+    initialRouteName: 'MenuTaber'
+  }
+);
+
 export const createRootNavigator = (signedIn = false) => {
   return StackNavigator(
     {
       SignedOut: { screen: AuthTaber },
-      SignedIn: { screen: MainTaber }
+      SignedIn: { screen: MainStacker }
     },
     {
       headerMode: 'none',
