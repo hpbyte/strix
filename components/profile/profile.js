@@ -25,7 +25,15 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
-    this.setState({ email: firebaseService.auth().currentUser.email })
+    firebaseService.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.setState({
+          email: user.email
+        })
+      } else {
+        this.props.navigation.navigate('SignedOut');
+      }
+    })
   }
 
   onSignOut() {

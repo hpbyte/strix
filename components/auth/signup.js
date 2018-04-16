@@ -11,25 +11,43 @@ import {
   Text
 } from 'native-base';
 import firebaseService from '../service/firebase';
+const FIREBASE = firebaseService.database();
 
 export default class Signup extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { email: '', password: '', error: '', loading: false };
+    this.state = {
+      name: '',
+      email: '', 
+      password: '',
+      dob: '', 
+      error: '', 
+      loading: false 
+    };
   }
 
   onSignupPress() {
     this.setState({ error: '', loading: true });
-    const { email, password } = this.state;
+    const { name, email, password, dob } = this.state;
 
     firebaseService.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
-        alert('Signup Successful!');
+        FIREBASE.ref('users/'+firebaseService.auth().currentUser.uid).set(
+          {
+            name: name,
+            dob: dob
+          }, (error) => {
+            if(error) {
+              alert(error.message)
+            }              
+          }
+        )
+        // alert('Signup Successful!');
         this.props.navigation.navigate('SignedIn');
       })
       .catch((err) => {
-        alert(err);
+        alert(err.message);
       });
   }
 
@@ -39,7 +57,10 @@ export default class Signup extends Component {
         <Content>
           <Text style={styles.strix}>Strix</Text>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Name" />
+            <Input 
+              value={this.state.name}
+              onChangeText={name => this.setState({name})}
+              style={styles.input} placeholder="Name" />
           </Item>
           <Item rounded style={styles.item} >
             <Input 
@@ -54,7 +75,10 @@ export default class Signup extends Component {
               secureTextEntry style={styles.input} placeholder="Password" />
           </Item>
           <Item rounded style={styles.item} >
-            <Input style={styles.input} placeholder="Date Of Birth" />
+            <Input
+              value={this.state.dob}
+              onChangeText={dob => this.setState({dob})}
+              style={styles.input} placeholder="Date Of Birth" />
           </Item>
           <Button rounded dark style={styles.btnLogin}
             onPress={this.onSignupPress.bind(this)}>

@@ -31,7 +31,7 @@ export default class Signin extends Component {
       })
       .catch((err) => {
         // alert(err);
-        this.setState({ error: err })
+        this.setState({ error: err, loading: false })
       })
   }
 
