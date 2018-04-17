@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   Container,
   Header,
@@ -39,7 +39,10 @@ export default class Clusters extends Component {
           </Right>
         </Header>
         <Content>
-          <Clust />
+          <View style={style.cartainer}>
+            <Clust style={style.clust} />
+            <Clust style={style.clust} />
+          </View>
         </Content>
       </Container>
     );
@@ -47,5 +50,14 @@ export default class Clusters extends Component {
 }
 
 const style = StyleSheet.create({
-
+  cartainer: {
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start'
+  },
+  clust: {
+    width: 200,
+    height: 200
+  }
 });
