@@ -72,7 +72,7 @@ export const MenuTaber = TabNavigator(
             <Button
               vertical
               >
-              <Ionicons name='ios-apps' size={25} style={Style.white} />
+              <Ionicons name='ios-help-circle' size={25} style={Style.white} />
             </Button>
             <Button
               vertical

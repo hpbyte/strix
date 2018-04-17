@@ -13,7 +13,8 @@ import {
   Card,
   CardItem,
   Thumbnail,
-  Text
+  Text,
+  Badge
 } from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import Style from '../style';
@@ -51,7 +52,7 @@ export default class Leaderboard extends Component {
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-            <Title style={Style.title}>LeaderBoard</Title>
+            <Title style={Style.title}>Strix</Title>
           </Body>
           <Right style={{ flex: 1 }}>
             <Button transparent>
@@ -69,7 +70,9 @@ export default class Leaderboard extends Component {
                   <Text>{item}</Text>
                 </Body>
                 <Right>
-                  <Text style={Style.blue}>{++dataIndex}</Text>
+                  <Badge>
+                    <Text>{++dataIndex}</Text>
+                  </Badge>
                 </Right>
               </ListItem>
             }>
