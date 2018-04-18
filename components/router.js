@@ -22,6 +22,7 @@ export const AuthTaber = TabNavigator(
   {
     tabBarPosition: 'bottom',
     swipeEnabled: true,
+    animationEnabled: true,
     tabBarComponent: props => {
       return(
         <Footer>
@@ -55,6 +56,7 @@ export const MenuTaber = TabNavigator(
   {
     tabBarPosition: 'bottom',
     swipeEnabled: true,
+    animationEnabled: true,
     tabBarComponent: props => {
       return(
         <Footer>
@@ -63,21 +65,25 @@ export const MenuTaber = TabNavigator(
               vertical
               onPress={() => props.navigation.navigate('Home')}>
               <Ionicons name='ios-school' size={25} style={Style.white} />
+              <Text>Clusters</Text>
             </Button>
             <Button
               vertical
               onPress={() => props.navigation.navigate('Leaderboard')}>
               <Ionicons name='ios-list-box-outline' size={25} style={Style.white} />
+              <Text>Rank</Text>
             </Button>
             <Button
               vertical
               >
-              <Ionicons name='ios-help-circle' size={25} style={Style.white} />
+              <Ionicons name='ios-chatboxes' size={25} style={Style.white} />
+              <Text>Discuss</Text>
             </Button>
             <Button
               vertical
               >
               <Ionicons name='ios-locate' size={25} style={Style.white} />
+              <Text>Appoint</Text>
             </Button>
           </FooterTab>
         </Footer>

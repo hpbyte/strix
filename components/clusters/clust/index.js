@@ -6,26 +6,26 @@ import {
     StyleSheet
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Grid, Row, Col } from 'react-native-easy-grid';
 
 export default class Clust extends Component {    
     render() {
         return(
-            <TouchableHighlight style={style.btn}>
-                <View>
-                    <Ionicons name='ios-home' size={30} />
-                    <Text>Home</Text>
-                </View>
-            </TouchableHighlight>
+            <Grid>
+                <Col style={style.col1}></Col>
+                <Col style={style.col2}></Col>
+            </Grid>
         );
     }
 }
 
 const style = StyleSheet.create({
-    btn: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#2a4ff0',
-        padding: 10,
-        margin: 20
-    }    
+    col1: {
+        backgroundColor: '#90caf9',
+        borderRadius: 10
+    },
+    col2: {
+        backgroundColor: '#fff9c4',
+        borderRadius: 10
+    }
 });
