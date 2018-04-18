@@ -63,24 +63,28 @@ export const MenuTaber = TabNavigator(
           <FooterTab style={Style.bgBlack}>
             <Button
               vertical
+              // active={props.navigationState.index === 0}
               onPress={() => props.navigation.navigate('Home')}>
               <Ionicons name='ios-school' size={25} style={Style.white} />
               <Text style={Style.grey}>Clusters</Text>
             </Button>
             <Button
               vertical
+              // active={props.navigationState.index === 1}
               onPress={() => props.navigation.navigate('Leaderboard')}>
               <Ionicons name='ios-list-box-outline' size={25} style={Style.white} />
               <Text style={Style.grey}>Rank</Text>
             </Button>
             <Button
               vertical
+              // active={props.navigationState.index === 2}
               >
               <Ionicons name='ios-chatboxes' size={25} style={Style.white} />
               <Text style={Style.grey}>Discuss</Text>
             </Button>
             <Button
               vertical
+              // active={props.navigationState.index === 3}
               >
               <Ionicons name='ios-locate' size={25} style={Style.white} />
               <Text style={Style.grey}>Appoint</Text>

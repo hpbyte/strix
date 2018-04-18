@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
-    View,
     Text,
-    TouchableHighlight,
-    StyleSheet
-} from 'react-native';
+    Body,
+} from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { Col, Row, Grid } from "react-native-easy-grid";
-import style from './style';
+import { Row } from "react-native-easy-grid";
+// import style from './style';
 
 export default class Clust extends Component {    
     render() {
         return(
-            <Grid>
-                <Col style={style.col1} size={75}>
-                    <Text>Column 1</Text>
-                </Col>
-                <Col style={style.col2} size={25}>
-                    <Text>Column 2</Text>
-                </Col>
-            </Grid>
+            <Row style={{ height: 200, backgroundColor: this.props.bgcolor, 
+                justifyContent: 'center', alignItems: 'center', margin: 5,
+                borderRadius: 15 }}>
+                <View>
+                    <Ionicons name='logo-nodejs' size={55} color="#fff" />
+                    <Text style={style.txt}>Row</Text>
+                </View>
+            </Row>
         );
     }
 }
 
+const style = StyleSheet.create({
+    txt: {
+        color: '#fff',
+        fontSize: 25
+    }
+});

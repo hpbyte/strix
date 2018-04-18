@@ -14,10 +14,14 @@ import {
   CardItem
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { Col, Row, Grid } from "react-native-easy-grid";
+import { Grid, Col } from "react-native-easy-grid";
 import Clust from './clust';
 import Style from '../style';
 
+const colors = [
+  '#5e35b1', '#dce775', '#00897b', '#3949ab',
+  '#a5d6a7', '#00e5ff', '#f4511e', '#ffa726'
+]
 
 export default class Clusters extends Component {
   render() {
@@ -41,7 +45,15 @@ export default class Clusters extends Component {
           </Right>
         </Header>
         <Content>
-          <Clust />
+          <Grid>
+            <Col>
+            {colors.map((prop, key) => {
+              return (
+                <Clust bgcolor={prop} key={key} />
+              )
+            })}
+            </Col>
+          </Grid>
         </Content>
       </Container>
     );
