@@ -14,8 +14,10 @@ import {
   CardItem
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import Clust from './clust';
 import Style from '../style';
+
 
 export default class Clusters extends Component {
   render() {
@@ -39,25 +41,9 @@ export default class Clusters extends Component {
           </Right>
         </Header>
         <Content>
-          <View style={style.cartainer}>
-            <Clust style={style.clust} />
-            <Clust style={style.clust} />
-          </View>
+          <Clust />
         </Content>
       </Container>
     );
   }
 }
-
-const style = StyleSheet.create({
-  cartainer: {
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start'
-  },
-  clust: {
-    width: 200,
-    height: 200
-  }
-});

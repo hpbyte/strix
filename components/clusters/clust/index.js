@@ -6,26 +6,21 @@ import {
     StyleSheet
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Grid, Row, Col } from 'react-native-easy-grid';
+import { Col, Row, Grid } from "react-native-easy-grid";
+import style from './style';
 
 export default class Clust extends Component {    
     render() {
         return(
             <Grid>
-                <Col style={style.col1}></Col>
-                <Col style={style.col2}></Col>
+                <Col style={style.col1} size={75}>
+                    <Text>Column 1</Text>
+                </Col>
+                <Col style={style.col2} size={25}>
+                    <Text>Column 2</Text>
+                </Col>
             </Grid>
         );
     }
 }
 
-const style = StyleSheet.create({
-    col1: {
-        backgroundColor: '#90caf9',
-        borderRadius: 10
-    },
-    col2: {
-        backgroundColor: '#fff9c4',
-        borderRadius: 10
-    }
-});

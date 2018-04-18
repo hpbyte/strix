@@ -58,7 +58,7 @@ export default class Profile extends Component {
             </Button>
           </Left>
           <Body>
-            <Title>Your Profile</Title>
+            <Title style={Style.black}>Your Profile</Title>
           </Body>
           <Right/>
         </Header>
