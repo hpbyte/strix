@@ -65,14 +65,14 @@ export const MenuTaber = TabNavigator(
               vertical
               // active={props.navigationState.index === 0}
               onPress={() => props.navigation.navigate('Home')}>
-              <Ionicons name='ios-school' size={25} style={Style.white} />
+              <Ionicons name='logo-buffer' size={25} style={Style.white} />
               <Text style={Style.grey}>Clusters</Text>
             </Button>
             <Button
               vertical
               // active={props.navigationState.index === 1}
               onPress={() => props.navigation.navigate('Leaderboard')}>
-              <Ionicons name='ios-list-box-outline' size={25} style={Style.white} />
+              <Ionicons name='ios-podium' size={25} style={Style.white} />
               <Text style={Style.grey}>Rank</Text>
             </Button>
             <Button

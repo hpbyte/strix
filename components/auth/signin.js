@@ -36,7 +36,7 @@ export default class Signin extends Component {
 
   render() {
     return(
-      <View>
+      <View style={{flex: 1}}>
         <Text style={style.strix}>Strix</Text>
         <Item rounded style={style.item} >
           <Input 

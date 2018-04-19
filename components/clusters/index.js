@@ -11,7 +11,6 @@ const ClusterStacker = StackNavigator(
   },
   {
     headerMode: 'none',
-    mode: 'modal',
     initialRouteName: 'Clusters'
   }
 );

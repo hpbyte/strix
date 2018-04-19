@@ -65,12 +65,12 @@ export default class Leaderboard extends Component {
             dataArray={data}
             renderRow={(item) => 
               <ListItem>
-                <Thumbnail square size={80} source={require('../../assets/logo.png')} />
+                <Thumbnail square size={80} source={require('../../assets/default.png')} />
                 <Body>
                   <Text>{item}</Text>
                 </Body>
                 <Right>
-                  <Badge>
+                  <Badge style={Style.bgBlue}>
                     <Text>{++dataIndex}</Text>
                   </Badge>
                 </Right>

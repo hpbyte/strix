@@ -57,7 +57,7 @@ export default class Signup extends Component {
   render() {
     return(
       <Container>
-        <Content>
+        <View style={{flex: 1}}>
           <Text style={style.strix}>Strix</Text>
           <Item rounded style={style.item} >
             <Input 
@@ -87,7 +87,7 @@ export default class Signup extends Component {
             onPress={this.onSignupPress.bind(this)}>
             <Text style={style.txtLogin}>Ok Go</Text>
           </Button>
-        </Content>
+        </View>
       </Container>
     );
   }

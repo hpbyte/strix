@@ -13,11 +13,8 @@ export default {
     bgBlack: {
       backgroundColor: '#000'
     },
-    bgRed: {
-      backgroundColor: '#c80202'
-    },
-    red: {
-      color: '#c80202'
+    bgBlue: {
+      backgroundColor: '#2a4ff0'
     },
     white: {
       color: '#fff'
@@ -27,9 +24,6 @@ export default {
     },
     blue: {
       color: '#2a4ff0'
-    },
-    grey: {
-      color: '#cccccc'
     },
     title: {
       fontFamily: 'pacifico',

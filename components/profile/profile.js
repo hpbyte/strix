@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import {
   Container,
   Header,
   Title,
   Content,
-  List,
-  ListItem,
   Left,
   Body,
   Right,
   Thumbnail,
   Text,
-  Button
+  Button,
+  List,
+  ListItem
 } from 'native-base';
+import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
 import Style from '../style';
 import firebaseService from '../service/firebase';
@@ -68,37 +70,79 @@ export default class Profile extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.goBack()}>
-              <Ionicons name='ios-arrow-back' size={26} />
+              <Ionicons name='ios-arrow-back' size={28} />
             </Button>
           </Left>
           <Body>
             <Title style={Style.black}>Your Profile</Title>
           </Body>
-          <Right/>
+          <Right>
+            <Button
+              transparent
+              onPress={this.onSignOut.bind(this)} >
+              <Ionicons name='ios-log-out' size={27} color='#000' />
+            </Button>
+          </Right>
         </Header>
-        <Content>
-          <List>
-            <ListItem avater>
-              <Left>
-                <Thumbnail source={require('../../assets/logo.png')} />
-              </Left>
-              <Body>
-                <Text>{this.state.name}</Text>
-                <Text>{this.state.dob}</Text>
-                <Text>{this.state.email}</Text>
-                <Text note>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, inventore.</Text>
-              </Body>
-              <Right/>
-            </ListItem>
-            <ListItem>
-              <Button
-                onPress={this.onSignOut.bind(this)} >
-                <Text>Logout</Text>
-              </Button>
-            </ListItem>
-          </List>
-        </Content>
+          <Grid>
+            <Row size={30} style={style.row1}>
+              <Thumbnail large source={require('../../assets/default.png')} />
+            </Row>
+            <Row size={70}>
+              <Content>
+                <List>
+                  <ListItem icon style={style.m10}>
+                    <Left>
+                      <Ionicons name='ios-contact' size={30} />
+                    </Left>
+                    <Body>
+                      <Text>{this.state.name}</Text>
+                    </Body>
+                    <Right/>
+                  </ListItem>
+                  <ListItem icon style={style.m10}>
+                    <Left>
+                      <Ionicons name='ios-mail' size={30} />
+                    </Left>
+                    <Body>
+                      <Text>{this.state.email}</Text>
+                    </Body>
+                    <Right/>
+                  </ListItem>
+                  <ListItem icon style={style.m10}>
+                    <Left>
+                      <Ionicons name='ios-card' size={30} />
+                    </Left>
+                    <Body>
+                      <Text>{this.state.dob}</Text>
+                    </Body>
+                    <Right/>
+                  </ListItem>
+                  <ListItem icon style={style.m10}>
+                    <Left>
+                      <Ionicons name='ios-school' size={30} />
+                    </Left>
+                    <Body>
+                      <Text>Oxford University</Text>
+                    </Body>
+                    <Right/>
+                  </ListItem>
+                </List>
+              </Content>
+            </Row>
+          </Grid>
       </Container>
     );
   }
 }
+
+const style = StyleSheet.create({
+  row1: {
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  m10: {
+    marginTop: 10,
+  }
+})

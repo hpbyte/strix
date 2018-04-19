@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import {
   Container,
   Header,
@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Grid, Col } from "react-native-easy-grid";
 import Clust from './clust';
 import Style from '../style';
+import FloatBtn from '../fab';
 
 const colors = [
   '#5e35b1', '#dce775', '#00897b', '#3949ab',
@@ -44,17 +45,24 @@ export default class Clusters extends Component {
             </Button>
           </Right>
         </Header>
-        <Content>
-          <Grid>
-            <Col>
-            {colors.map((prop, key) => {
-              return (
-                <Clust bgcolor={prop} key={key} />
-              )
-            })}
-            </Col>
-          </Grid>
-        </Content>
+        <View style={{flex: 1}}>
+          <Content>
+            <Grid>
+              <Col>
+              {colors.map((prop, key) => {
+                return (
+                  <TouchableOpacity
+                    key={key}
+                    onPress={() => this.props.navigation.navigate('Cluster')}>
+                    <Clust bgcolor={prop} />
+                  </TouchableOpacity>
+                )
+              })}
+              </Col>
+            </Grid>
+          </Content>
+          <FloatBtn />
+        </View>
       </Container>
     );
   }
