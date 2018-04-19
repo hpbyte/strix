@@ -17,23 +17,37 @@ import { Ionicons } from '@expo/vector-icons';
 import Style from '../style';
 import firebaseService from '../service/firebase';
 
+const FIREBASE = firebaseService.database();
+
 export default class Profile extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { email: '' }
+    this.state = { name: '', email: '', dob: '' }
   }
 
   componentDidMount() {
     firebaseService.auth().onAuthStateChanged(user => {
       if(user) {
+        // getting user data on db
+        try{
+          FIREBASE.ref('users/'+user.uid).once('value').then(snapshot => {
+            this.setState({
+              name: snapshot.val().name,
+              dob: snapshot.val().dob
+            })
+          })
+        } catch(error) {
+          alert(error)
+        }
+        // getting email from auth
         this.setState({
           email: user.email
         })
       } else {
         this.props.navigation.navigate('SignedOut');
       }
-    })
+    });
   }
 
   onSignOut() {
@@ -69,7 +83,8 @@ export default class Profile extends Component {
                 <Thumbnail source={require('../../assets/logo.png')} />
               </Left>
               <Body>
-                <Text>James</Text>
+                <Text>{this.state.name}</Text>
+                <Text>{this.state.dob}</Text>
                 <Text>{this.state.email}</Text>
                 <Text note>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, inventore.</Text>
               </Body>
