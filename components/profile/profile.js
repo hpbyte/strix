@@ -70,7 +70,7 @@ export default class Profile extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.goBack()}>
-              <Ionicons name='ios-arrow-back' size={28} />
+              <Ionicons name='ios-arrow-back' size={28} color='#000' />
             </Button>
           </Left>
           <Body>
@@ -84,53 +84,53 @@ export default class Profile extends Component {
             </Button>
           </Right>
         </Header>
-          <Grid>
-            <Row size={30} style={style.row1}>
-              <Thumbnail large source={require('../../assets/default.png')} />
-            </Row>
-            <Row size={70}>
-              <Content>
-                <List>
-                  <ListItem icon style={style.m10}>
-                    <Left>
-                      <Ionicons name='ios-contact' size={30} />
-                    </Left>
-                    <Body>
-                      <Text>{this.state.name}</Text>
-                    </Body>
-                    <Right/>
-                  </ListItem>
-                  <ListItem icon style={style.m10}>
-                    <Left>
-                      <Ionicons name='ios-mail' size={30} />
-                    </Left>
-                    <Body>
-                      <Text>{this.state.email}</Text>
-                    </Body>
-                    <Right/>
-                  </ListItem>
-                  <ListItem icon style={style.m10}>
-                    <Left>
-                      <Ionicons name='ios-card' size={30} />
-                    </Left>
-                    <Body>
-                      <Text>{this.state.dob}</Text>
-                    </Body>
-                    <Right/>
-                  </ListItem>
-                  <ListItem icon style={style.m10}>
-                    <Left>
-                      <Ionicons name='ios-school' size={30} />
-                    </Left>
-                    <Body>
-                      <Text>Oxford University</Text>
-                    </Body>
-                    <Right/>
-                  </ListItem>
-                </List>
-              </Content>
-            </Row>
-          </Grid>
+        <Grid>
+          <Row size={30} style={style.row1}>
+            <Thumbnail large source={require('../../assets/default.png')} />
+          </Row>
+          <Row size={70}>
+            <Content>
+              <List>
+                <ListItem icon>
+                  <Left>
+                    <Ionicons name='ios-contact' size={30} />
+                  </Left>
+                  <Body>
+                    <Text>{this.state.name}</Text>
+                  </Body>
+                  <Right/>
+                </ListItem>
+                <ListItem icon>
+                  <Left>
+                    <Ionicons name='ios-mail' size={30} />
+                  </Left>
+                  <Body>
+                    <Text>{this.state.email}</Text>
+                  </Body>
+                  <Right/>
+                </ListItem>
+                <ListItem icon>
+                  <Left>
+                    <Ionicons name='ios-card' size={30} />
+                  </Left>
+                  <Body>
+                    <Text>{this.state.dob}</Text>
+                  </Body>
+                  <Right/>
+                </ListItem>
+                <ListItem icon>
+                  <Left>
+                    <Ionicons name='ios-school' size={30} />
+                  </Left>
+                  <Body>
+                    <Text>Oxford University</Text>
+                  </Body>
+                  <Right/>
+                </ListItem>
+              </List>
+            </Content>
+          </Row>
+        </Grid>
       </Container>
     );
   }
@@ -141,8 +141,5 @@ const style = StyleSheet.create({
     backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  m10: {
-    marginTop: 10,
   }
 })

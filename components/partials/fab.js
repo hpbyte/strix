@@ -19,8 +19,8 @@ export default class FloatBtn extends Component {
             position="bottomRight"
             onPress={() => this.setState({ active: !this.state.active })}>
                 <Ionicons name="ios-add" size={25} />
-                <Button disabled style={{ backgroundColor: '#DD5144' }}>
-                    <Ionicons name="ios-mail" color='#fff' size={25} />
+                <Button style={{ backgroundColor: '#DD5144' }} >
+                    <Ionicons name="ios-mail" color='#fff' size={30} />
                 </Button>
             </Fab>
         );

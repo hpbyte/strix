@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import {
   Container,
   Header,
@@ -14,10 +14,9 @@ import {
   CardItem
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { Grid, Col } from "react-native-easy-grid";
-import Clust from './clust';
+import { Grid, Col, Row } from "react-native-easy-grid";
 import Style from '../style';
-import FloatBtn from '../fab';
+import Bar from '../partials/statusbar'
 
 const colors = [
   '#5e35b1', '#dce775', '#00897b', '#3949ab',
@@ -45,6 +44,7 @@ export default class Clusters extends Component {
             </Button>
           </Right>
         </Header>
+        <Bar />
         <View style={{flex: 1}}>
           <Content>
             <Grid>
@@ -54,14 +54,24 @@ export default class Clusters extends Component {
                   <TouchableOpacity
                     key={key}
                     onPress={() => this.props.navigation.navigate('Cluster')}>
-                    <Clust bgcolor={prop} />
+                    <Row style={{ height: 200, backgroundColor: prop, 
+                        justifyContent: 'center', alignItems: 'center', margin: 5,
+                        borderRadius: 15 }}>
+                        <View>
+                            <Ionicons name='logo-nodejs' size={55} color="#fff" />
+                            <Text style={{ color: '#fff', fontSize: 25 }}>Row</Text>
+                        </View>
+                    </Row>
                   </TouchableOpacity>
                 )
               })}
               </Col>
             </Grid>
           </Content>
-          <FloatBtn />
+          <TouchableOpacity style={Style.fab}
+            onPress={() => this.props.navigation.navigate('Add')}>
+            <Ionicons name='ios-add' color='#fff' size={30} />
+          </TouchableOpacity>
         </View>
       </Container>
     );

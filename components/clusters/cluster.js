@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import {
   Container,
   Header,
@@ -40,46 +40,52 @@ export default class Cluster extends Component {
             </Button>
           </Right>
         </Header>
-        <Content>
-          {posts.map((prop, key) => {
-            return (
-              <Card key={key}>
-                <CardItem>
-                  <Left>
-                    <Thumbnail source={require("../../assets/default.png")} />
-                    <Body>
-                      <Text>{prop}</Text>
-                    </Body>
-                  </Left>
-                  <Right>
-                    <Ionicons name='md-more' size={25} color='#000' />
-                  </Right>
-                </CardItem>
-                <CardItem>
-                  {/* <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/> */}
-                  <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in v
-                    oluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    blah sint occaecat cupidatat non proident,
-                    sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-                </CardItem>
-                <CardItem>
-                  <Left>
-                    <Button transparent>
-                      <Ionicons name='ios-chatbubbles' size={23} />
-                      <Text>4 Answers</Text>
-                    </Button>
-                  </Left>
-                  <Right>
-                    <Text>11h ago</Text>
-                  </Right>
-                </CardItem>
-              </Card>
-            )
-          })}
-        </Content>
+        <View style={{ flex: 1}}>
+          <Content>
+            {posts.map((prop, key) => {
+              return (
+                <Card key={key}>
+                  <CardItem>
+                    <Left>
+                      <Thumbnail source={require("../../assets/default.png")} />
+                      <Body>
+                        <Text>{prop}</Text>
+                      </Body>
+                    </Left>
+                    <Right>
+                      <Ionicons name='md-more' size={25} color='#000' />
+                    </Right>
+                  </CardItem>
+                  <CardItem>
+                    {/* <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/> */}
+                    <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in v
+                      oluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                      blah sint occaecat cupidatat non proident,
+                      sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+                  </CardItem>
+                  <CardItem>
+                    <Left>
+                      <Button transparent>
+                        <Ionicons name='ios-chatbubbles' size={23} />
+                        <Text>4 Answers</Text>
+                      </Button>
+                    </Left>
+                    <Right>
+                      <Text>11h ago</Text>
+                    </Right>
+                  </CardItem>
+                </Card>
+              )
+            })}
+          </Content>
+          <TouchableOpacity style={Style.fab}
+            onPress={() => this.props.navigation.navigate('Post')}>
+            <Ionicons name='ios-add' color='#fff' size={30} />
+          </TouchableOpacity>
+        </View>        
       </Container>
     );
   }
