@@ -12,6 +12,7 @@ import {
 } from 'native-base';
 import firebaseService from '../service/firebase';
 import style from './style';
+import { signedIn } from '../auth/check'
 
 const FIREBASE = firebaseService.database();
 
@@ -46,6 +47,8 @@ export default class Signup extends Component {
             }              
           }
         )
+        // store that the user is logged in
+        signedIn()
         // alert('Signup Successful!');
         this.props.navigation.navigate('SignedIn');
       })

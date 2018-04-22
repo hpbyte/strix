@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import firebaseService from '../service/firebase';
 import style from './style';
+import { signedIn } from './check'
 
 export default class Signin extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ export default class Signin extends Component {
     firebaseService.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ error: '', loading: false });
+        // store that the user is logged in
+        signedIn();
         // alert('Logged In')
         this.props.navigation.navigate("SignedIn")
       })

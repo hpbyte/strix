@@ -2,6 +2,7 @@ import React from 'react';
 import { createRootNavigator } from './components/router';
 import { AppLoading, Font } from 'expo';
 import firebaseService from './components/service/firebase';
+import { isSignedIn } from './components/auth/check'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -24,11 +25,15 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    firebaseService.auth().onAuthStateChanged(user => {
-      if(user) {
-        this.setState({ signedIn: true });
-      }
-    })
+    // firebaseService.auth().onAuthStateChanged(user => {
+    //   if(user) {
+    //     this.setState({ signedIn: true });
+    //   }
+    // })
+    // check if user is logged in
+    isSignedIn()
+      .then(res => this.setState({ signedIn: res }))
+      .catch(err => alert("An error occurred"));
   }
 
   render() {

@@ -18,6 +18,7 @@ import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
 import Style from '../style';
 import firebaseService from '../service/firebase';
+import { signedOut } from '../auth/check'
 
 const FIREBASE = firebaseService.database();
 
@@ -55,6 +56,8 @@ export default class Profile extends Component {
   onSignOut() {
     firebaseService.auth().signOut()
       .then(() => {
+        // remove from storage
+        signedOut();        
         this.props.navigation.navigate('SignedOut')
       })
       .catch((error) => {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
     Container,
     Header,
@@ -12,12 +12,30 @@ import {
     Form, 
     Item, 
     Input, 
-    Label
+    Textarea,
+    Label,
+    Picker,
+    Card,
+    CardItem
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
 import Style from '../style'
 
 export default class Post extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            selected: 'How'
+        }
+    }
+
+    onValueChange(value) {
+        this.setState({
+            selected: value
+        })
+    }
+
     render() {
         return(
             <Container>
@@ -38,16 +56,21 @@ export default class Post extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <Content>
+                <Content padder>
                     <Form>
-                        <Item floatingLabel>
-                            <Label>Username</Label>
-                            <Input />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label>Password</Label>
-                            <Input />
-                        </Item>
+                        <Picker
+                        mode="dropdown"
+                        selectedValue={this.state.selected}
+                        onValueChange={this.onValueChange.bind(this)} >
+                            <Picker.Item label="How" value="How" />
+                            <Picker.Item label="What" value="What" />
+                            <Picker.Item label="Why" value="Why" />
+                        </Picker>
+                        <Textarea rowSpan={5} style={{ marginTop: 5 }}
+                            bordered placeholder="your question here ..." />
+                        <Button block>
+                            <Text>Submit</Text>
+                        </Button>
                     </Form>
                 </Content>
             </Container>
