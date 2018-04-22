@@ -16,10 +16,31 @@ import {
 } from 'native-base';
 import Style from '../style';
 import { Ionicons } from '@expo/vector-icons';
+import firebaseService from '../service/firebase'
 
-const posts = ['Luffy', 'Saitama', 'Deadpool', 'Naruto', 'Tony', 'Mardock', 'Ichigo'];
+const FIREBASE = firebaseService.database()
+
+// const posts = ['Luffy', 'Saitama', 'Deadpool', 'Naruto', 'Tony', 'Mardock', 'Ichigo'];
 
 export default class Cluster extends Component {
+  constructor(props) {
+    super(props)
+    
+    this.state = { questions: [] }
+  }
+
+  componentDidMount() {
+    FIREBASE.ref('questions/').on('value', (snapshot) => {
+      let qArr = []
+
+      snapshot.forEach((snap) => {
+        qArr.push(snap.val())
+      })
+
+      this.setState({ questions: qArr })
+    })
+  }
+
   render() {
     return (
       <Container>
@@ -42,14 +63,14 @@ export default class Cluster extends Component {
         </Header>
         <View style={{ flex: 1}}>
           <Content>
-            {posts.map((prop, key) => {
-              return (
+            {this.state.questions.map((prop, key) => {
+              return(
                 <Card key={key}>
                   <CardItem>
                     <Left>
                       <Thumbnail source={require("../../assets/default.png")} />
                       <Body>
-                        <Text>{prop}</Text>
+                        <Text>Luffy</Text>
                       </Body>
                     </Left>
                     <Right>
@@ -57,14 +78,7 @@ export default class Cluster extends Component {
                     </Right>
                   </CardItem>
                   <CardItem>
-                    {/* <Image source={require("../../assets/drawer-cover.png")} style={{height: 200, width: null, flex: 1}}/> */}
-                    <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in v
-                      oluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                      blah sint occaecat cupidatat non proident,
-                      sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+                    <Text>{prop.quiz}</Text>
                   </CardItem>
                   <CardItem>
                     <Left>

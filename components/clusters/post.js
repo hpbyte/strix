@@ -50,6 +50,7 @@ export default class Post extends Component {
             FIREBASE.ref('questions').push(
                 {
                     quiz: selected+" "+quiz,
+                    userId: firebaseService.auth().currentUser.uid,
                     duration: '12-2-2019'
                 }, (error) => {
                     if(error) alert(error.message)
