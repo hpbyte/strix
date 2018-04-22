@@ -32,7 +32,7 @@ export default class Cluster extends Component {
             </Button>
           </Left>
           <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Title style={Style.title}>IT</Title>
+            <Title style={Style.black}>IT</Title>
           </Body>
           <Right style={{ flex: 1 }}>
             <Button transparent>
