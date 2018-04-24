@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import {
   Container,
   Content,
@@ -10,6 +10,8 @@ import {
   Button,
   Text
 } from 'native-base';
+import { Ionicons } from '@expo/vector-icons'
+import { mail, lock, user } from '../partials/icons'
 import firebaseService from '../service/firebase';
 import style from './style';
 import { signedIn } from '../auth/check'
@@ -24,7 +26,6 @@ export default class Signup extends Component {
       name: '',
       email: '', 
       password: '',
-      dob: '', 
       error: '', 
       loading: false 
     };
@@ -39,8 +40,7 @@ export default class Signup extends Component {
         // add it to the database
         FIREBASE.ref('users/'+firebaseService.auth().currentUser.uid).set(
           {
-            name: name,
-            dob: dob
+            name: name
           }, (error) => {
             if(error) {
               alert(error.message)
@@ -59,39 +59,41 @@ export default class Signup extends Component {
 
   render() {
     return(
-      <Container>
-        <View style={{flex: 1}}>
-          <Text style={style.strix}>Strix</Text>
-          <Item rounded style={style.item} >
-            <Input 
-              value={this.state.name}
-              onChangeText={name => this.setState({name})}
-              style={style.input} placeholder="Name" />
-          </Item>
-          <Item rounded style={style.item} >
-            <Input 
-              value={this.state.email} 
-              onChangeText={email => this.setState({email})} 
-              style={style.input} placeholder="Email" />
-          </Item>
-          <Item rounded style={style.item} >
-            <Input 
-              value={this.state.password} 
-              onChangeText={password => this.setState({password})} 
-              secureTextEntry style={style.input} placeholder="Password" />
-          </Item>
-          <Item rounded style={style.item} >
-            <Input
-              value={this.state.dob}
-              onChangeText={dob => this.setState({dob})}
-              style={style.input} placeholder="Date Of Birth" />
-          </Item>
-          <Button rounded dark style={style.btn}
-            onPress={this.onSignupPress.bind(this)}>
-            <Text style={style.txtLogin}>Ok Go</Text>
-          </Button>
-        </View>
-      </Container>
+      <KeyboardAvoidingView style={{flex: 1}} behavior='position' enabled>
+        <Text style={style.strix}>Strix</Text>
+        <Item rounded style={style.item} >
+          <Ionicons name={user} size={25} style={style.inputIcon} />
+          <Input 
+            value={this.state.name}
+            onChangeText={name => this.setState({name})}
+            style={style.input} placeholder="Name"
+            keyboardAppearance='dark'
+            returnKeyType='next' />
+        </Item>
+        <Item rounded style={style.item} >
+          <Ionicons name={mail} size={25} style={style.inputIcon} />
+          <Input 
+            value={this.state.email} 
+            onChangeText={email => this.setState({email})} 
+            style={style.input} placeholder="Email"
+            keyboardType='email-address'
+            keyboardAppearance='dark'
+            returnKeyType='next' />
+        </Item>
+        <Item rounded style={style.item} >
+          <Ionicons name={lock} size={25} style={style.inputIcon} />
+          <Input 
+            value={this.state.password} 
+            onChangeText={password => this.setState({password})} 
+            secureTextEntry style={style.input} placeholder="Password"
+            keyboardAppearance='dark'
+            returnKeyType='done' />
+        </Item>
+        <Button rounded dark style={style.btn}
+          onPress={this.onSignupPress.bind(this)}>
+          <Text style={style.txtLogin}>Ok Go</Text>
+        </Button>
+      </KeyboardAvoidingView>
     );
   }
 }

@@ -16,11 +16,10 @@ import {
 } from 'native-base';
 import Style from '../style';
 import { Ionicons } from '@expo/vector-icons';
+import { discuss, add, more } from '../partials/icons'
 import firebaseService from '../service/firebase'
 
 const FIREBASE = firebaseService.database()
-
-// const posts = ['Luffy', 'Saitama', 'Deadpool', 'Naruto', 'Tony', 'Mardock', 'Ichigo'];
 
 export default class Cluster extends Component {
   constructor(props) {
@@ -57,7 +56,7 @@ export default class Cluster extends Component {
           </Body>
           <Right style={{ flex: 1 }}>
             <Button transparent>
-              <Ionicons name='ios-more' size={26} style={Style.black} />
+              <Ionicons name={more} size={26} style={Style.black} />
             </Button>
           </Right>
         </Header>
@@ -74,7 +73,7 @@ export default class Cluster extends Component {
                       </Body>
                     </Left>
                     <Right>
-                      <Ionicons name='md-more' size={25} color='#000' />
+                      <Ionicons name={more} size={25} color='#000' />
                     </Right>
                   </CardItem>
                   <CardItem>
@@ -83,7 +82,7 @@ export default class Cluster extends Component {
                   <CardItem>
                     <Left>
                       <Button transparent>
-                        <Ionicons name='ios-chatbubbles' size={23} />
+                        <Ionicons name={discuss} size={23} />
                         <Text>4 Answers</Text>
                       </Button>
                     </Left>
@@ -97,7 +96,7 @@ export default class Cluster extends Component {
           </Content>
           <TouchableOpacity style={Style.fab}
             onPress={() => this.props.navigation.navigate('Post')}>
-            <Ionicons name='ios-add' color='#fff' size={30} />
+            <Ionicons name={add} color='#fff' size={30} />
           </TouchableOpacity>
         </View>        
       </Container>

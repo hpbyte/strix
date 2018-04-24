@@ -22,6 +22,7 @@ import {
     Root
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
+import { alert } from '../partials/icons'
 import Style from '../style'
 import firebaseService from '../service/firebase'
 
@@ -99,15 +100,15 @@ export default class Post extends Component {
                 <Content>
                     <Card>
                         <CardItem>
-                            <Ionicons name="ios-alert" color="red" size={35} />
+                            <Ionicons name={alert} color="red" size={35} />
                             <Text style={style.infotxt}>Keep your question short and to the point</Text>
                         </CardItem>
                         <CardItem>
-                            <Ionicons name="ios-alert" color="green" size={35} />
+                            <Ionicons name={alert} color="green" size={35} />
                             <Text style={style.infotxt}>Phrase it like a question</Text>
                         </CardItem>
                         <CardItem>
-                            <Ionicons name="ios-alert" color="orange" size={35} />
+                            <Ionicons name={alert} color="orange" size={35} />
                             <Text style={style.infotxt}>Check for grammar or spelling errors</Text>
                         </CardItem>
                     </Card>

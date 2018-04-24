@@ -17,6 +17,7 @@ import {
   Badge
 } from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
+import { user } from '../partials/icons'
 import Style from '../style';
 
 const data = [
@@ -44,7 +45,7 @@ export default class Leaderboard extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.navigate('Profile')}>
-              <Ionicons name='md-person' size={26} style={Style.black}/>
+              <Ionicons name={user} size={26} style={Style.black}/>
             </Button>
           </Left>
           <Body style={{

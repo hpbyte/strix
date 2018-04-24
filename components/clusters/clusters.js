@@ -14,9 +14,9 @@ import {
   CardItem
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import { add, user } from '../partials/icons'
 import { Grid, Col, Row } from "react-native-easy-grid";
 import Style from '../style';
-import Bar from '../partials/statusbar'
 
 const colors = [
   '#5e35b1', '#dce775', '#00897b', '#3949ab',
@@ -32,7 +32,7 @@ export default class Clusters extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.navigate('Profile')}>
-              <Ionicons name='md-person' size={26} style={Style.black} />
+              <Ionicons name={user} size={26} style={Style.black} />
             </Button>
           </Left>
           <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -44,7 +44,6 @@ export default class Clusters extends Component {
             </Button>
           </Right>
         </Header>
-        <Bar />
         <View style={{flex: 1}}>
           <Content padder>
             <Grid>
@@ -70,7 +69,7 @@ export default class Clusters extends Component {
           </Content>
           <TouchableOpacity style={Style.fab}
             onPress={() => this.props.navigation.navigate('Add')}>
-            <Ionicons name='ios-add' color='#fff' size={30} />
+            <Ionicons name={add} color='#fff' size={30} />
           </TouchableOpacity>
         </View>
       </Container>

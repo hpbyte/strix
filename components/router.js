@@ -4,9 +4,11 @@ import {
   Footer,
   FooterTab,
   Button,
+  Badge,
   Text
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import { podium, link, noti } from './partials/icons';
 import Style from './style';
 import Profile from './profile/profile';
 import Signup from './auth/signup';
@@ -72,22 +74,23 @@ export const MenuTaber = TabNavigator(
               vertical
               // active={props.navigationState.index === 1}
               onPress={() => props.navigation.navigate('Leaderboard')}>
-              <Ionicons name='ios-podium' size={25} style={Style.white} />
+              <Ionicons name={podium} size={25} style={Style.white} />
               <Text style={Style.grey}>Rank</Text>
             </Button>
             <Button
               vertical
               // active={props.navigationState.index === 2}
               >
-              <Ionicons name='ios-chatboxes' size={25} style={Style.white} />
-              <Text style={Style.grey}>Discuss</Text>
+              <Ionicons name={link} size={25} style={Style.white} />
+              <Text style={Style.grey}>Appoint</Text>
             </Button>
             <Button
-              vertical
+              badge vertical
               // active={props.navigationState.index === 3}
               >
-              <Ionicons name='ios-locate' size={25} style={Style.white} />
-              <Text style={Style.grey}>Appoint</Text>
+              <Badge><Text>7</Text></Badge>
+              <Ionicons name={noti} size={25} style={Style.white} />
+              <Text style={Style.grey}>Noti</Text>
             </Button>
           </FooterTab>
         </Footer>

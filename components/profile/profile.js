@@ -47,8 +47,6 @@ export default class Profile extends Component {
         this.setState({
           email: user.email
         })
-      } else {
-        this.props.navigation.navigate('SignedOut');
       }
     });
   }

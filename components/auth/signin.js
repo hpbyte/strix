@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import {
   Form,
   Item,
   Input,
   Label,
   Button,
-  Text
+  Text,
+  Container
 } from 'native-base';
+import { Ionicons } from '@expo/vector-icons'
+import { mail, lock } from '../partials/icons'
 import firebaseService from '../service/firebase';
 import style from './style';
 import { signedIn } from './check'
@@ -39,27 +42,34 @@ export default class Signin extends Component {
 
   render() {
     return(
-      <View style={{flex: 1}}>
+      <KeyboardAvoidingView style={{flex: 1}} behavior='position' enabled>
         <Text style={style.strix}>Strix</Text>
         <Item rounded style={style.item} >
+          <Ionicons name={mail} size={25} style={style.inputIcon} />
           <Input 
             value={this.state.email} 
             onChangeText={email => this.setState({email})} 
             style={style.input} placeholder="Email"
-            placeholderTextColor="#000" />
+            placeholderTextColor="#000"
+            keyboardType='email-address'
+            keyboardAppearance='dark'
+            returnKeyType='next' />
         </Item>
         <Item rounded style={style.item} >
+          <Ionicons name={lock} size={25} style={style.inputIcon} />
           <Input 
             value={this.state.password} 
             onChangeText={password => this.setState({password})} 
             secureTextEntry={true} style={style.input}
-            placeholder="Password" placeholderTextColor="#000" />
+            placeholder="Password" placeholderTextColor="#000"
+            keyboardAppearance='dark'
+            returnKeyType='done' />
         </Item>
         <Button rounded dark style={style.btn}
           onPress={this.onSigninPress.bind(this)}>
           <Text style={style.txtLogin}>Ok Go</Text>
         </Button>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
