@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import {
   Container,
   Header,
@@ -66,30 +66,35 @@ export default class Profile extends Component {
   render() {
     return(
       <Container>
-        <Header style={Style.header}>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.goBack()}>
-              <Ionicons name='ios-arrow-back' size={28} color='#000' />
-            </Button>
-          </Left>
-          <Body>
-            <Title style={Style.black}>Your Profile</Title>
-          </Body>
-          <Right>
-            <Button
-              transparent
-              onPress={this.onSignOut.bind(this)} >
-              <Ionicons name='ios-log-out' size={27} color='#000' />
-            </Button>
-          </Right>
-        </Header>
+        {/* <Header style={Style.header}>
+          
+        </Header> */}
         <Grid>
-          <Row size={30} style={style.row1}>
+          <Row size={8} style={{ backgroundColor: '#000' }}>
+            <Left>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.goBack()}
+                style={{ marginLeft: 15 }} >
+                <Ionicons name='ios-arrow-back' size={28} color='#fff' />
+              </Button>
+            </Left>
+            <Body>
+              <Title style={Style.white}>Your Profile</Title>
+            </Body>
+            <Right>
+              <Button
+                transparent
+                onPress={this.onSignOut.bind(this)}
+                style={{ width: 27, marginRight: 10 }} >
+                <Ionicons name='ios-log-out' size={27} color='#fff' />
+              </Button>
+            </Right>
+          </Row>
+          <Row size={27} style={style.row1}>
             <Thumbnail large source={require('../../assets/default.png')} />
           </Row>
-          <Row size={70}>
+          <Row size={65}>
             <Content>
               <List>
                 <ListItem icon>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, KeyboardAvoidingView } from 'react-native'
 import {
     Container,
     Header,
@@ -98,6 +98,7 @@ export default class Post extends Component {
                     </Right>
                 </Header>
                 <Content>
+                    <KeyboardAvoidingView behavior='position' enabled>
                     <Card>
                         <CardItem>
                             <Ionicons name={alert} color="red" size={35} />
@@ -133,7 +134,8 @@ export default class Post extends Component {
                                 <Text>Submit Quiz</Text>
                             </Button>
                         </Form>
-                    </Card>                  
+                    </Card>
+                    </KeyboardAvoidingView>
                 </Content>
             </Container>
         </Root>

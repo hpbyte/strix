@@ -81,7 +81,10 @@ export default class Cluster extends Component {
                   </CardItem>
                   <CardItem>
                     <Left>
-                      <Button transparent>
+                      <Button transparent
+                        onPress={() => this.props.navigation.navigate('Answer', {
+                          quiz: prop.quiz,
+                        })}>
                         <Ionicons name={discuss} size={23} />
                         <Text>4 Answers</Text>
                       </Button>

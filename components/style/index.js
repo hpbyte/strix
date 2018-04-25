@@ -25,6 +25,9 @@ export default {
     blue: {
       color: '#2a4ff0'
     },
+    red: {
+      color: '#d32f2f'
+    },
     title: {
       fontFamily: 'pacifico',
       fontSize: 32,
