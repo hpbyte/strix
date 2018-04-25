@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Platform } from 'react-native'
+import { View, Platform, KeyboardAvoidingView } from 'react-native'
 import {
     Container,
     Thumbnail,
@@ -14,11 +14,12 @@ import {
     CardItem,
     Form,
     Item,
-    Input
+    Input,
+    Footer
 } from 'native-base'
 import { Grid, Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
-import { more, up, down } from '../partials/icons'
+import { more, up, down, send } from '../partials/icons'
 import Style from '../style'
 
 const answers = [
@@ -48,6 +49,7 @@ export default class Answer extends Component {
 
         return(
             <Container>
+                {Platform.OS === 'ios' ? <View style={{ height: 20 }} /> : null}
                 <Grid>
                     <Row size={8} style={{backgroundColor: '#fff'}}>
                         <Left>
@@ -78,6 +80,16 @@ export default class Answer extends Component {
                             <View style={{ backgroundColor: '#fff' }}>
                                 <Text style={{ margin: 15, marginBottom: 30 }}>{ JSON.stringify(quiz) }</Text>
                             </View>
+                            <Form style={{ backgroundColor: '#fff', borderTopColor: '#000' }}>
+                            <KeyboardAvoidingView behavior="position" enabled>
+                                <Item regular>
+                                    <Input multiline={true} placeholder='your answer here ...' />
+                                    <Button transparent>
+                                        <Ionicons name={send} size={28} style={{ marginRight: 15 }} />
+                                    </Button>
+                                </Item>
+                            </KeyboardAvoidingView>
+                            </Form>
                             <Content>
                                 <View>
                                     {answers.map((prop, key) => {

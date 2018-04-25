@@ -17,7 +17,7 @@ import {
   Badge
 } from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
-import { user } from '../partials/icons'
+import { user, search } from '../partials/icons'
 import Style from '../style';
 
 const data = [
@@ -56,8 +56,9 @@ export default class Leaderboard extends Component {
             <Title style={Style.title}>Strix</Title>
           </Body>
           <Right style={{ flex: 1 }}>
-            <Button transparent>
-              <Ionicons name='ios-search' size={26} style={Style.black}/>
+            <Button transparent
+              onPress={() => this.props.navigation.navigate('Search')}>
+              <Ionicons name={search} size={26} style={Style.black}/>
             </Button>
           </Right>
         </Header>

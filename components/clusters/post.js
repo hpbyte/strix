@@ -98,7 +98,8 @@ export default class Post extends Component {
                     </Right>
                 </Header>
                 <Content>
-                    <KeyboardAvoidingView behavior='position' enabled>
+                    <KeyboardAvoidingView behavior='position' enabled
+                    keyboardVerticalOffset={-30}>
                     <Card>
                         <CardItem>
                             <Ionicons name={alert} color="red" size={35} />

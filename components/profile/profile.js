@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, View } from 'react-native';
 import {
   Container,
   Header,
@@ -15,10 +15,10 @@ import {
   ListItem
 } from 'native-base';
 import { Grid, Col, Row } from 'react-native-easy-grid';
-import { Ionicons } from '@expo/vector-icons';
-import Style from '../style';
 import firebaseService from '../service/firebase';
+import { Ionicons } from '@expo/vector-icons';
 import { signedOut } from '../auth/check'
+import Style from '../style';
 
 const FIREBASE = firebaseService.database();
 
@@ -66,9 +66,7 @@ export default class Profile extends Component {
   render() {
     return(
       <Container>
-        {/* <Header style={Style.header}>
-          
-        </Header> */}
+        {Platform.OS === 'ios' ? <View style={{ height: 20 }} /> : null}
         <Grid>
           <Row size={8} style={{ backgroundColor: '#000' }}>
             <Left>

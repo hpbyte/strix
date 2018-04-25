@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import { View, Platform, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import {
   Form,
   Item,
@@ -42,7 +42,8 @@ export default class Signin extends Component {
 
   render() {
     return(
-      <KeyboardAvoidingView style={{flex: 1}} behavior='position' enabled>
+      <KeyboardAvoidingView style={{flex: 1}} behavior="position" enabled
+      keyboardVerticalOffset={-30}>
         <Text style={style.strix}>Strix</Text>
         <Item rounded style={style.item} >
           <Ionicons name={mail} size={25} style={style.inputIcon} />

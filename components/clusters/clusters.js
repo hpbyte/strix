@@ -39,7 +39,8 @@ export default class Clusters extends Component {
             <Title style={Style.title}>Strix</Title>
           </Body>
           <Right style={{ flex: 1 }}>
-            <Button transparent>
+            <Button transparent
+              onPress={() => this.props.navigation.navigate('Search')}>
               <Ionicons name='ios-search' size={26} style={Style.black} />
             </Button>
           </Right>

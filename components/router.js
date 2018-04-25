@@ -10,11 +10,14 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { podium, link, noti } from './partials/icons';
 import Style from './style';
+import Leaderboard from './leaderboard/leaderboard';
+import Search from './searchbar/searchbar'
 import Profile from './profile/profile';
+import Booster from './booster/booster'
 import Signup from './auth/signup';
 import Signin from './auth/signin';
 import Home from './clusters';
-import Leaderboard from './leaderboard/leaderboard';
+import Noti from './noti/noti'
 
 export const AuthTaber = TabNavigator(
   {
@@ -53,7 +56,9 @@ export const AuthTaber = TabNavigator(
 export const MenuTaber = TabNavigator(
   {
     Home: { screen: Home },
-    Leaderboard: { screen: Leaderboard }
+    Leaderboard: { screen: Leaderboard },
+    Booster: { screen: Booster },
+    Noti: { screen: Noti }
   },
   {
     tabBarPosition: 'bottom',
@@ -80,14 +85,14 @@ export const MenuTaber = TabNavigator(
             <Button
               vertical
               // active={props.navigationState.index === 2}
-              >
+              onPress={() => props.navigation.navigate('Booster')}>
               <Ionicons name={link} size={25} style={Style.white} />
               <Text style={Style.grey}>Appoint</Text>
             </Button>
             <Button
               badge vertical
               // active={props.navigationState.index === 3}
-              >
+              onPress={() => props.navigation.navigate('Noti')}>
               <Badge><Text>7</Text></Badge>
               <Ionicons name={noti} size={25} style={Style.white} />
               <Text style={Style.grey}>Noti</Text>
@@ -102,7 +107,8 @@ export const MenuTaber = TabNavigator(
 export const MainStacker = StackNavigator(
   {
     MenuTaber: { screen: MenuTaber },
-    Profile: { screen: Profile }
+    Profile: { screen: Profile },
+    Search: { screen: Search }
   },
   {
     headerMode: 'none',
