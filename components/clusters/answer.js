@@ -49,9 +49,9 @@ export default class Answer extends Component {
 
         return(
             <Container>
-                {Platform.OS === 'ios' ? <View style={{ height: 20 }} /> : null}
+                {Platform.OS === 'ios' ? <View style={{ height: 20, backgroundColor: '#fff' }} /> : null}
                 <Grid>
-                    <Row size={8} style={{backgroundColor: '#fff'}}>
+                    <Row size={8} style={{ backgroundColor: '#fff', paddingTop: 5 }}>
                         <Left>
                             <Button
                             transparent
@@ -81,14 +81,14 @@ export default class Answer extends Component {
                                 <Text style={{ margin: 15, marginBottom: 30 }}>{ JSON.stringify(quiz) }</Text>
                             </View>
                             <Form style={{ backgroundColor: '#fff', borderTopColor: '#000' }}>
-                            <KeyboardAvoidingView behavior="position" enabled>
-                                <Item regular>
-                                    <Input multiline={true} placeholder='your answer here ...' />
-                                    <Button transparent>
-                                        <Ionicons name={send} size={28} style={{ marginRight: 15 }} />
-                                    </Button>
-                                </Item>
-                            </KeyboardAvoidingView>
+                                <KeyboardAvoidingView behavior="position" enabled>
+                                    <Item regular style={{ padding: 5 }}>
+                                        <Input multiline={true} placeholder='your answer here ...' />
+                                        <Button transparent>
+                                            <Ionicons name={send} size={28} style={{ marginRight: 10 }} />
+                                        </Button>
+                                    </Item>
+                                </KeyboardAvoidingView>
                             </Form>
                             <Content>
                                 <View>

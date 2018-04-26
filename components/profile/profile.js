@@ -66,7 +66,7 @@ export default class Profile extends Component {
   render() {
     return(
       <Container>
-        {Platform.OS === 'ios' ? <View style={{ height: 20 }} /> : null}
+        {Platform.OS === 'ios' ? <View style={{ height: 20, backgroundColor: '#fff' }} /> : null}
         <Grid>
           <Row size={8} style={{ backgroundColor: '#000' }}>
             <Left>

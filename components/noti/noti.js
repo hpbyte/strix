@@ -1,36 +1,59 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { ListView, TouchableOpacity, StyleSheet } from 'react-native'
 import { 
     Container, 
     Header, 
     Content, 
+    Button,
     List, 
     ListItem, 
     Thumbnail,
-    Button,
     Text, 
     Body,
     Left,
     Right,
     Title
-} from 'native-base';
+} from 'native-base'
+import { Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
-import { user, search } from '../partials/icons'
+import { user, search, trash } from '../partials/icons'
 import Style from '../style'
+import MyHeader from '../partials/myheader'
+
+const datas = [
+  'It is time to build a difference that has good impact on our world',
+  'Simon Mignolet',
+  'Nathaniel Clyne',
+  'Dejan Lovren',
+  'Mama Sakho',
+  'Alberto Moreno',
+  'Emre Can',
+  'Joe Allen',
+  'Phil Coutinho',
+  'Nathaniel Clyne',
+  'Dejan Lovren',
+  'Mama Sakho',
+  'Alberto Moreno',
+  'Emre Can',
+]
 
 export default class Noti extends Component {
+  constructor(props) {
+    super(props);
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.state = {
+      basic: true,
+      listViewData: datas,
+    };
+  }
+  deleteRow(secId, rowId, rowMap) {
+    rowMap[`${secId}${rowId}`].props.closeRow();
+    const newData = [...this.state.listViewData];
+    newData.splice(rowId, 1);
+    this.setState({ listViewData: newData });
+  }
   render() {
-    const arr = [
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-    ]
-
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     return (
       <Container>
         <Header style={Style.header}>
@@ -57,15 +80,30 @@ export default class Noti extends Component {
         </Header>
         <Content>
           <List
-            dataArray={arr}
-            renderRow={(a) => 
-                <ListItem>
-                    <Text>{a}</Text>
+            style={{ marginTop: 12 }}
+            dataSource={this.ds.cloneWithRows(this.state.listViewData)}
+            renderRow={data =>
+              <TouchableOpacity style={style.listItem}>
+                <ListItem style={[style.listItem, {paddingLeft: 10}]}>
+                      <Thumbnail square source={require('../../assets/scene.jpg')} />
+                      <Body><Text style={Style.red}>{ data }</Text></Body>
                 </ListItem>
-            }>
-          </List>
+              </TouchableOpacity>}
+            renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+              <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
+                <Ionicons active name={trash} size={27} />
+              </Button>}
+            rightOpenValue={-75}
+            disableRightSwipe={true}
+          />
         </Content>
       </Container>
     );
   }
 }
+
+const style = StyleSheet.create({
+  listItem: {
+    height: 85,
+  }
+})

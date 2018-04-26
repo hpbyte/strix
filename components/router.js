@@ -5,7 +5,8 @@ import {
   FooterTab,
   Button,
   Badge,
-  Text
+  Text,
+  Icon
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { podium, link, noti } from './partials/icons';
@@ -62,7 +63,7 @@ export const MenuTaber = TabNavigator(
   },
   {
     tabBarPosition: 'bottom',
-    swipeEnabled: true,
+    swipeEnabled: false,
     animationEnabled: true,
     tabBarComponent: props => {
       return(
@@ -94,7 +95,7 @@ export const MenuTaber = TabNavigator(
               // active={props.navigationState.index === 3}
               onPress={() => props.navigation.navigate('Noti')}>
               <Badge><Text>7</Text></Badge>
-              <Ionicons name={noti} size={25} style={Style.white} />
+              <Icon name={noti} style={Style.white} />
               <Text style={Style.grey}>Noti</Text>
             </Button>
           </FooterTab>
