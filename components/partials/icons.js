@@ -1,11 +1,11 @@
 import { Platform } from 'react-native'
 
+export const send = 'md-send'
 export const add = Platform.OS === 'ios' ? 'ios-add' : 'md-add'
 export const link = Platform.OS === 'ios' ? 'ios-link' : 'md-link'
 export const more = Platform.OS === 'ios' ? 'ios-more' : 'md-more'
 export const mail = Platform.OS === 'ios' ? 'ios-mail' : 'md-mail'
 export const lock = Platform.OS === 'ios' ? 'ios-lock' : 'md-lock'
-export const send = Platform.OS === 'ios' ? 'ios-send' : 'md-send'
 export const alert = Platform.OS === 'ios' ? 'ios-alert' : 'md-alert'
 export const trash = Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'
 export const podium = Platform.OS === 'ios' ? 'ios-podium' : 'md-podium'

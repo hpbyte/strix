@@ -10,6 +10,7 @@ import {
     Body,
     Right,
     Text,
+    Title,
     Card,
     CardItem,
     Form,
@@ -17,7 +18,7 @@ import {
     Input,
     Footer
 } from 'native-base'
-import { Grid, Row, Col } from 'react-native-easy-grid'
+import { Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
 import { more, up, down, send } from '../partials/icons'
 import Style from '../style'
@@ -37,9 +38,38 @@ const answers = [
     'but i keep on coming back to you'
 ]
 
+const IosInput = () => {
+    return(
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={20}>
+            <Item regular style={{ padding: 5, backgroundColor: '#fff' }}>
+                <Input multiline={true} placeholder='your answer here ...' />
+                <Button transparent>
+                    <Ionicons name={send} size={28} style={{ marginRight: 10 }} />
+                </Button>
+            </Item>   
+        </KeyboardAvoidingView>
+    )
+}
+
+const MdInput = () => {
+    return(
+        <Form style={{ backgroundColor: '#fff'}}>
+            <KeyboardAvoidingView behavior="position" enabled>
+                <Item regular style={{ padding: 5 }}>
+                    <Input multiline={true} placeholder='your answer here ...' />
+                    <Button transparent>
+                        <Ionicons name={send} size={28} style={{ marginRight: 10 }} />
+                    </Button>
+                </Item>
+            </KeyboardAvoidingView>
+        </Form>
+    )
+}
+
 export default class Answer extends Component {
     constructor(props) {
         super(props)
+        
     }
 
     render() {
@@ -49,82 +79,63 @@ export default class Answer extends Component {
 
         return(
             <Container>
-                {Platform.OS === 'ios' ? <View style={{ height: 20, backgroundColor: '#fff' }} /> : null}
-                <Grid>
-                    <Row size={8} style={{ backgroundColor: '#fff', paddingTop: 5 }}>
-                        <Left>
-                            <Button
-                            transparent
-                            onPress={() => this.props.navigation.goBack()}
-                            style={{ marginLeft: 15 }}>
-                                <Ionicons name='ios-arrow-back' size={26} style={Style.black} />
-                            </Button>
-                        </Left>
-                        <Body >
-                            <Button transparent style={{marginLeft: -75}}>
-                                <Thumbnail small source={require("../../assets/default.png")} />
-                                <Body>
-                                    <Text style={{marginLeft: -100}}>Luffy</Text>
-                                    <Text style={{ marginLeft: -85, fontSize: 12 }}>11 hr ago</Text>
-                                </Body>
-                            </Button>
-                        </Body>
-                        <Right>
-                            <Button transparent style={{ width: 20, marginRight: marRight }}>
-                                <Ionicons name={more} size={26} style={Style.black} />
-                            </Button>
-                        </Right>
-                    </Row>
-                    <Row size={92}>
-                        <Col>
-                            <View style={{ backgroundColor: '#fff' }}>
-                                <Text style={{ margin: 15, marginBottom: 30 }}>{ JSON.stringify(quiz) }</Text>
-                            </View>
-                            <Form style={{ backgroundColor: '#fff', borderTopColor: '#000' }}>
-                                <KeyboardAvoidingView behavior="position" enabled>
-                                    <Item regular style={{ padding: 5 }}>
-                                        <Input multiline={true} placeholder='your answer here ...' />
-                                        <Button transparent>
-                                            <Ionicons name={send} size={28} style={{ marginRight: 10 }} />
-                                        </Button>
-                                    </Item>
-                                </KeyboardAvoidingView>
-                            </Form>
-                            <Content>
-                                <View>
-                                    {answers.map((prop, key) => {
-                                        return(
-                                            <Row key={key} style={{ margin: 10 }}>
-                                                <Col size={10}>
-                                                    <Thumbnail small source={require("../../assets/default.png")} />
-                                                </Col>
-                                                <Col size={90} style={{ marginLeft: 10, borderRadius: 30, backgroundColor: '#fff' }}>
-                                                    <Row>
-                                                        <Col size={80}>
-                                                            <Text style={{ margin: 10, marginLeft: 15 }}>{prop}</Text>
-                                                        </Col>
-                                                        <Col size={10}>
-                                                            <Button transparent style={{ margin: 0, padding: 0 }}>
-                                                                <Ionicons name={up} size={27} />
-                                                            </Button>
-                                                            <Text style={[Style.blue, { fontSize: 12, marginTop: -10 }]}>28</Text>
-                                                        </Col>
-                                                        <Col size={10}>
-                                                            <Button transparent style={{ margin: 0, padding: 0 }}>
-                                                                <Ionicons name={down} size={27} />
-                                                            </Button>
-                                                            <Text style={[Style.red, { fontSize: 12, marginTop: -10 }]}>15</Text>
-                                                        </Col>
-                                                    </Row>
-                                                </Col>
-                                            </Row>
-                                        )
-                                    })}
-                                </View>
-                            </Content>
-                        </Col>
-                    </Row>
-                </Grid>        
+                <Header style={Style.bgWhite} noShadow>
+                    <Left style={{ flex: 1, flexDirection: 'row' }}>
+                        <Button
+                        transparent
+                        onPress={() => this.props.navigation.goBack()}>
+                            <Ionicons name='ios-arrow-back' size={26} style={Style.black} />
+                        </Button>
+                        <Button transparent style={{ marginLeft: 10 }}>
+                            <Thumbnail small source={require("../../assets/default.png")} />
+                        </Button>
+                        <View style={{ marginLeft: 7 }}>
+                            <Text>Luffy</Text>
+                            <Text style={{ fontSize: 12 }}>3 hr ago</Text>
+                        </View>
+                    </Left>
+                    <Right style={{ flex: 1 }}>
+                        <Button transparent>
+                        <Ionicons name={more} size={26} style={Style.black} />
+                        </Button>
+                    </Right>
+                </Header>
+                <Content>
+                    <View style={{ backgroundColor: '#fff' }}>
+                        <Text style={{ margin: 15, marginBottom: 30 }}>{ JSON.stringify(quiz) }</Text>
+                    </View>
+                    <View>
+                        {answers.map((prop, key) => {
+                            return(
+                            <Row key={key} style={{ margin: 10 }}>
+                                <Col size={10}>
+                                    <Thumbnail small source={require("../../assets/default.png")} />
+                                </Col>
+                                <Col size={90} style={{ marginLeft: 10, borderRadius: 30, backgroundColor: '#fff' }}>
+                                    <Row>
+                                        <Col size={80}>
+                                            <Text style={{ margin: 10, marginLeft: 15 }}>{prop}</Text>
+                                        </Col>
+                                        <Col size={10}>
+                                            <Button transparent style={{ margin: 0, padding: 0 }}>
+                                                <Ionicons name={up} size={27} />
+                                            </Button>
+                                            <Text style={[Style.blue, { fontSize: 12, marginTop: -10 }]}>28</Text>
+                                        </Col>
+                                        <Col size={10}>
+                                            <Button transparent style={{ margin: 0, padding: 0 }}>
+                                                <Ionicons name={down} size={27} />
+                                            </Button>
+                                            <Text style={[Style.red, { fontSize: 12, marginTop: -10 }]}>15</Text>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            )
+                        })}
+                    </View>
+                </Content>
+                {Platform.OS === 'ios' ? <IosInput /> : <MdInput />}
             </Container>
         )
     }
