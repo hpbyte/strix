@@ -60,7 +60,7 @@ export default class Signup extends Component {
   render() {
     return(
       <Container>
-        <KeyboardAvoidingView style={{flex: 1}} behavior="position" enabled
+        <KeyboardAvoidingView style={{flex: 1}} behavior="position" 
           keyboardVerticalOffset={-30}>
           <Text style={style.strix}>Strix</Text>
           <Item rounded style={style.item} >

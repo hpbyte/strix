@@ -42,7 +42,7 @@ export default class Signin extends Component {
 
   render() {
     return(
-      <KeyboardAvoidingView style={{flex: 1}} behavior="position" enabled
+      <KeyboardAvoidingView style={{flex: 1}} behavior="position"
       keyboardVerticalOffset={-30}>
         <Text style={style.strix}>Strix</Text>
         <Item rounded style={style.item} >

@@ -33,7 +33,7 @@ export default class Cluster extends Component {
       let qArr = []
 
       snapshot.forEach((snap) => {
-        qArr.push(snap.val())
+        qArr.push(snap)
       })
 
       this.setState({ questions: qArr })
@@ -77,13 +77,14 @@ export default class Cluster extends Component {
                     </Right>
                   </CardItem>
                   <CardItem>
-                    <Text>{prop.quiz}</Text>
+                    <Text>{prop.val().quiz}</Text>
                   </CardItem>
                   <CardItem>
                     <Left>
                       <Button transparent
                         onPress={() => this.props.navigation.navigate('Answer', {
-                          quiz: prop.quiz,
+                          quiz: prop.val().quiz,
+                          quizId: prop.key
                         })}>
                         <Ionicons name={discuss} size={23} />
                         <Text>4 Answers</Text>

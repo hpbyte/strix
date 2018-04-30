@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { Platform, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import {
     Container,
     Header,
@@ -22,7 +22,7 @@ import {
     Root
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
-import { alert } from '../partials/icons'
+import { alert, more } from '../partials/icons'
 import Style from '../style'
 import firebaseService from '../service/firebase'
 
@@ -62,7 +62,8 @@ export default class Post extends Component {
                 text: 'Successfully Submitted!',
                 buttonText: 'OK',
                 duration: 3000,
-                type: 'success'
+                type: 'success',
+                position: 'top'
             })
     
             this.setState({ selected: 'What', quiz: '' })
@@ -71,7 +72,8 @@ export default class Post extends Component {
                 text: 'Please write your question first!',
                 buttonText: 'OK',
                 duration: 3000,
-                type: 'danger'
+                type: 'danger',
+                position: 'top'
             })
         }        
     }
@@ -93,13 +95,12 @@ export default class Post extends Component {
                     </Body>
                     <Right style={{ flex: 1 }}>
                         <Button transparent>
-                            <Ionicons name='ios-more' size={26} style={Style.black} />
+                            <Ionicons name={more} size={26} style={Style.black} />
                         </Button>
                     </Right>
                 </Header>
                 <Content>
-                    <KeyboardAvoidingView behavior='position' enabled
-                    keyboardVerticalOffset={-30}>
+                    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 50}>
                     <Card>
                         <CardItem>
                             <Ionicons name={alert} color="red" size={35} />
