@@ -21,6 +21,7 @@ import {
     Footer
 } from 'native-base'
 import { Row, Col } from 'react-native-easy-grid'
+import Moment from 'moment'
 import { Ionicons } from '@expo/vector-icons'
 import { more, up, down, send } from '../partials/icons'
 import Style from '../style'
@@ -41,8 +42,8 @@ export default class Answer extends Component {
             question: quiz,
             questionId: quizId,
             answers: [],
-            upvote: '',
-            downvote: ''
+            upvote: 0,
+            downvote: 0
         }
     }
 
@@ -55,9 +56,9 @@ export default class Answer extends Component {
                 {
                     answer: ans,
                     userId: uId,
-                    timestamp: '',
-                    upvote: '',
-                    downvote: ''
+                    timestamp: Moment(),
+                    upvote: 0,
+                    downvote: 0
                 }, (error) => {
                     if(error) alert(error.message)
                 }
@@ -81,6 +82,14 @@ export default class Answer extends Component {
                 position: 'top'
             })
         }
+    }
+
+    voteUp() {
+        this.setState({ upvote: this.state.upvote+1 })
+    }
+
+    voteDown() {
+        this.setState({ downvote: this.state.downvote+1 })
     }
 
     componentDidMount() {
@@ -137,22 +146,27 @@ export default class Answer extends Component {
                                             <Text style={style.ansTxt}>{prop.val().answer}</Text>
                                         </Row>
                                         <Row>
-                                            <Col size={60} />
                                             <Col size={10}>
-                                                <Button transparent style={style.updownBtn}>
+                                                {/* <Text>{prop.val().timestamp}</Text> */}
+                                            </Col>
+                                            <Col size={50} />
+                                            <Col size={10}>
+                                                <Button transparent style={style.updownBtn}
+                                                    onPress={this.voteUp.bind(this)}>
                                                     <Ionicons name={up} size={27} />
                                                 </Button>
                                             </Col>
                                             <Col size={10}>
-                                                <Text style={[Style.blue, style.updownTxt]}>+28</Text>
+                                                <Text style={[Style.blue, style.updownTxt]}>+{this.state.upvote}</Text>
                                             </Col>
                                             <Col size={10}>
-                                                <Button transparent style={style.updownBtn}>
+                                                <Button transparent style={style.updownBtn}
+                                                    onPress={this.voteDown.bind(this)}>
                                                     <Ionicons name={down} size={27} />
                                                 </Button>
                                             </Col>
                                             <Col size={10}>
-                                                <Text style={[Style.red, style.updownTxt]}>-15</Text>
+                                                <Text style={[Style.red, style.updownTxt]}>-{this.state.downvote}</Text>
                                             </Col>
                                         </Row>
                                     </Col>
