@@ -22,9 +22,9 @@ import {
     Root
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
-import { alert, more } from '../partials/icons'
-import Style from '../style'
-import firebaseService from '../service/firebase'
+import { alert, more } from '../../partials/icons'
+import firebaseService from '../../service/firebase'
+import Style from '../../style'
 
 const FIREBASE = firebaseService.database();
 

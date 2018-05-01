@@ -1,5 +1,5 @@
 import { StackNavigator } from 'react-navigation';
-import Clusters from './clusters';
+import Home from './home';
 import Cluster from './cluster';
 import Add from './add'
 import Post from './post'
@@ -7,7 +7,7 @@ import Answer from './answer'
 
 const ClusterStacker = StackNavigator(
   {
-    Clusters: { screen: Clusters },
+    Home: { screen: Home },
     Cluster: { screen: Cluster },
     Add: { screen: Add },
     Post: { screen: Post },
@@ -15,7 +15,7 @@ const ClusterStacker = StackNavigator(
   },
   {
     headerMode: 'none',
-    initialRouteName: 'Clusters'
+    initialRouteName: 'Home'
   }
 );
 

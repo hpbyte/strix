@@ -11,7 +11,7 @@ import {
     Button
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
-import Style from '../style'
+import Style from '../../style'
 
 export default class Add extends Component {
     render() {

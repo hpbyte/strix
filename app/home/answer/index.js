@@ -21,11 +21,11 @@ import {
     Footer
 } from 'native-base'
 import { Row, Col } from 'react-native-easy-grid'
-import Moment from 'moment'
+import moment from 'moment'
 import { Ionicons } from '@expo/vector-icons'
-import { more, up, down, send } from '../partials/icons'
-import Style from '../style'
-import firebaseService from '../service/firebase'
+import { more, up, down, send } from '../../partials/icons'
+import Style from '../../style'
+import firebaseService from '../../service/firebase'
 
 const FIREBASE = firebaseService.database()
 
@@ -43,7 +43,8 @@ export default class Answer extends Component {
             questionId: quizId,
             answers: [],
             upvote: 0,
-            downvote: 0
+            downvote: 0,
+            isClicked: false
         }
     }
 
@@ -56,7 +57,7 @@ export default class Answer extends Component {
                 {
                     answer: ans,
                     userId: uId,
-                    timestamp: Moment(),
+                    timestamp: moment().format("YYYY-MM-DD HH:mm"),
                     upvote: 0,
                     downvote: 0
                 }, (error) => {
@@ -84,12 +85,13 @@ export default class Answer extends Component {
         }
     }
 
-    voteUp() {
-        this.setState({ upvote: this.state.upvote+1 })
+    voteUp(ansKey) {
+        // this.setState({ upvote: this.state.upvote+1, isClicked: true })
+        
     }
 
     voteDown() {
-        this.setState({ downvote: this.state.downvote+1 })
+        this.setState({ downvote: this.state.downvote+1, isClicked: true })
     }
 
     componentDidMount() {
@@ -116,7 +118,7 @@ export default class Answer extends Component {
                             <Ionicons name='ios-arrow-back' size={26} style={Style.black} />
                         </Button>
                         <Button transparent style={{ marginLeft: 10 }}>
-                            <Thumbnail small source={require("../../assets/default.png")} />
+                            <Thumbnail small source={require("../../../assets/default.png")} />
                         </Button>
                         <View style={{ marginLeft: 7 }}>
                             <Text>Luffy</Text>
@@ -138,7 +140,7 @@ export default class Answer extends Component {
                             return (
                                 <Row key={key} style={{ margin: 10 }}>
                                     <Col size={10}>
-                                        <Thumbnail small source={require("../../assets/default.png")} />
+                                        <Thumbnail small source={require("../../../assets/default.png")} />
                                     </Col>
                                     <Col size={90} style={{ marginLeft: 10 }}>
                                         <Row style={style.ansRow}>
@@ -146,10 +148,9 @@ export default class Answer extends Component {
                                             <Text style={style.ansTxt}>{prop.val().answer}</Text>
                                         </Row>
                                         <Row>
-                                            <Col size={10}>
-                                                {/* <Text>{prop.val().timestamp}</Text> */}
+                                            <Col size={60}>
+                                                <Text style={style.dateTxt}>{moment(prop.val().timestamp).fromNow()}</Text>
                                             </Col>
-                                            <Col size={50} />
                                             <Col size={10}>
                                                 <Button transparent style={style.updownBtn}
                                                     onPress={this.voteUp.bind(this)}>
@@ -219,17 +220,27 @@ const style = StyleSheet.create({
     },
     nameTxt: {
         marginTop: 10,
-        marginLeft: 15
+        marginLeft: 15,
+        fontSize: 15,
+        fontWeight: "500"
     },
     ansTxt: {
+        fontSize: 15,
         marginBottom: 10,
         marginLeft: 15
     },
     updownBtn: {
+        height: 40,
         margin: 0,
+        paddingTop: 0
     },
     updownTxt: {
         fontSize: 14,
-        marginTop: 12
+        marginTop: 5
+    },
+    dateTxt: {
+        fontSize: 14,
+        marginTop: 5,
+        marginLeft: 10
     }
 })

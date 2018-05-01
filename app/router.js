@@ -17,7 +17,7 @@ import Profile from './profile/profile';
 import Booster from './booster/booster'
 import Signup from './auth/signup';
 import Signin from './auth/signin';
-import Home from './clusters';
+import Home from './home';
 import Noti from './noti/noti'
 
 export const AuthTaber = TabNavigator(

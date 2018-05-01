@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableHighlight, TouchableOpacity } from 'react-native';
 import {
   Container,
   Header,
@@ -68,10 +68,10 @@ export default class Clusters extends Component {
               </Col>
             </Grid>
           </Content>
-          <TouchableOpacity style={Style.fab}
+          <TouchableHighlight style={Style.fab}
             onPress={() => this.props.navigation.navigate('Add')}>
             <Ionicons name={add} color='#fff' size={30} />
-          </TouchableOpacity>
+          </TouchableHighlight>
         </View>
       </Container>
     );

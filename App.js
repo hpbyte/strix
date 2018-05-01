@@ -1,8 +1,8 @@
 import React from 'react';
-import { createRootNavigator } from './components/router';
+import { createRootNavigator } from './app/router';
 import { AppLoading, Font } from 'expo';
-import firebaseService from './components/service/firebase';
-import { isSignedIn } from './components/auth/check'
+import firebaseService from './app/service/firebase';
+import { isSignedIn } from './app/auth/check'
 
 export default class App extends React.Component {
   constructor(props) {

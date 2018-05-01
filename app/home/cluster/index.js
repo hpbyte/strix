@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableHighlight } from 'react-native';
 import {
   Container,
   Header,
@@ -14,10 +14,10 @@ import {
   CardItem,
   Thumbnail
 } from 'native-base';
-import Style from '../style';
 import { Ionicons } from '@expo/vector-icons';
-import { discuss, add, more } from '../partials/icons'
-import firebaseService from '../service/firebase'
+import { discuss, add, more } from '../../partials/icons'
+import firebaseService from '../../service/firebase'
+import Style from '../../style';
 
 const FIREBASE = firebaseService.database()
 
@@ -67,7 +67,7 @@ export default class Cluster extends Component {
                 <Card key={key}>
                   <CardItem>
                     <Left>
-                      <Thumbnail source={require("../../assets/default.png")} />
+                      <Thumbnail source={require("../../../assets/default.png")} />
                       <Body>
                         <Text>Luffy</Text>
                       </Body>
@@ -98,10 +98,10 @@ export default class Cluster extends Component {
               )
             })}
           </Content>
-          <TouchableOpacity style={Style.fab}
+          <TouchableHighlight style={Style.fab}
             onPress={() => this.props.navigation.navigate('Post')}>
             <Ionicons name={add} color='#fff' size={30} />
-          </TouchableOpacity>
+          </TouchableHighlight>
         </View>        
       </Container>
     );
