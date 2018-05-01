@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import {
+    Root,
     Container,
     Header,
     Content,
@@ -19,7 +20,7 @@ import {
     Card,
     CardItem,
     Toast,
-    Root
+    ActionSheet
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
 import { alert, more } from '../../partials/icons'
@@ -76,6 +77,11 @@ export default class Post extends Component {
                 position: 'top'
             })
         }        
+    }
+
+    componentWillUnmount() {
+        Toast.toastInstance = null
+        ActionSheet.actionsheetInstance = null
     }
     
     render() {

@@ -30,5 +30,10 @@ export default {
         marginBottom: 5,
         marginLeft: 20,
         marginRight: 20
+    },
+    errorTxt: {
+        color: 'red',
+        marginLeft: 30,
+        marginTop: 5
     }
 }

@@ -22,13 +22,7 @@ export default class Signup extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      name: '',
-      email: '', 
-      password: '',
-      error: '', 
-      loading: false 
-    }
+    this.state = { name: '', email: '', password: '', error: null, loading: false }
   }
 
   onSignupPress() {
@@ -38,22 +32,15 @@ export default class Signup extends Component {
     firebaseService.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         // add it to the database
-        FIREBASE.ref('users/'+firebaseService.auth().currentUser.uid).set(
-          {
+        FIREBASE.ref('users/'+firebaseService.auth().currentUser.uid).set({
             name: name
-          }, (error) => {
-            if(error) {
-              alert(error.message)
-            }              
-          }
-        )
+        })
         // store that the user is logged in
         signedIn()
-        // alert('Signup Successful!');
         this.props.navigation.navigate('SignedIn');
       })
       .catch((err) => {
-        alert(err.message);
+        this.setState({ error: err.code })
       });
   }
 
@@ -72,7 +59,10 @@ export default class Signup extends Component {
               keyboardAppearance='dark'
               returnKeyType='next' />
           </Item>
-          <Item rounded style={style.item} >
+          <Item 
+            error={this.state.error == 'auth/email-already-in-use'  ? true : false} 
+            error={this.state.error == 'auth/invalid-email'  ? true : false} 
+            rounded style={style.item} >
             <Ionicons name={mail} size={25} style={style.inputIcon} />
             <Input 
               value={this.state.email} 
@@ -82,7 +72,9 @@ export default class Signup extends Component {
               keyboardAppearance='dark'
               returnKeyType='next' />
           </Item>
-          <Item rounded style={style.item} >
+          {this.state.error == "auth/email-already-in-use" ? <Text style={style.errorTxt}>Email is already used</Text> : null}
+          {this.state.error == "auth/invalid-email" ? <Text style={style.errorTxt}>Invalid Email</Text> : null}
+          <Item error={this.state.error == "auth/weak-password" ? true : false} rounded style={style.item} >
             <Ionicons name={lock} size={25} style={style.inputIcon} />
             <Input 
               value={this.state.password} 
@@ -91,6 +83,7 @@ export default class Signup extends Component {
               keyboardAppearance='dark'
               returnKeyType='done' />
           </Item>
+          {this.state.error == "auth/weak-password" ? <Text style={style.errorTxt}>Weak Password</Text> : null}
           <Button rounded dark style={style.btn}
             onPress={this.onSignupPress.bind(this)}>
             <Text style={style.txtLogin}>Ok Go</Text>

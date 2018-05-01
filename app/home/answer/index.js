@@ -18,6 +18,7 @@ import {
     Item,
     Input,
     Toast,
+    ActionSheet,
     Footer
 } from 'native-base'
 import { Row, Col } from 'react-native-easy-grid'
@@ -44,7 +45,8 @@ export default class Answer extends Component {
             answers: [],
             upvote: 0,
             downvote: 0,
-            isClicked: false
+            isUpClicked: false,
+            isDownClicked: false
         }
     }
 
@@ -86,12 +88,11 @@ export default class Answer extends Component {
     }
 
     voteUp(ansKey) {
-        // this.setState({ upvote: this.state.upvote+1, isClicked: true })
-        
+        this.setState({ upvote: this.state.upvote+1, isUpClicked: true })        
     }
 
     voteDown() {
-        this.setState({ downvote: this.state.downvote+1, isClicked: true })
+        this.setState({ downvote: this.state.downvote+1, isDownClicked: true })
     }
 
     componentDidMount() {
@@ -104,6 +105,11 @@ export default class Answer extends Component {
 
             this.setState({ answers: ansArr })
         })
+    }
+
+    componentWillUnmount() {
+        Toast.toastInstance = null
+        ActionSheet.actionsheetInstance = null
     }
 
     render() {        
@@ -153,6 +159,7 @@ export default class Answer extends Component {
                                             </Col>
                                             <Col size={10}>
                                                 <Button transparent style={style.updownBtn}
+                                                    disabled={this.state.isUpClicked ? true : false}
                                                     onPress={this.voteUp.bind(this)}>
                                                     <Ionicons name={up} size={27} />
                                                 </Button>
@@ -162,6 +169,7 @@ export default class Answer extends Component {
                                             </Col>
                                             <Col size={10}>
                                                 <Button transparent style={style.updownBtn}
+                                                    disabled={this.state.isDownClicked ? true : false}
                                                     onPress={this.voteDown.bind(this)}>
                                                     <Ionicons name={down} size={27} />
                                                 </Button>
@@ -230,17 +238,17 @@ const style = StyleSheet.create({
         marginLeft: 15
     },
     updownBtn: {
-        height: 40,
+        height: 28,
         margin: 0,
         paddingTop: 0
     },
     updownTxt: {
         fontSize: 14,
-        marginTop: 5
+        marginTop: 3
     },
     dateTxt: {
         fontSize: 14,
-        marginTop: 5,
+        marginTop: 3,
         marginLeft: 10
     }
 })
