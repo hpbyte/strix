@@ -17,6 +17,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { discuss, add, more } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
+import moment from 'moment'
 import Style from '../../style';
 
 const FIREBASE = firebaseService.database()
@@ -83,15 +84,16 @@ export default class Cluster extends Component {
                     <Left>
                       <Button transparent
                         onPress={() => this.props.navigation.navigate('Answer', {
+                          quizId: prop.key,
                           quiz: prop.val().quiz,
-                          quizId: prop.key
+                          time: prop.val().timestamp
                         })}>
                         <Ionicons name={discuss} size={23} />
                         <Text>4 Answers</Text>
                       </Button>
                     </Left>
                     <Right>
-                      <Text>11h ago</Text>
+                      <Text>{moment(prop.val().timestamp).fromNow()}</Text>
                     </Right>
                   </CardItem>
                 </Card>

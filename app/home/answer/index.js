@@ -37,11 +37,13 @@ export default class Answer extends Component {
         const { params } = this.props.navigation.state
         const quiz = params ? params.quiz : null
         const quizId = params ? params.quizId : null
+        const qTime = params ? params.time : null
 
         this.state = { 
             answer: '',
             question: quiz,
             questionId: quizId,
+            questionTime: qTime,
             answers: [],
             isUpClicked: false,
             isDownClicked: false
@@ -133,7 +135,7 @@ export default class Answer extends Component {
                         </Button>
                         <View style={{ marginLeft: 7 }}>
                             <Text>Luffy</Text>
-                            <Text style={{ fontSize: 12 }}>3 hr ago</Text>
+                            <Text style={{ fontSize: 12 }}>{moment(this.state.questionTime).fromNow()}</Text>
                         </View>
                     </Left>
                     <Right style={{ flex: 1 }}>

@@ -25,6 +25,7 @@ import {
 import { Ionicons } from '@expo/vector-icons'
 import { alert, more } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
+import moment from 'moment'
 import Style from '../../style'
 
 const FIREBASE = firebaseService.database();
@@ -53,7 +54,8 @@ export default class Post extends Component {
                 {
                     quiz: selected+" "+quiz,
                     userId: firebaseService.auth().currentUser.uid,
-                    duration: '12-2-2019'
+                    duration: '12-2-2019',
+                    timestamp: moment().format("YYYY-MM-DD HH:mm")
                 }, (error) => {
                     if(error) alert(error.message)
                 }
