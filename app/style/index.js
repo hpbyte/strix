@@ -16,6 +16,9 @@ export default {
     bgBlue: {
       backgroundColor: '#2a4ff0'
     },
+    bgRed: {
+        backgroundColor: '#d32f2f'
+    },
     white: {
       color: '#fff'
     },

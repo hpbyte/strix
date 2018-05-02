@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ListView, TouchableOpacity, StyleSheet } from 'react-native'
+import { ListView, TouchableOpacity } from 'react-native'
 import { 
     Container, 
     Header, 
@@ -40,19 +40,23 @@ export default class Noti extends Component {
   constructor(props) {
     super(props);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
     this.state = {
       basic: true,
       listViewData: datas,
     };
   }
+
   deleteRow(secId, rowId, rowMap) {
     rowMap[`${secId}${rowId}`].props.closeRow();
     const newData = [...this.state.listViewData];
     newData.splice(rowId, 1);
     this.setState({ listViewData: newData });
   }
+
   render() {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    
     return (
       <Container>
         <Header style={Style.header}>
@@ -78,14 +82,15 @@ export default class Noti extends Component {
             style={{ marginTop: 12 }}
             dataSource={this.ds.cloneWithRows(this.state.listViewData)}
             renderRow={data =>
-              <TouchableOpacity style={style.listItem}>
-                <ListItem style={[style.listItem, {paddingLeft: 10}]}>
+              <TouchableOpacity style={{ height: 85 }}>
+                <ListItem style={{height: 85, paddingLeft: 10}}>
                       <Thumbnail square source={require('../../assets/scene.jpg')} />
                       <Body><Text style={Style.blue}>{ data }</Text></Body>
                 </ListItem>
               </TouchableOpacity>}
             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-              <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
+              <Button full style={Style.bgRed}
+                onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
                 <Ionicons active name={trash} size={27} />
               </Button>}
             rightOpenValue={-75}
@@ -96,9 +101,3 @@ export default class Noti extends Component {
     );
   }
 }
-
-const style = StyleSheet.create({
-  listItem: {
-    height: 85,
-  }
-})

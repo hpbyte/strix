@@ -25,19 +25,23 @@ import Style from '../style';
 
 import Activity from './activity'
 import Detail from './detail'
+import Chats from './chats'
+import Posts from './posts'
 
 const ProfileTaber = TabNavigator(
     {
         Detail: { screen: Detail },
-        Activity: { screen: Activity }
+        Activity: { screen: Activity },
+        Posts: { screen: Posts },
+        Chats: { screen: Chats }
     },
     {
         tabBarPosition: 'top',
-        swipeEnabled: true,
+        swipeEnabled: false,
         animationEnabled: true,
         tabBarComponent: props => {
             return (
-                <Footer>
+                <Footer style={{ borderBottomColor: '#000', borderBottomWidth: 0.3 }}>
                     <FooterTab style={Style.bgWhite}>
                         <Button vertical
                             onPress={() => props.navigation.navigate('Detail')}>
@@ -50,12 +54,12 @@ const ProfileTaber = TabNavigator(
                             <Text style={Style.black}>Activity</Text>
                         </Button>
                         <Button vertical
-                            onPress={() => props.navigation.navigate('Activity')}>
+                            onPress={() => props.navigation.navigate('Posts')}>
                             <Ionicons name={quote} size={28} color="#000" />
                             <Text style={Style.black}>Posts</Text>
                         </Button>
                         <Button vertical
-                            onPress={() => props.navigation.navigate('Activity')}>
+                            onPress={() => props.navigation.navigate('Chats')}>
                             <Ionicons name={chat} size={28} color="#000" />
                             <Text style={Style.black}>Chats</Text>
                         </Button>
