@@ -43,14 +43,15 @@ export default class Answer extends Component {
             question: quiz,
             questionId: quizId,
             answers: [],
-            upvote: 0,
-            downvote: 0,
             isUpClicked: false,
             isDownClicked: false
         }
+
+        this._voteUp = this._voteUp.bind(this)
+        this._voteDown = this._voteDown.bind(this)
     }
 
-    submitAnswer() {
+    _submitAnswer() {
         const ans = this.state.answer
         const uId = firebaseService.auth().currentUser.uid
 
@@ -87,12 +88,16 @@ export default class Answer extends Component {
         }
     }
 
-    voteUp(ansKey) {
-        this.setState({ upvote: this.state.upvote+1, isUpClicked: true })        
+    _voteUp(ansId) {
+        FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/upvote").transaction(up => {
+            return up + 1
+        })
     }
 
-    voteDown() {
-        this.setState({ downvote: this.state.downvote+1, isDownClicked: true })
+    _voteDown(ansId) {
+        FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/downvote").transaction(down => {
+            return down + 1
+        })
     }
 
     componentDidMount() {
@@ -160,22 +165,22 @@ export default class Answer extends Component {
                                             <Col size={10}>
                                                 <Button transparent style={style.updownBtn}
                                                     disabled={this.state.isUpClicked ? true : false}
-                                                    onPress={this.voteUp.bind(this)}>
+                                                    onPress={() => this._voteUp(prop.key)}>
                                                     <Ionicons name={up} size={27} />
                                                 </Button>
                                             </Col>
                                             <Col size={10}>
-                                                <Text style={[Style.blue, style.updownTxt]}>+{this.state.upvote}</Text>
+                                                <Text style={[Style.blue, style.updownTxt]}>+{prop.val().upvote}</Text>
                                             </Col>
                                             <Col size={10}>
                                                 <Button transparent style={style.updownBtn}
                                                     disabled={this.state.isDownClicked ? true : false}
-                                                    onPress={this.voteDown.bind(this)}>
+                                                    onPress={() => this._voteDown(prop.key)}>
                                                     <Ionicons name={down} size={27} />
                                                 </Button>
                                             </Col>
                                             <Col size={10}>
-                                                <Text style={[Style.red, style.updownTxt]}>-{this.state.downvote}</Text>
+                                                <Text style={[Style.red, style.updownTxt]}>-{prop.val().downvote}</Text>
                                             </Col>
                                         </Row>
                                     </Col>
@@ -189,7 +194,7 @@ export default class Answer extends Component {
                     <Input multiline={true} placeholder='your answer here ...' clearButtonMode='while-editing'
                         value={this.state.answer} onChangeText={answer => this.setState({answer})}/>
                     <Button transparent
-                        onPress={this.submitAnswer.bind(this)}>
+                        onPress={this._submitAnswer.bind(this)}>
                         <Ionicons name={send} size={28} style={{ marginRight: 10 }} />
                     </Button>
                 </Item>   
@@ -199,7 +204,7 @@ export default class Answer extends Component {
                             <Input multiline={true} placeholder='your answer here ...' clearButtonMode='while-editing'
                                 value={this.state.answer} onChangeText={answer => this.setState({answer})} />
                             <Button transparent
-                                onPress={this.submitAnswer.bind(this)}>
+                                onPress={this._submitAnswer.bind(this)}>
                                 <Ionicons name={send} size={28} style={{ marginRight: 10 }} />
                             </Button>
                         </Item>
