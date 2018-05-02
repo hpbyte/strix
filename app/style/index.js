@@ -47,5 +47,14 @@ export default {
       shadowColor: '#000',
       shadowOffset: { width: 2, height: 3 },
       shadowOpacity: 0.1
+    },
+    flexCenter: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    itemCenter: {
+      justifyContent: 'center',
+      alignItems: 'center'
     }
 }

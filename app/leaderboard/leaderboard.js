@@ -48,11 +48,7 @@ export default class Leaderboard extends Component {
               <Ionicons name={user} size={26} style={Style.black}/>
             </Button>
           </Left>
-          <Body style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
+          <Body style={Style.flexCenter}>
             <Title style={Style.title}>Strix</Title>
           </Body>
           <Right style={{ flex: 1 }}>

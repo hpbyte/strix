@@ -18,7 +18,6 @@ import { Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
 import { user, search, trash } from '../partials/icons'
 import Style from '../style'
-import MyHeader from '../partials/myheader'
 
 const datas = [
   'It is time to build a difference that has good impact on our world',
@@ -64,11 +63,7 @@ export default class Noti extends Component {
               <Ionicons name={user} size={26} style={Style.black}/>
             </Button>
           </Left>
-          <Body style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
+          <Body style={Style.flexCenter}>
             <Title style={Style.title}>Strix</Title>
           </Body>
           <Right style={{ flex: 1 }}>
@@ -86,7 +81,7 @@ export default class Noti extends Component {
               <TouchableOpacity style={style.listItem}>
                 <ListItem style={[style.listItem, {paddingLeft: 10}]}>
                       <Thumbnail square source={require('../../assets/scene.jpg')} />
-                      <Body><Text style={Style.red}>{ data }</Text></Body>
+                      <Body><Text style={Style.blue}>{ data }</Text></Body>
                 </ListItem>
               </TouchableOpacity>}
             renderRightHiddenRow={(data, secId, rowId, rowMap) =>

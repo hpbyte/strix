@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Platform, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import {
   Container,
   Header,
@@ -68,17 +68,17 @@ export default class Profile extends Component {
       <Container>
         {Platform.OS === 'ios' ? <View style={{height: 20, backgroundColor: '#fff'}} /> : null}
         <Header noShadow style={[Style.bgBlack, { borderBottomWidth: 0, paddingTop: 0 }]}>
-          <Left>
+          <Left style={{ flex: 1 }}>
             <Button
               transparent
               onPress={() => this.props.navigation.goBack()}>
               <Ionicons name='ios-arrow-back' size={28} color='#fff' />
             </Button>
           </Left>
-          <Body>
+          <Body style={Style.flexCenter}>
             <Title style={Style.white}>Your Profile</Title>
           </Body>
-          <Right>
+          <Right style={{ flex: 1 }}>
             <Button
               transparent
               onPress={this.onSignOut.bind(this)}>
@@ -87,7 +87,7 @@ export default class Profile extends Component {
           </Right>
         </Header>
         <Grid>
-          <Row size={27} style={style.row1}>
+          <Row size={27} style={[Style.bgBlack, Style.itemCenter]}>
             <Thumbnail large source={require('../../assets/default.png')} />
           </Row>
           <Row size={65}>
@@ -137,11 +137,3 @@ export default class Profile extends Component {
     );
   }
 }
-
-const style = StyleSheet.create({
-  row1: {
-    backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
