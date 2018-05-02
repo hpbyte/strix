@@ -13,7 +13,7 @@ import { podium, link, noti } from './partials/icons';
 import Style from './style';
 import Leaderboard from './leaderboard/leaderboard';
 import Search from './searchbar/searchbar'
-import Profile from './profile/profile';
+import Profile from './profile';
 import Booster from './booster/booster'
 import Signup from './auth/signup';
 import Signin from './auth/signin';

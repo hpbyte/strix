@@ -14,7 +14,7 @@ import {
   CardItem,
   Thumbnail
 } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { discuss, add, more } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
 import moment from 'moment'
@@ -56,6 +56,9 @@ export default class Cluster extends Component {
             <Title style={Style.black}>IT</Title>
           </Body>
           <Right style={{ flex: 1 }}>
+            <Button transparent>
+              <MaterialIcons name="sort" size={26} style={Style.black} />
+            </Button>
             <Button transparent>
               <Ionicons name={more} size={26} style={Style.black} />
             </Button>
