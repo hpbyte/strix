@@ -68,17 +68,18 @@ export default class Answer extends Component {
                 }, (error) => {
                     if(error) alert(error.message)
                 }
-            )
-            // successfully submitted
-            Toast.show({
-                text: 'Successfully Submitted!',
-                buttonText: 'OK',
-                duration: 3000,
-                type: 'success',
-                position: 'top'
-            })
-            // clear the answer input field
-            this.setState({ answer: '' })
+            ).then(
+                // clear the answer input field
+                this.setState({ answer: '' }),
+                // successfully submitted
+                Toast.show({
+                    text: 'Successfully Submitted!',
+                    buttonText: 'OK',
+                    duration: 3000,
+                    type: 'success',
+                    position: 'top'
+                })
+            ).catch(error => alert(error))
         } else {
             Toast.show({
                 text: 'Please type your answer first!',

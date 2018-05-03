@@ -33,7 +33,11 @@ export default class Signup extends Component {
       .then(() => {
         // add it to the database
         FIREBASE.ref('users/'+firebaseService.auth().currentUser.uid).set({
-            name: name
+            name: name,
+            dob: "",
+            school: "",
+            uni: "",
+            job: ""
         })
         // store that the user is logged in
         signedIn()

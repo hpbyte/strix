@@ -54,17 +54,17 @@ export default class Post extends Component {
                 }, (error) => {
                     if(error) alert(error.message)
                 }
-            )
-    
-            Toast.show({
-                text: 'Successfully Submitted!',
-                buttonText: 'OK',
-                duration: 3000,
-                type: 'success',
-                position: 'top'
-            })
-    
-            this.setState({ selected: 'What', quiz: '' })
+            ).then(
+                this.setState({ selected: 'What', quiz: '' }),
+
+                Toast.show({
+                    text: 'Successfully Submitted!',
+                    buttonText: 'OK',
+                    duration: 3000,
+                    type: 'success',
+                    position: 'top'
+                })
+            ).catch(error => alert(error))
         } else {
             Toast.show({
                 text: 'Please write your question first!',
