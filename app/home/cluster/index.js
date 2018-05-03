@@ -33,9 +33,7 @@ export default class Cluster extends Component {
     FIREBASE.ref('questions/').on('value', (snapshot) => {
       let qArr = []
 
-      snapshot.forEach((snap) => {
-        qArr.push(snap)
-      })
+      snapshot.forEach((snap) => { qArr.push(snap) })
 
       this.setState({ questions: qArr })
     })

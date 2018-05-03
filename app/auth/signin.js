@@ -22,11 +22,11 @@ export default class Signin extends Component {
     this.state = { email: '', password: '', error: null, loading: false };
   }
 
-  onSigninPress() {
+  async _signIn() {
     this.setState({ error: '', loading: true });
     const { email, password } = this.state;
 
-    firebaseService.auth().signInWithEmailAndPassword(email, password)
+    await firebaseService.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ loading: false });
         // store that the user is logged in
@@ -73,7 +73,7 @@ export default class Signin extends Component {
         </Item>
         {this.state.error == "auth/wrong-password" ? <Text style={style.errorTxt}>Incorrect password!</Text> : null}
         <Button rounded dark style={style.btn}
-          onPress={this.onSigninPress.bind(this)}>
+          onPress={this._signIn.bind(this)}>
           <Text style={style.txtLogin}>Ok Go</Text>
         </Button>
       </KeyboardAvoidingView>

@@ -53,12 +53,12 @@ export default class Answer extends Component {
         this._voteDown = this._voteDown.bind(this)
     }
 
-    _submitAnswer() {
+    async _submitAnswer() {
         const ans = this.state.answer
         const uId = firebaseService.auth().currentUser.uid
 
         if(ans !== '') {
-            FIREBASE.ref("answers").child(this.state.questionId).push(
+            await FIREBASE.ref("answers").child(this.state.questionId).push(
                 {
                     answer: ans,
                     userId: uId,
@@ -90,14 +90,14 @@ export default class Answer extends Component {
         }
     }
 
-    _voteUp(ansId) {
-        FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/upvote").transaction(up => {
+    async _voteUp(ansId) {
+        await FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/upvote").transaction(up => {
             return up + 1
         })
     }
 
-    _voteDown(ansId) {
-        FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/downvote").transaction(down => {
+    async _voteDown(ansId) {
+        await FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/downvote").transaction(down => {
             return down + 1
         })
     }
@@ -106,9 +106,7 @@ export default class Answer extends Component {
         FIREBASE.ref("answers").child(this.state.questionId).on('value', snapshot => {
             let ansArr = []
 
-            snapshot.forEach(snap => {
-                ansArr.push(snap)
-            })
+            snapshot.forEach(snap => { ansArr.push(snap) })
 
             this.setState({ answers: ansArr })
         })

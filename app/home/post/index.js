@@ -34,23 +34,18 @@ export default class Post extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            showToast: false,
-            selected: 'What',
-            quiz: '',
-            duration: ''
-        }
+        this.state = { showToast: false, selected: 'What', quiz: '', duration: '' }
     }
 
     onValueChange(value) {
         this.setState({ selected: value })
     }
 
-    postQuiz() {
+    async _postQuiz() {
         const { selected, quiz, duration } = this.state
 
         if(quiz !== '') {
-            FIREBASE.ref('questions').push(
+            await FIREBASE.ref('questions').push(
                 {
                     quiz: selected+" "+quiz,
                     userId: firebaseService.auth().currentUser.uid,
@@ -140,7 +135,7 @@ export default class Post extends Component {
                                 value={this.state.quiz}
                                 onChangeText={quiz => this.setState({quiz})} />
                             <Button block style={style.submit}
-                                onPress={this.postQuiz.bind(this)}>
+                                onPress={this._postQuiz.bind(this)}>
                                 <Text>Submit Quiz</Text>
                             </Button>
                         </Form>

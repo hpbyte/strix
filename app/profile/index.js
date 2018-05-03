@@ -19,13 +19,15 @@ import {
 } from 'native-base';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
-import { logout, chat, pulse, menu, quote } from '../partials/icons'
+import { logout, chat, pulse, menu, quote, camera } from '../partials/icons'
 import { signedOut } from '../auth/check'
-import Style from '../style';
+import Style from '../style'
+import style from './style'
+import firebaseService from '../service/firebase'
 
 import Activity from './activity'
 import Detail from './detail'
-import Chats from './chats'
+import Messages from './msg'
 import Posts from './posts'
 
 const ProfileTaber = TabNavigator(
@@ -33,7 +35,7 @@ const ProfileTaber = TabNavigator(
         Detail: { screen: Detail },
         Activity: { screen: Activity },
         Posts: { screen: Posts },
-        Chats: { screen: Chats }
+        Messages: { screen: Messages }
     },
     {
         tabBarPosition: 'top',
@@ -59,7 +61,7 @@ const ProfileTaber = TabNavigator(
                             <Text style={Style.black}>Posts</Text>
                         </Button>
                         <Button vertical
-                            onPress={() => props.navigation.navigate('Chats')}>
+                            onPress={() => props.navigation.navigate('Messages')}>
                             <Ionicons name={chat} size={28} color="#000" />
                             <Text style={Style.black}>Chats</Text>
                         </Button>
@@ -75,8 +77,8 @@ export default class Profile extends Component {
     super(props)
   }
 
-  _onSignOut() {
-    firebaseService.auth().signOut()
+  async _signOut() {
+    await firebaseService.auth().signOut()
       .then(() => {
         // remove from storage
         signedOut();        
@@ -105,14 +107,16 @@ export default class Profile extends Component {
           <Right style={{ flex: 1 }}>
             <Button
               transparent
-              onPress={this._onSignOut.bind(this)}>
+              onPress={this._signOut.bind(this)}>
               <Ionicons name={logout} size={27} color='#fff' />
             </Button>
           </Right>
         </Header>
         <Grid>
-          <Row size={25} style={[Style.bgBlack, Style.itemCenter]}>
+          <Row size={25} style={style.avater}>
             <Thumbnail large source={require('../../assets/default.png')} />
+            <Ionicons name={camera} size={27} color="#fff" style={style.camera}
+              onPress={() => alert('profile picture')}/>
           </Row>
           <Row size={75}>
             <ProfileTaber />

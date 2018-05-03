@@ -25,11 +25,11 @@ export default class Signup extends Component {
     this.state = { name: '', email: '', password: '', error: null, loading: false }
   }
 
-  onSignupPress() {
+  async _signUp() {
     this.setState({ error: '', loading: true });
     const { name, email, password, dob } = this.state;
 
-    firebaseService.auth().createUserWithEmailAndPassword(email, password)
+    await firebaseService.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         // add it to the database
         FIREBASE.ref('users/'+firebaseService.auth().currentUser.uid).set({
@@ -85,7 +85,7 @@ export default class Signup extends Component {
           </Item>
           {this.state.error == "auth/weak-password" ? <Text style={style.errorTxt}>Weak Password</Text> : null}
           <Button rounded dark style={style.btn}
-            onPress={this.onSignupPress.bind(this)}>
+            onPress={this._signUp.bind(this)}>
             <Text style={style.txtLogin}>Ok Go</Text>
           </Button>
         </KeyboardAvoidingView>
