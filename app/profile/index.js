@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, View } from 'react-native';
+import { Platform, View, Image } from 'react-native';
 import { TabNavigator } from 'react-navigation'
+import { ImagePicker, Permissions } from 'expo'
 import {
   Container,
   Header,
@@ -24,6 +25,7 @@ import { signedOut } from '../auth/check'
 import Style from '../style'
 import style from './style'
 import firebaseService from '../service/firebase'
+import storage from '../service/storage'
 
 import Activity from './activity'
 import Detail from './detail'
@@ -75,6 +77,8 @@ const ProfileTaber = TabNavigator(
 export default class Profile extends Component {
   constructor(props) {
     super(props)
+
+    this.state = { image: null }
   }
 
   async _signOut() {
@@ -89,7 +93,44 @@ export default class Profile extends Component {
       });
   }
 
+  async _pickImage() {
+    // ask for camera roll permission in ios
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+    if(status !== 'granted') {
+      alert('Camera Roll Permission not granted!')
+    }
+    // pick image
+    let result = await ImagePicker.launchImageLibraryAsync({
+      // base64: true,
+      allowsEditing: true,
+      aspect: [1,1]
+    })
+    alert(result)
+    this._handleImagePicked(result)
+  }
+
+  async _handleImagePicked(pickerResult) {
+    try {
+      if(!pickerResult.cancelled) {
+        uploadUrl = await _uploadImage(pickerResult.uri)
+        this.setState({ image: uploadUrl })
+      }
+    } catch(error) {
+      alert(error)
+    }
+  }
+
+  async _uploadImage(uri) {
+    const response = await fetch(uri)
+    const blob = await response.blob()
+    const snapshot = storage.ref().child(uuid.v4()).put(blob)
+
+    return snapshot.downloadURL
+  }
+
   render() {
+    let { image } = this.state
+
     return(
       <Container>
         {Platform.OS === 'ios' ? <View style={{height: 20, backgroundColor: '#fff'}} /> : null}
@@ -116,7 +157,8 @@ export default class Profile extends Component {
           <Row size={25} style={style.avater}>
             <Thumbnail large source={require('../../assets/default.png')} />
             <Ionicons name={camera} size={27} color="#fff" style={style.camera}
-              onPress={() => alert('profile picture')}/>
+              onPress={this._pickImage} />
+            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> }
           </Row>
           <Row size={75}>
             <ProfileTaber />
