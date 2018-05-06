@@ -16,7 +16,9 @@ import {
   List,
   ListItem,
   Footer,
-  FooterTab
+  FooterTab,
+  Toast,
+  ActionSheet
 } from 'native-base';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
@@ -25,7 +27,6 @@ import { signedOut } from '../auth/check'
 import Style from '../style'
 import style from './style'
 import firebaseService from '../service/firebase'
-import storage from '../service/storage'
 
 import Activity from './activity'
 import Detail from './detail'
@@ -81,6 +82,11 @@ export default class Profile extends Component {
     this.state = { image: null }
   }
 
+  componentWillUnmount() {
+    Toast.toastInstance = null
+    ActionSheet.actionsheetInstance = null
+  }
+
   async _signOut() {
     await firebaseService.auth().signOut()
       .then(() => {
@@ -93,7 +99,7 @@ export default class Profile extends Component {
       });
   }
 
-  async _pickImage() {
+  _pickImage = async() => {
     // ask for camera roll permission in ios
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     if(status !== 'granted') {
@@ -101,31 +107,43 @@ export default class Profile extends Component {
     }
     // pick image
     let result = await ImagePicker.launchImageLibraryAsync({
-      // base64: true,
       allowsEditing: true,
       aspect: [1,1]
     })
-    alert(result)
+    
     this._handleImagePicked(result)
   }
 
-  async _handleImagePicked(pickerResult) {
-    try {
-      if(!pickerResult.cancelled) {
-        uploadUrl = await _uploadImage(pickerResult.uri)
-        this.setState({ image: uploadUrl })
-      }
-    } catch(error) {
-      alert(error)
+  _handleImagePicked = async(pickerResult) => {
+    if(!pickerResult.cancelled) {
+      // uploadUrl = await this._uploadImage(pickerResult.uri)
+      // this.setState({ image: uploadUrl })
+      await this._uploadImage(pickerResult.uri).then(() => {
+        Toast.show({
+          text: 'Successfully Uploaded!',
+          buttonText: 'OK',
+          duration: 3000,
+          type: 'success',
+          position: 'top'
+        })
+      }).catch(error => {
+        Toast.show({
+          text: error,
+          buttonText: 'OK',
+          duration: 3000,
+          type: 'danger',
+          position: 'top'
+        })
+      })
     }
   }
 
-  async _uploadImage(uri) {
+  _uploadImage = async(uri) => {
     const response = await fetch(uri)
     const blob = await response.blob()
-    const snapshot = storage.ref().child(uuid.v4()).put(blob)
+    const ref = firebaseService.storage().ref().child("profile_pics/"+firebaseService.auth().currentUser.uid)
 
-    return snapshot.downloadURL
+    return ref.put(blob)
   }
 
   render() {
@@ -158,7 +176,6 @@ export default class Profile extends Component {
             <Thumbnail large source={require('../../assets/default.png')} />
             <Ionicons name={camera} size={27} color="#fff" style={style.camera}
               onPress={this._pickImage} />
-            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> }
           </Row>
           <Row size={75}>
             <ProfileTaber />
