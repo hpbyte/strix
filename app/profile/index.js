@@ -28,6 +28,8 @@ import Style from '../style'
 import style from './style'
 import firebaseService from '../service/firebase'
 
+const storage = firebaseService.storage()
+
 import Activity from './activity'
 import Detail from './detail'
 import Messages from './msg'
@@ -80,6 +82,27 @@ export default class Profile extends Component {
     super(props)
 
     this.state = { image: null }
+  }
+
+  componentDidMount() {
+    const img = storage.ref('profile_pics/'+firebaseService.auth().currentUser.uid)
+    img.getDownloadURL().then(url => {
+      this.setState({ image: url })
+    }).catch(error => {
+      switch (error.code) {
+        case 'storage/object_not_found':
+          alert('File Not Found')
+          break;
+    
+        case 'storage/unauthorized':
+          alert('Unauthorized Action')
+          break;
+    
+        case 'storage/unknown':
+          alert('Unknown error occurred!')
+          break;
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -141,7 +164,7 @@ export default class Profile extends Component {
   _uploadImage = async(uri) => {
     const response = await fetch(uri)
     const blob = await response.blob()
-    const ref = firebaseService.storage().ref().child("profile_pics/"+firebaseService.auth().currentUser.uid)
+    const ref = storage.ref().child("profile_pics/"+firebaseService.auth().currentUser.uid)
 
     return ref.put(blob)
   }
@@ -173,7 +196,7 @@ export default class Profile extends Component {
         </Header>
         <Grid>
           <Row size={25} style={style.avater}>
-            <Thumbnail large source={require('../../assets/default.png')} />
+            <Thumbnail large source={{ uri: image }} />
             <Ionicons name={camera} size={27} color="#fff" style={style.camera}
               onPress={this._pickImage} />
           </Row>
