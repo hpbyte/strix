@@ -1,7 +1,28 @@
 import React, { Component } from 'react';
-import {
-    Text,
-} from 'native-base';
+import { Content, Text, Card, CardItem } from 'native-base';
+
+const arr = [
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side",
+    "hello from the other side"
+]
 
 export default class Activity extends Component {
     constructor(props) {
@@ -10,7 +31,14 @@ export default class Activity extends Component {
 
     render() {
         return(
-            <Text>hello from cluster addition</Text>
+            <Card
+                dataArray={arr}
+                renderRow={a => 
+                    <CardItem>    
+                        <Text>{a}</Text>
+                    </CardItem>    
+                }>
+            </Card>
         )
     }
 }

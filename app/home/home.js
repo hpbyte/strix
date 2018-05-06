@@ -46,7 +46,7 @@ export default class Clusters extends Component {
           </Right>
         </Header>
         <View style={{flex: 1}}>
-          <Content padder>
+          <Content>
             <Grid>
               <Col>
               {colors.map((prop, key) => {
@@ -55,8 +55,7 @@ export default class Clusters extends Component {
                     key={key}
                     onPress={() => this.props.navigation.navigate('Cluster')}>
                     <Row style={{ height: 200, backgroundColor: prop, 
-                        justifyContent: 'center', alignItems: 'center', 
-                        marginBottom: 5, borderRadius: 15 }}>
+                        justifyContent: 'center', alignItems: 'center' }}>
                         <View>
                             <Ionicons name='logo-nodejs' size={55} color="#fff" />
                             <Text style={{ color: '#fff', fontSize: 25 }}>Row</Text>

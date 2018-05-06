@@ -36,5 +36,9 @@ export default {
         alignSelf: 'center',
         marginTop: 20,
         backgroundColor: '#000'
+    },
+    postItem: {
+        marginLeft: 0,
+        backgroundColor: '#fff'
     }
 }

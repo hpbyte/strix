@@ -54,8 +54,8 @@ export default class Post extends Component {
                 }, (error) => {
                     if(error) alert(error.message)
                 }
-            ).then(
-                this.setState({ selected: 'What', quiz: '' }),
+            ).then(() => {
+                this.setState({ selected: 'What', quiz: '' })
 
                 Toast.show({
                     text: 'Successfully Submitted!',
@@ -64,7 +64,7 @@ export default class Post extends Component {
                     type: 'success',
                     position: 'top'
                 })
-            ).catch(error => alert(error))
+            }).catch(error => alert(error))
         } else {
             Toast.show({
                 text: 'Please write your question first!',

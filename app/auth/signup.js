@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, KeyboardAvoidingView } from 'react-native';
+import { View, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import {
   Container,
   Content,
@@ -52,46 +52,53 @@ export default class Signup extends Component {
     return(
       <Container>
         <KeyboardAvoidingView style={{flex: 1}} behavior="position" 
-          keyboardVerticalOffset={-30}>
-          <Text style={style.strix}>Strix</Text>
-          <Item rounded style={style.item} >
-            <Ionicons name={user} size={25} style={style.inputIcon} />
-            <Input 
-              value={this.state.name}
-              onChangeText={name => this.setState({name})}
-              style={style.input} placeholder="Name"
-              keyboardAppearance='dark'
-              returnKeyType='next' />
-          </Item>
-          <Item 
-            error={this.state.error == 'auth/email-already-in-use'  ? true : false} 
-            error={this.state.error == 'auth/invalid-email'  ? true : false} 
-            rounded style={style.item} >
-            <Ionicons name={mail} size={25} style={style.inputIcon} />
-            <Input 
-              value={this.state.email} 
-              onChangeText={email => this.setState({email})} 
-              style={style.input} placeholder="Email"
-              keyboardType='email-address'
-              keyboardAppearance='dark'
-              returnKeyType='next' />
-          </Item>
-          {this.state.error == "auth/email-already-in-use" ? <Text style={style.errorTxt}>Email is already used</Text> : null}
-          {this.state.error == "auth/invalid-email" ? <Text style={style.errorTxt}>Invalid Email</Text> : null}
-          <Item error={this.state.error == "auth/weak-password" ? true : false} rounded style={style.item} >
-            <Ionicons name={lock} size={25} style={style.inputIcon} />
-            <Input 
-              value={this.state.password} 
-              onChangeText={password => this.setState({password})} 
-              secureTextEntry style={style.input} placeholder="Password"
-              keyboardAppearance='dark'
-              returnKeyType='done' />
-          </Item>
-          {this.state.error == "auth/weak-password" ? <Text style={style.errorTxt}>Weak Password</Text> : null}
-          <Button rounded dark style={style.btn}
-            onPress={this._signUp.bind(this)}>
-            <Text style={style.txtLogin}>Ok Go</Text>
-          </Button>
+            keyboardVerticalOffset={-30}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View>
+              <Text style={style.strix}>Strix</Text>
+              <Item rounded style={style.item} >
+                <Ionicons name={user} size={25} style={style.inputIcon} />
+                <Input 
+                  value={this.state.name}
+                  onChangeText={name => this.setState({name})}
+                  style={style.input} placeholder="Name"
+                  clearButtonMode="while-editing"
+                  keyboardAppearance='dark'
+                  returnKeyType='next' />
+              </Item>
+              <Item 
+                error={this.state.error == 'auth/email-already-in-use'  ? true : false} 
+                error={this.state.error == 'auth/invalid-email'  ? true : false} 
+                rounded style={style.item} >
+                <Ionicons name={mail} size={25} style={style.inputIcon} />
+                <Input 
+                  value={this.state.email} 
+                  onChangeText={email => this.setState({email})} 
+                  style={style.input} placeholder="Email"
+                  clearButtonMode="while-editing"
+                  keyboardType='email-address'
+                  keyboardAppearance='dark'
+                  returnKeyType='next' />
+              </Item>
+              {this.state.error == "auth/email-already-in-use" ? <Text style={style.errorTxt}>Email is already used</Text> : null}
+              {this.state.error == "auth/invalid-email" ? <Text style={style.errorTxt}>Invalid Email</Text> : null}
+              <Item error={this.state.error == "auth/weak-password" ? true : false} rounded style={style.item} >
+                <Ionicons name={lock} size={25} style={style.inputIcon} />
+                <Input 
+                  value={this.state.password} 
+                  onChangeText={password => this.setState({password})} 
+                  secureTextEntry style={style.input} placeholder="Password"
+                  clearButtonMode="while-editing"
+                  keyboardAppearance='dark'
+                  returnKeyType='done' />
+              </Item>
+              {this.state.error == "auth/weak-password" ? <Text style={style.errorTxt}>Weak Password</Text> : null}
+              <Button rounded dark style={style.btn}
+                onPress={this._signUp.bind(this)}>
+                <Text style={style.txtLogin}>Ok Go</Text>
+              </Button>
+            </View>
+          </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
       </Container>
     );

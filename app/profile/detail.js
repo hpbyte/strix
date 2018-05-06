@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Modal, View } from 'react-native'
+import { Modal, View, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
 import {
   Root,
+  Container,
   Content,
   Left,
   Body,
@@ -68,8 +69,8 @@ export default class Detail extends Component {
       school: school,
       uni: uni,
       job: job
-    }).then(
-      this.setModalVisible(!this.state.modalVisible),
+    }).then(() => {
+      this.setModalVisible(!this.state.modalVisible)
 
       Toast.show({
         text: 'Successfully Submitted!',
@@ -78,7 +79,7 @@ export default class Detail extends Component {
         type: 'success',
         position: 'top'
       })
-    ).catch(err => alert(err))
+    }).catch(err => alert(err))
   }
 
   componentWillUnmount() {
@@ -89,6 +90,7 @@ export default class Detail extends Component {
   render() {
     return(
       <Root>
+        <Container>
         <Content>
           <Card>
             <CardItem header bordered>
@@ -137,57 +139,70 @@ export default class Detail extends Component {
               </Body>
             </CardItem>
           </Card>
+        </Content>
           <Modal
             animationType="slide"
             transparent={false}
             visible={this.state.modalVisible}
             onRequestClose={() => { this.setModalVisible(!this.state.modalVisible) }}>
             <Grid>
-              <Col>               
+              <Col>    
                 <FontAwesome
                   style={{ alignSelf: 'center' }} 
                   name="sort-down" size={45} color="#ccc" 
                   onPress={() => this.setModalVisible(!this.state.modalVisible)} />
-                <Form style={{ marginTop: 25 }}>
-                  <Item style={style.item}>
-                    <Ionicons name={user} size={30} color="#303F9F" />
-                    <Input style={style.input} placeholder={this.state.name}
-                      value={this.state.name} onChangeText={name => this.setState({name})}/>
-                  </Item>
-                  <Item style={style.item}>
-                    <Ionicons name={mail} size={30} color="#D32F2F" />
-                    <Input style={style.input} placeholder={this.state.email}
-                      value={this.state.email} onChangeText={email => this.setState({email})}/>
-                  </Item>
-                  <Item style={style.item}>
-                    <Ionicons name={card} size={30} color="#388E3C" />
-                    <Input style={style.input} placeholder={this.state.dob}
-                      value={this.state.dob} onChangeText={dob => this.setState({dob})}/>
-                  </Item>
-                  <Item style={style.item}>
-                    <Ionicons name={school} size={30} color="#E64A19" />
-                    <Input style={style.input} placeholder={this.state.school}
-                      value={this.state.school} onChangeText={school => this.setState({school})}/>
-                  </Item>
-                  <Item style={style.item}>
-                    <Ionicons name={school} size={30} color="#00796B" />
-                    <Input style={style.input} placeholder={this.state.uni}
-                      value={this.state.uni} onChangeText={uni => this.setState({uni})}/>
-                  </Item>
-                  <Item style={style.item}>
-                    <Ionicons name={work} size={30} color="#AFB42B" />
-                    <Input style={style.input} placeholder={this.state.job}
-                      value={this.state.job} onChangeText={job => this.setState({job})}/>
-                  </Item>
-                  <Button rounded style={style.editBtn}
-                    onPress={this._editProfile.bind(this)}>
-                    <Text>Submit Change</Text>
-                  </Button>
-                </Form>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                  <Content>
+                  <Form style={{ marginTop: 25 }}>
+                    <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
+                      <Item style={style.item}>
+                        <Ionicons name={user} size={30} color="#303F9F" />
+                        <Input style={style.input} placeholder={this.state.name} 
+                          clearButtonMode="while-editing"
+                          value={this.state.name} onChangeText={name => this.setState({name})}/>
+                      </Item>
+                      <Item style={style.item}>
+                        <Ionicons name={mail} size={30} color="#D32F2F" />
+                        <Input style={style.input} placeholder={this.state.email}
+                          clearButtonMode="while-editing"
+                          value={this.state.email} onChangeText={email => this.setState({email})}/>
+                      </Item>
+                      <Item style={style.item}>
+                        <Ionicons name={card} size={30} color="#388E3C" />
+                        <Input style={style.input} placeholder={this.state.dob}
+                          clearButtonMode="while-editing"
+                          value={this.state.dob} onChangeText={dob => this.setState({dob})}/>
+                      </Item>
+                      <Item style={style.item}>
+                        <Ionicons name={school} size={30} color="#E64A19" />
+                        <Input style={style.input} placeholder={this.state.school}
+                          clearButtonMode="while-editing"
+                          value={this.state.school} onChangeText={school => this.setState({school})}/>
+                      </Item>
+                      <Item style={style.item}>
+                        <Ionicons name={school} size={30} color="#00796B" />
+                        <Input style={style.input} placeholder={this.state.uni}
+                          clearButtonMode="while-editing"
+                          value={this.state.uni} onChangeText={uni => this.setState({uni})}/>
+                      </Item>
+                      <Item style={style.item}>
+                        <Ionicons name={work} size={30} color="#AFB42B" />
+                        <Input style={style.input} placeholder={this.state.job}
+                          clearButtonMode="while-editing"
+                          value={this.state.job} onChangeText={job => this.setState({job})}/>
+                      </Item>
+                      <Button rounded style={style.editBtn}
+                        onPress={this._editProfile.bind(this)}>
+                        <Text>Submit Change</Text>
+                      </Button>
+                    </KeyboardAvoidingView>
+                  </Form>
+                  </Content>
+                </TouchableWithoutFeedback>
               </Col>
             </Grid>
           </Modal>
-        </Content>
+        </Container>
       </Root>
     );
   }

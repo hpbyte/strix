@@ -32,43 +32,43 @@ import Posts from './posts'
 
 const ProfileTaber = TabNavigator(
     {
-        Detail: { screen: Detail },
-        Activity: { screen: Activity },
-        Posts: { screen: Posts },
-        Messages: { screen: Messages }
+      Detail: { screen: Detail },
+      Activity: { screen: Activity },
+      Posts: { screen: Posts },
+      Messages: { screen: Messages }
     },
     {
-        tabBarPosition: 'top',
-        swipeEnabled: false,
-        animationEnabled: true,
-        tabBarComponent: props => {
-            return (
-                <Footer style={{ borderBottomColor: '#000', borderBottomWidth: 0.3 }}>
-                    <FooterTab style={Style.bgWhite}>
-                        <Button vertical
-                            onPress={() => props.navigation.navigate('Detail')}>
-                            <Ionicons name={menu} size={28} color="#000" />
-                            <Text style={Style.black}>Detail</Text>
-                        </Button>
-                        <Button vertical
-                            onPress={() => props.navigation.navigate('Activity')}>
-                            <Ionicons name={pulse} size={28} color="#000" />
-                            <Text style={Style.black}>Activity</Text>
-                        </Button>
-                        <Button vertical
-                            onPress={() => props.navigation.navigate('Posts')}>
-                            <Ionicons name={quote} size={28} color="#000" />
-                            <Text style={Style.black}>Posts</Text>
-                        </Button>
-                        <Button vertical
-                            onPress={() => props.navigation.navigate('Messages')}>
-                            <Ionicons name={chat} size={28} color="#000" />
-                            <Text style={Style.black}>Chats</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
-            )
-        }
+      tabBarPosition: 'top',
+      swipeEnabled: false,
+      animationEnabled: true,
+      tabBarComponent: props => {
+          return (
+            <Footer style={{ borderBottomColor: '#000', borderBottomWidth: 0.3 }}>
+                <FooterTab style={Style.bgWhite}>
+                    <Button vertical
+                        onPress={() => props.navigation.navigate('Detail')}>
+                        <Ionicons name={menu} size={28} color="#000" />
+                        <Text style={Style.black}>Detail</Text>
+                    </Button>
+                    <Button vertical
+                        onPress={() => props.navigation.navigate('Activity')}>
+                        <Ionicons name={pulse} size={28} color="#000" />
+                        <Text style={Style.black}>Activity</Text>
+                    </Button>
+                    <Button vertical
+                        onPress={() => props.navigation.navigate('Posts')}>
+                        <Ionicons name={quote} size={28} color="#000" />
+                        <Text style={Style.black}>Posts</Text>
+                    </Button>
+                    <Button vertical
+                        onPress={() => props.navigation.navigate('Messages')}>
+                        <Ionicons name={chat} size={28} color="#000" />
+                        <Text style={Style.black}>Chats</Text>
+                    </Button>
+                </FooterTab>
+            </Footer>
+          )
+      }
     }
 )
 

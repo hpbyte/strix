@@ -68,9 +68,9 @@ export default class Answer extends Component {
                 }, (error) => {
                     if(error) alert(error.message)
                 }
-            ).then(
+            ).then(() => {
                 // clear the answer input field
-                this.setState({ answer: '' }),
+                this.setState({ answer: '' })
                 // successfully submitted
                 Toast.show({
                     text: 'Successfully Submitted!',
@@ -79,7 +79,7 @@ export default class Answer extends Component {
                     type: 'success',
                     position: 'top'
                 })
-            ).catch(error => alert(error))
+            }).catch(error => alert(error))
         } else {
             Toast.show({
                 text: 'Please type your answer first!',
@@ -104,13 +104,15 @@ export default class Answer extends Component {
     }
 
     componentDidMount() {
-        FIREBASE.ref("answers").child(this.state.questionId).on('value', snapshot => {
-            let ansArr = []
-
-            snapshot.forEach(snap => { ansArr.push(snap) })
-
-            this.setState({ answers: ansArr })
-        })
+        try {
+            FIREBASE.ref("answers").child(this.state.questionId).on('value', snapshot => {
+                let ansArr = []
+    
+                snapshot.forEach(snap => { ansArr.push(snap) })
+    
+                this.setState({ answers: ansArr })
+            })
+        } catch(error) { alert(error.message) }
     }
 
     componentWillUnmount() {
@@ -190,7 +192,7 @@ export default class Answer extends Component {
                         })}
                     </View>
                 </Content>
-                {Platform.OS === 'ios' ? (<KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={20}>
+                {Platform.OS === 'ios' ? (<KeyboardAvoidingView behavior="padding">
                 <Item regular style={{ padding: 5, backgroundColor: '#fff' }}>
                     <Input multiline={true} placeholder='your answer here ...' clearButtonMode='while-editing'
                         value={this.state.answer} onChangeText={answer => this.setState({answer})}/>
@@ -201,7 +203,7 @@ export default class Answer extends Component {
                 </Item>   
             </KeyboardAvoidingView>) : (<Form style={{ backgroundColor: '#fff'}}>
                     <KeyboardAvoidingView behavior="position" enabled>
-                        <Item regular style={{ padding: 5 }}>
+                        <Item regular style={{ padding: 5, backgroundColor: '#fff' }}>
                             <Input multiline={true} placeholder='your answer here ...' clearButtonMode='while-editing'
                                 value={this.state.answer} onChangeText={answer => this.setState({answer})} />
                             <Button transparent
