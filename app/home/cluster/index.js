@@ -19,19 +19,25 @@ import { discuss, add, more } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
 import moment from 'moment'
 import Style from '../../style';
+import Bar from "../../partials/bar";
 
 const FIREBASE = firebaseService.database()
 
 export default class Cluster extends Component {
   constructor(props) {
     super(props)
+
+    const { params } = this.props.navigation.state
+    const clust = params ? params.cluster : null
     
-    this.state = { questions: [] }
+    this.state = { questions: [], cluster: clust }
   }
 
   componentDidMount() {
+    const cluster = this.state.cluster
+
     try {
-      FIREBASE.ref('questions/').on('value', (snapshot) => {
+      FIREBASE.ref('questions').child(cluster).on('value', (snapshot) => {
         let qArr = []
 
         snapshot.forEach((snap) => { qArr.push(snap) })
@@ -64,6 +70,7 @@ export default class Cluster extends Component {
             </Button>
           </Right>
         </Header>
+        <Bar />
         <View style={{ flex: 1}}>
           <Content>
             {this.state.questions.map((prop, key) => {
@@ -104,7 +111,7 @@ export default class Cluster extends Component {
             })}
           </Content>
           <TouchableHighlight style={Style.fab}
-            onPress={() => this.props.navigation.navigate('Post')}>
+            onPress={() => this.props.navigation.navigate('Post', { cluster: this.state.cluster })}>
             <Ionicons name={add} color='#fff' size={30} />
           </TouchableHighlight>
         </View>        

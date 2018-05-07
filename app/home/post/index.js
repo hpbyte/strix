@@ -34,18 +34,21 @@ export default class Post extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { showToast: false, selected: 'What', quiz: '', duration: '' }
+        const { params } = this.props.navigation.state
+        const clust = params ? params.cluster : null
+
+        this.state = { showToast: false, selected: 'What', quiz: '', duration: '', cluster: clust }
     }
 
     onValueChange(value) {
         this.setState({ selected: value })
     }
 
-    async _postQuiz() {
-        const { selected, quiz, duration } = this.state
+    _postQuiz = async() => {
+        const { selected, quiz, duration, cluster } = this.state
 
         if(quiz !== '') {
-            await FIREBASE.ref('questions').push(
+            await FIREBASE.ref('questions').child(cluster).push(
                 {
                     quiz: selected+" "+quiz,
                     userId: firebaseService.auth().currentUser.uid,

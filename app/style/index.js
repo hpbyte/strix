@@ -19,6 +19,12 @@ export default {
     bgRed: {
         backgroundColor: '#d32f2f'
     },
+    bgDgrey: {
+      backgroundColor: '#212121'
+    },
+    bgGrey: {
+      backgroundColor: '#424242'
+    },
     white: {
       color: '#fff'
     },
@@ -59,5 +65,16 @@ export default {
     itemCenter: {
       justifyContent: 'center',
       alignItems: 'center'
-    }
+    },
+    myCard: {
+      margin: 5,
+      marginLeft: 10,
+      marginRight: 10,
+      padding: 15,
+      backgroundColor: '#424242',
+      borderRadius: 10,
+      elevation: 7,
+      shadowColor: '#000',
+      shadowOffset: { width: 5, height: 5 }
+  }
 }

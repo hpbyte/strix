@@ -53,7 +53,7 @@ export default class Answer extends Component {
         this._voteDown = this._voteDown.bind(this)
     }
 
-    async _submitAnswer() {
+    _submitAnswer = async() => {
         const ans = this.state.answer
         const uId = firebaseService.auth().currentUser.uid
 
@@ -91,13 +91,13 @@ export default class Answer extends Component {
         }
     }
 
-    async _voteUp(ansId) {
+    _voteUp = async(ansId) => {
         await FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/upvote").transaction(up => {
             return up + 1
         })
     }
 
-    async _voteDown(ansId) {
+    _voteDown = async(ansId) => {
         await FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/downvote").transaction(down => {
             return down + 1
         })

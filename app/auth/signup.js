@@ -25,7 +25,7 @@ export default class Signup extends Component {
     this.state = { name: '', email: '', password: '', error: null, loading: false }
   }
 
-  async _signUp() {
+  _signUp = async() => {
     this.setState({ error: '', loading: true });
     const { name, email, password, dob } = this.state;
 

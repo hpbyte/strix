@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, View, Image } from 'react-native';
+import { Platform, View } from 'react-native';
 import { TabNavigator } from 'react-navigation'
 import { ImagePicker, Permissions } from 'expo'
 import {
@@ -24,6 +24,7 @@ import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
 import { logout, chat, pulse, menu, quote, camera } from '../partials/icons'
 import { signedOut } from '../auth/check'
+import Bar from '../partials/bar'
 import Style from '../style'
 import style from './style'
 import firebaseService from '../service/firebase'
@@ -110,7 +111,7 @@ export default class Profile extends Component {
     ActionSheet.actionsheetInstance = null
   }
 
-  async _signOut() {
+  _signOut = async() => {
     await firebaseService.auth().signOut()
       .then(() => {
         // remove from storage
@@ -194,6 +195,7 @@ export default class Profile extends Component {
             </Button>
           </Right>
         </Header>
+        <Bar />
         <Grid>
           <Row size={25} style={style.avater}>
             <Thumbnail large source={{ uri: image }} />

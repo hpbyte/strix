@@ -60,7 +60,7 @@ export default class Detail extends Component {
     });
   }
 
-  async _editProfile() {
+  _editProfile = async() => {
     const { name, email, dob, school, uni, job } = this.state
     
     await FIREBASE.ref("users/"+firebaseService.auth().currentUser.uid).update({

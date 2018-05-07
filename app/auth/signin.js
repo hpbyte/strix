@@ -22,7 +22,7 @@ export default class Signin extends Component {
     this.state = { email: '', password: '', error: null, loading: false };
   }
 
-  async _signIn() {
+  _signIn = async() => {
     this.setState({ error: '', loading: true });
     const { email, password } = this.state;
 
