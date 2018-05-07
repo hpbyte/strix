@@ -20,10 +20,12 @@ import {
   Toast,
   ActionSheet
 } from 'native-base';
+import QRCode from 'react-native-qrcode'
 import firebaseService from '../service/firebase';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { school, work, user, mail, card, down } from '../partials/icons'
 import { Grid, Row, Col } from 'react-native-easy-grid'
+import Style from '../style'
 import style from './style'
 
 const FIREBASE = firebaseService.database();
@@ -32,7 +34,16 @@ export default class Detail extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { name: '', email: '', dob: '', school: '', uni: '', job: '', showToast: false, modalVisible: false }
+    this.state = { 
+      uId: firebaseService.auth().currentUser.uid,
+      name: '', 
+      email: '', 
+      dob: '', 
+      school: '', 
+      uni: '', 
+      job: '', 
+      showToast: false, 
+      modalVisible: false }
   }
 
   setModalVisible(visible) {
@@ -61,9 +72,9 @@ export default class Detail extends Component {
   }
 
   _editProfile = async() => {
-    const { name, email, dob, school, uni, job } = this.state
+    const { uId, name, email, dob, school, uni, job } = this.state
     
-    await FIREBASE.ref("users/"+firebaseService.auth().currentUser.uid).update({
+    await FIREBASE.ref("users/"+uId).update({
       name: name,
       dob: dob,
       school: school,
@@ -137,6 +148,20 @@ export default class Detail extends Component {
                 <Text style={style.pdlf}>Job</Text>
                 <Text style={style.pdlf} note>{this.state.job}</Text>
               </Body>
+            </CardItem>
+          </Card>
+          <Card>
+            <CardItem header bordered>
+              <Text>Your Personal QRCode</Text>
+            </CardItem>
+            <CardItem>
+              <View style={Style.flexCenter}>
+                <QRCode
+                  value={this.state.uId}
+                  size={300}
+                  bgColor='black'
+                  fgColor='white' />
+              </View>
             </CardItem>
           </Card>
         </Content>

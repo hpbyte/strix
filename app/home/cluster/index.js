@@ -58,8 +58,8 @@ export default class Cluster extends Component {
               <Ionicons name='ios-arrow-back' size={26} style={Style.black} />
             </Button>
           </Left>
-          <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Title style={Style.black}>IT</Title>
+          <Body style={Style.flexCenter}>
+            <Title style={Style.black}>{this.state.cluster}</Title>
           </Body>
           <Right style={{ flex: 1 }}>
             <Button transparent>

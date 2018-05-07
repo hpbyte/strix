@@ -43,6 +43,7 @@ export default {
       color: '#000'
     },
     fab: {
+      flex: 1,
       position: 'absolute',
       bottom: 15,
       right: 15,
@@ -50,9 +51,9 @@ export default {
       height: 65,
       borderRadius: 50,
       backgroundColor: '#d32f2f',
-      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      elevation: 9,
       shadowColor: '#000',
       shadowOffset: { width: 2, height: 3 },
       shadowOpacity: 0.1

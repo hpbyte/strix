@@ -11,26 +11,22 @@ import {
     Body,
     Left,
     Right,
-    Title
+    Title,
+    View,
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
 import { user, search } from '../partials/icons'
+import firebaseService from '../service/firebase'
 import Style from '../style'
 
 export default class Booster extends Component {
-  render() {
-    const arr = [
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-        'Its time to build a difference . .',
-    ]
+  constructor(props) {
+    super(props)
 
+    this.state = { code: firebaseService.auth().currentUser.uid }
+  }
+
+  render() {
     return (
       <Container>
         <Header style={Style.header}>
@@ -51,15 +47,10 @@ export default class Booster extends Component {
             </Button>
           </Right>
         </Header>
-        <Content>
-          <List
-            dataArray={arr}
-            renderRow={(a) => 
-                <ListItem>
-                    <Text>{a}</Text>
-                </ListItem>
-            }>
-          </List>
+        <Content padder>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Booster</Text>
+          </View>
         </Content>
       </Container>
     );
