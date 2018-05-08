@@ -14,10 +14,12 @@ import {
   CardItem,
   Thumbnail,
   Text,
-  Badge
+  Badge,
+  View
 } from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import { user, search } from '../partials/icons'
+import Bar from '../partials/bar'
 import Style from '../style';
 
 const data = [
@@ -58,23 +60,28 @@ export default class Leaderboard extends Component {
             </Button>
           </Right>
         </Header>
+        <Bar />
         <Content>
-          <List
-            dataArray={data}
-            renderRow={(item) => 
-              <ListItem>
-                <Thumbnail square size={80} source={require('../../assets/default.png')} />
-                <Body>
-                  <Text>{item}</Text>
-                </Body>
-                <Right>
-                  <Badge style={Style.bgBlue}>
-                    <Text>{++dataIndex}</Text>
-                  </Badge>
-                </Right>
-              </ListItem>
-            }>
-          </List>
+          <Card style={{ marginLeft: 0 }}>
+            <List
+              dataArray={data}
+              renderRow={(item) => 
+              <View style={Style.listItem}>
+                <ListItem>
+                  <Thumbnail square size={80} source={require('../../assets/default.png')} />
+                  <Body>
+                    <Text>{item}</Text>
+                  </Body>
+                  <Right>
+                    <Badge style={Style.bgBlue}>
+                      <Text>{++dataIndex}</Text>
+                    </Badge>
+                  </Right>
+                </ListItem>
+              </View>
+              }>
+            </List>
+          </Card>    
         </Content>
       </Container>
       );

@@ -14,7 +14,7 @@ import Style from './style';
 import Leaderboard from './leaderboard/leaderboard';
 import Search from './searchbar/searchbar'
 import Profile from './profile';
-import Booster from './booster/booster'
+import Booster from './booster/'
 import Signup from './auth/signup';
 import Signin from './auth/signin';
 import Home from './home';

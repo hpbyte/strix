@@ -17,6 +17,7 @@ import {
 import { Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
 import { user, search, trash } from '../partials/icons'
+import Bar from '../partials/bar'
 import Style from '../style'
 
 const datas = [
@@ -77,6 +78,7 @@ export default class Noti extends Component {
             </Button>
           </Right>
         </Header>
+        <Bar />
         <Content>
           <List
             style={{ marginTop: 12 }}

@@ -29,7 +29,8 @@ import Style from '../style'
 import style from './style'
 import firebaseService from '../service/firebase'
 
-const storage = firebaseService.storage()
+const FIREBASE = firebaseService.database()
+const STORAGE = firebaseService.storage()
 
 import Activity from './activity'
 import Detail from './detail'
@@ -82,11 +83,22 @@ export default class Profile extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { image: null }
+    this.state = { uId: firebaseService.auth().currentUser.uid, image: null, hasCamerRollPermission: null }
   }
 
   componentDidMount() {
-    const img = storage.ref('profile_pics/'+firebaseService.auth().currentUser.uid)
+    this._requestCameraRollPermission()
+    // get profile image
+    this._getProfileImage(this.state.uId)
+  }
+
+  componentWillUnmount() {
+    Toast.toastInstance = null
+    ActionSheet.actionsheetInstance = null
+  }
+
+  _getProfileImage = userId => {
+    const img = STORAGE.ref('profile_pics/'+userId)
     img.getDownloadURL().then(url => {
       this.setState({ image: url })
     }).catch(error => {
@@ -106,9 +118,9 @@ export default class Profile extends Component {
     })
   }
 
-  componentWillUnmount() {
-    Toast.toastInstance = null
-    ActionSheet.actionsheetInstance = null
+  _requestCameraRollPermission = async() => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+    this.setState({ hasCamerRollPermission: status === 'granted' })
   }
 
   _signOut = async() => {
@@ -124,12 +136,6 @@ export default class Profile extends Component {
   }
 
   _pickImage = async() => {
-    // ask for camera roll permission in ios
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
-    if(status !== 'granted') {
-      alert('Camera Roll Permission not granted!')
-    }
-    // pick image
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [1,1]
@@ -165,7 +171,7 @@ export default class Profile extends Component {
   _uploadImage = async(uri) => {
     const response = await fetch(uri)
     const blob = await response.blob()
-    const ref = storage.ref().child("profile_pics/"+firebaseService.auth().currentUser.uid)
+    const ref = STORAGE.ref().child("profile_pics/"+this.state.uId)
 
     return ref.put(blob)
   }
@@ -198,7 +204,7 @@ export default class Profile extends Component {
         <Bar />
         <Grid>
           <Row size={25} style={style.avater}>
-            <Thumbnail large source={{ uri: image }} />
+            {image !== null ? (<Thumbnail large source={{ uri: image }} />) : (<Thumbnail large source={require('../../assets/default.png')} />)}
             <Ionicons name={camera} size={27} color="#fff" style={style.camera}
               onPress={this._pickImage} />
           </Row>

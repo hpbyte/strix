@@ -21,9 +21,11 @@ class Posts extends Component {
         let qArr = []
         FIREBASE.ref("questions").once("value", snapshot => {
             snapshot.forEach(snap => {
-                if(snap.val().userId === firebaseService.auth().currentUser.uid) {
-                    qArr.push(snap)
-                }
+                snap.forEach(snp => {
+                    if(snp.val().userId === firebaseService.auth().currentUser.uid) {
+                        qArr.push(snp)
+                    }
+                })
             })
         }).then(() => {
             this.setState({ questions: qArr })

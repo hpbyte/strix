@@ -77,5 +77,10 @@ export default {
       elevation: 7,
       shadowColor: '#000',
       shadowOffset: { width: 5, height: 5 }
+  },
+  listItem: {
+    marginBottom: 3,
+    borderLeftWidth: 5,
+    borderLeftColor: '#212121',
   }
 }
