@@ -27,35 +27,6 @@ import Style from '../style'
 const FIREBASE = firebaseService.database()
 const STORAGE = firebaseService.storage()
 
-const Tab1 = (props) => (
-  <Card style={{marginLeft: 0}}>
-    <CardItem header bordered>
-        <Body style={{ flex: 3 }}>
-            <Text style={Style.blue}>People in your current domain</Text>
-        </Body>
-        <Right style={{ flex: 1 }}>
-            <MaterialIcons name="sort" size={25} color="#000" />
-        </Right>
-    </CardItem>
-    <List
-      dataArray={props.users}
-      renderRow={(item) => 
-        <View style={Style.listItem}>
-          <ListItem>
-            <Thumbnail small square size={80} source={require('../../assets/default.png')} />
-            <Body>
-              <Text>{item.name}</Text>
-            </Body>
-            <Right>
-              <Ionicons name={right} size={27} color="#000" />
-            </Right>
-          </ListItem>
-        </View>
-      }>
-    </List>
-  </Card>
-)
-
 const Tab2 = (props) => (
   <Card>
     <CardItem>
@@ -81,7 +52,7 @@ export default class Booster extends Component {
     let uArr = []
     await FIREBASE.ref('users').orderByChild('name')
       .once('value', snapshot => {
-        snapshot.forEach(snap => { uArr.push(snap.val()) })
+        snapshot.forEach(snap => { uArr.push(snap) })
       })
       .then(() => { this.setState({ users: uArr }) })
       .catch(error => alert(error))
@@ -115,7 +86,33 @@ export default class Booster extends Component {
           <Tabs initialPage={0}>
             <Tab heading="Mentors" textStyle={Style.black} activeTextStyle={Style.blue}
               tabStyle={Style.bgWhite} activeTabStyle={Style.bgWhite}>
-              <Tab1 users={users} />
+              <Card style={{marginLeft: 0}}>
+                <CardItem header bordered>
+                    <Body style={{ flex: 3 }}>
+                        <Text style={Style.blue}>People in your current domain</Text>
+                    </Body>
+                    <Right style={{ flex: 1 }}>
+                        <MaterialIcons name="sort" size={25} color="#000" />
+                    </Right>
+                </CardItem>
+                <List
+                  dataArray={users}
+                  renderRow={(item) => 
+                    <View style={Style.listItem}>
+                      <ListItem>
+                        <Thumbnail small size={80} source={{ uri: item.val().image }} />
+                        <Body>
+                          <Text>{item.val().name}</Text>
+                        </Body>
+                        <Right>
+                          <Ionicons name={right} size={27} color="#000"
+                            onPress={() => this.props.navigation.navigate('Info', { userId: item.key })} />
+                        </Right>
+                      </ListItem>
+                    </View>
+                  }>
+                </List>
+              </Card>
             </Tab>
             <Tab heading="My Appointments" textStyle={Style.black} activeTextStyle={Style.blue}
               tabStyle={Style.bgWhite} activeTabStyle={Style.bgWhite}>

@@ -23,7 +23,7 @@ import {
 import QRCode from 'react-native-qrcode'
 import firebaseService from '../service/firebase';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import { school, work, user, mail, card, down } from '../partials/icons'
+import { school, work, user, mail, card } from '../partials/icons'
 import { Grid, Row, Col } from 'react-native-easy-grid'
 import Style from '../style'
 import style from './style'

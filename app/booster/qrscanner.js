@@ -1,20 +1,28 @@
 import React, { PureComponent } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import ViewFinder from 'react-native-view-finder'
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons'
+import { Container, Root, Text } from 'native-base'
 import { BarCodeScanner, Permissions } from 'expo'
-import { Container, Text } from 'native-base'
-import { MaterialIcons, Ionicons } from '@expo/vector-icons'
+import ViewFinder from 'react-native-view-finder'
+import firebaseService from '../service/firebase'
+import moment from 'moment'
+
+import Result from './result'
+
+const FIREBASE = firebaseService.database()
 
 export default class QRScanner extends PureComponent {
   constructor(props) {
     super(props)
 
     this.state = {
+      userId: firebaseService.auth().currentUser.uid,
       hasCameraPermssion: null,
       isBack: true,
       isTorchOn: false,
       data: '',
-      type: ''
+      type: '',
+      modalVisible: false
     }
   }
 
@@ -26,12 +34,31 @@ export default class QRScanner extends PureComponent {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
     this.setState({ hasCameraPermssion: status === 'granted' })
   }
+  
+  _handleDone = () => {
+    this.setState({ modalVisible: false })
+  }
 
-  _handleBarCodeRead = (data) => {
-    Alert.alert(
-      'Scan successful!',
-      JSON.stringify(data)
-    );
+  _handleBarCodeRead = ({type, data}) => {
+    const { modalVisible } = this.state
+    
+    if(modalVisible) {
+      return
+    }    
+    
+    FIREBASE.ref('appointments').push(
+      {
+        mentorId: this.state.data,
+        userId: this.state.userId,
+        startTime: moment().format("YYYY-MM-DD HH:mm"),
+        endTime: '',
+        status: 'ongoing'
+      }, (error) => {
+        if(error) alert(error.message)
+      }
+    ).then(() => {
+      this.setState({ type, data, modalVisible: true })
+    })
   }
 
   _handleReverseCamera = () => {
@@ -43,29 +70,44 @@ export default class QRScanner extends PureComponent {
   }
 
   render() {
-    const { hasCameraPermssion, isBack, isTorchOn } = this.state
+    const { 
+      hasCameraPermssion,
+      isBack, 
+      isTorchOn, 
+      data,
+      type,
+      modalVisible
+    } = this.state
 
     return(
-      <Container>
-        <BarCodeScanner
-          type={isBack ? 'back' : 'front'}
-          torchMode={isTorchOn ? 'on' : 'off'}
-          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-          onBarCodeRead={this._handleBarCodeRead}
-          style={StyleSheet.absoluteFill}
-        />
-        <ViewFinder />
-        <TouchableOpacity onPress={this._handleReverseCamera} style={[style.btn, {right: 20}]}>
-          <Ionicons 
-            name="md-reverse-camera"
-            size={25} color="#37474F" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this._handleTorch} style={[style.btn, {left: 20}]}>
-          <MaterialIcons 
-            name={isTorchOn ? 'flash-on' : 'flash-off'}
-            size={25} color="#37474F" />
-        </TouchableOpacity>
-      </Container>
+      <Root>
+        <Container>
+          <Result 
+            show={modalVisible}
+            onDone={this._handleDone}
+            data={data}
+            type={type}
+            />
+          <BarCodeScanner
+            type={isBack ? 'back' : 'front'}
+            torchMode={isTorchOn ? 'on' : 'off'}
+            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+            onBarCodeRead={this._handleBarCodeRead}
+            style={StyleSheet.absoluteFill}
+          />
+          <ViewFinder />
+          <TouchableOpacity onPress={this._handleReverseCamera} style={[style.btn, {right: 20}]}>
+            <Ionicons 
+              name="md-reverse-camera"
+              size={25} color="#37474F" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._handleTorch} style={[style.btn, {left: 20}]}>
+            <MaterialIcons 
+              name={isTorchOn ? 'flash-on' : 'flash-off'}
+              size={25} color="#37474F" />
+          </TouchableOpacity>
+        </Container>
+      </Root>
     )
   }
 }

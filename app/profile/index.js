@@ -86,35 +86,11 @@ export default class Profile extends Component {
     this.state = { uId: firebaseService.auth().currentUser.uid, image: null, hasCamerRollPermission: null }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this._requestCameraRollPermission()
     // get profile image
-    this._getProfileImage(this.state.uId)
-  }
-
-  componentWillUnmount() {
-    Toast.toastInstance = null
-    ActionSheet.actionsheetInstance = null
-  }
-
-  _getProfileImage = userId => {
-    const img = STORAGE.ref('profile_pics/'+userId)
-    img.getDownloadURL().then(url => {
-      this.setState({ image: url })
-    }).catch(error => {
-      switch (error.code) {
-        case 'storage/object_not_found':
-          alert('File Not Found')
-          break;
-    
-        case 'storage/unauthorized':
-          alert('Unauthorized Action')
-          break;
-    
-        case 'storage/unknown':
-          alert('Unknown error occurred!')
-          break;
-      }
+    await FIREBASE.ref('users/'+this.state.uId).once('value', snapshot => {
+      this.setState({ image: snapshot.val().image })
     })
   }
 
@@ -146,9 +122,9 @@ export default class Profile extends Component {
 
   _handleImagePicked = async(pickerResult) => {
     if(!pickerResult.cancelled) {
-      // uploadUrl = await this._uploadImage(pickerResult.uri)
-      // this.setState({ image: uploadUrl })
       await this._uploadImage(pickerResult.uri).then(() => {
+        this._setImageUrl()
+
         Toast.show({
           text: 'Successfully Uploaded!',
           buttonText: 'OK',
@@ -174,6 +150,21 @@ export default class Profile extends Component {
     const ref = STORAGE.ref().child("profile_pics/"+this.state.uId)
 
     return ref.put(blob)
+  }
+
+  _setImageUrl = () => {
+    const img = STORAGE.ref('profile_pics/'+this.state.uId)
+
+    img.getDownloadURL().then(url => {
+      FIREBASE.ref('users/'+this.state.uId).update({
+        image: url
+      }).catch(error => alert(error.message))
+    }).catch(error => alert(error.message))
+  }
+
+  componentWillUnmount() {
+    Toast.toastInstance = null
+    ActionSheet.actionsheetInstance = null
   }
 
   render() {
