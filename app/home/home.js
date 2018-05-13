@@ -17,8 +17,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { add, user } from '../partials/icons'
 import { Grid, Col, Row } from "react-native-easy-grid";
 import firebaseService from '../service/firebase'
-import Style from '../style';
 import Bar from '../partials/bar'
+import Sheader from '../partials/sheader'
+import Style from '../style';
 
 const FIREBASE = firebaseService.database()
 const colors = [
@@ -61,24 +62,7 @@ export default class Clusters extends Component {
   render() {
     return(
       <Container>
-        <Header style={Style.header}>
-          <Left style={{ flex: 1 }}>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.navigate('Profile')}>
-              <Ionicons name={user} size={26} style={Style.black} />
-            </Button>
-          </Left>
-          <Body style={Style.flexCenter}>
-            <Title style={Style.title}>Strix</Title>
-          </Body>
-          <Right style={{ flex: 1 }}>
-            <Button transparent
-              onPress={() => this.props.navigation.navigate('Search')}>
-              <Ionicons name='ios-search' size={26} style={Style.black} />
-            </Button>
-          </Right>
-        </Header>
+        <Sheader navigation={this.props.navigation} />
         <Bar />
         <View style={{flex: 1}}>
           <Content>

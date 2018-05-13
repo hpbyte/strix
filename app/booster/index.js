@@ -1,7 +1,7 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation'
 import Result from './result'
-import Info from './info'
+import Info from '../info/info'
 import Booster from './booster'
 import QRScanner from './qrscanner'
 

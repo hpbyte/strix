@@ -25,8 +25,9 @@ import { Row, Col } from 'react-native-easy-grid'
 import moment from 'moment'
 import { Ionicons } from '@expo/vector-icons'
 import { more, up, down, send } from '../../partials/icons'
-import Style from '../../style'
 import firebaseService from '../../service/firebase'
+import Style from '../../style'
+import Bar from '../../partials/bar'
 
 const FIREBASE = firebaseService.database()
 
@@ -145,6 +146,7 @@ export default class Answer extends Component {
                         </Button>
                     </Right>
                 </Header>
+                <Bar />
                 <Content>
                     <View style={{ backgroundColor: '#fff' }}>
                         <Text style={style.quizTxt}>{ this.state.question }</Text>

@@ -71,12 +71,7 @@ export default class QRScanner extends PureComponent {
 
   render() {
     const { 
-      hasCameraPermssion,
-      isBack, 
-      isTorchOn, 
-      data,
-      type,
-      modalVisible
+      hasCameraPermssion, isBack, isTorchOn, data, type, modalVisible
     } = this.state
 
     return(
@@ -99,12 +94,12 @@ export default class QRScanner extends PureComponent {
           <TouchableOpacity onPress={this._handleReverseCamera} style={[style.btn, {right: 20}]}>
             <Ionicons 
               name="md-reverse-camera"
-              size={25} color="#37474F" />
+              size={25} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity onPress={this._handleTorch} style={[style.btn, {left: 20}]}>
             <MaterialIcons 
               name={isTorchOn ? 'flash-on' : 'flash-off'}
-              size={25} color="#37474F" />
+              size={25} color="#000" />
           </TouchableOpacity>
         </Container>
       </Root>

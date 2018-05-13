@@ -110,43 +110,43 @@ export default class Detail extends Component {
             <CardItem>
               <Ionicons name={user} size={30} color="#303F9F" />
               <Body>
-                <Text style={style.pdlf}>Name</Text>
-                <Text style={style.pdlf} note>{this.state.name}</Text>
+                <Text style={Style.pdlf}>Name</Text>
+                <Text style={Style.pdlf} note>{this.state.name}</Text>
               </Body>
             </CardItem>
             <CardItem>
               <Ionicons name={mail} size={30} color="#D32F2F" />
               <Body>
-                <Text style={style.pdlf}>Email Address</Text>
-                <Text style={style.pdlf} note>{this.state.email}</Text>
+                <Text style={Style.pdlf}>Email Address</Text>
+                <Text style={Style.pdlf} note>{this.state.email}</Text>
               </Body>
             </CardItem>
             <CardItem>
               <Ionicons name={card} size={30} color="#388E3C" />
               <Body>
-                <Text style={style.pdlf}>Date-of-Birth</Text>
-                <Text style={style.pdlf} note>{this.state.dob}</Text>
+                <Text style={Style.pdlf}>Date-of-Birth</Text>
+                <Text style={Style.pdlf} note>{this.state.dob}</Text>
               </Body>
             </CardItem>
             <CardItem>
               <Ionicons name={school} size={30} color="#E64A19" />
               <Body>
-                <Text style={style.pdlf}>High School</Text>
-                <Text style={style.pdlf} note>{this.state.school}</Text>
+                <Text style={Style.pdlf}>High School</Text>
+                <Text style={Style.pdlf} note>{this.state.school}</Text>
               </Body>
             </CardItem>
             <CardItem>
               <Ionicons name={school} size={30} color="#00796B" />
               <Body>  
-                <Text style={style.pdlf}>University</Text>
-                <Text style={style.pdlf} note>{this.state.uni}</Text>
+                <Text style={Style.pdlf}>University</Text>
+                <Text style={Style.pdlf} note>{this.state.uni}</Text>
               </Body>
             </CardItem>
             <CardItem>
               <Ionicons name={work} size={30} color="#AFB42B" />
               <Body>
-                <Text style={style.pdlf}>Job</Text>
-                <Text style={style.pdlf} note>{this.state.job}</Text>
+                <Text style={Style.pdlf}>Job</Text>
+                <Text style={Style.pdlf} note>{this.state.job}</Text>
               </Body>
             </CardItem>
           </Card>

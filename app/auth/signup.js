@@ -38,7 +38,8 @@ export default class Signup extends Component {
             school: "",
             uni: "",
             job: "",
-            image: ""
+            image: "",
+            bio: ""
         })
         // store that the user is logged in
         signedIn()

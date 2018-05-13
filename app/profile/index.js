@@ -18,7 +18,8 @@ import {
   Footer,
   FooterTab,
   Toast,
-  ActionSheet
+  ActionSheet,
+  Spinner
 } from 'native-base';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
@@ -122,25 +123,27 @@ export default class Profile extends Component {
 
   _handleImagePicked = async(pickerResult) => {
     if(!pickerResult.cancelled) {
-      await this._uploadImage(pickerResult.uri).then(() => {
-        this._setImageUrl()
+      await this._uploadImage(pickerResult.uri)
+        .then(() => {
+          this._setImageUrl()
 
-        Toast.show({
-          text: 'Successfully Uploaded!',
-          buttonText: 'OK',
-          duration: 3000,
-          type: 'success',
-          position: 'top'
+          Toast.show({
+            text: 'Successfully Uploaded!',
+            buttonText: 'OK',
+            duration: 3000,
+            type: 'success',
+            position: 'top'
+          })
         })
-      }).catch(error => {
-        Toast.show({
-          text: error,
-          buttonText: 'OK',
-          duration: 3000,
-          type: 'danger',
-          position: 'top'
+        .catch(error => {
+          Toast.show({
+            text: error,
+            buttonText: 'OK',
+            duration: 3000,
+            type: 'danger',
+            position: 'top'
+          })
         })
-      })
     }
   }
 
@@ -194,9 +197,9 @@ export default class Profile extends Component {
         </Header>
         <Bar />
         <Grid>
-          <Row size={25} style={style.avater}>
+          <Row size={25} style={Style.avater}>
             {image !== null ? (<Thumbnail large source={{ uri: image }} />) : (<Thumbnail large source={require('../../assets/default.png')} />)}
-            <Ionicons name={camera} size={27} color="#fff" style={style.camera}
+            <Ionicons name={camera} size={27} color="#fff" style={Style.camera}
               onPress={this._pickImage} />
           </Row>
           <Row size={75}>

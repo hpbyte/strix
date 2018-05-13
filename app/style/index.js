@@ -82,5 +82,18 @@ export default {
     marginBottom: 3,
     borderLeftWidth: 5,
     borderLeftColor: '#212121',
-  }
+  },
+  avater: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000'
+  },
+  pdlf: {
+    paddingLeft: 15
+  },
+  camera: {
+    alignSelf: 'center',
+    marginTop: 5
+  },
 }

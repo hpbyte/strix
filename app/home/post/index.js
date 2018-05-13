@@ -27,6 +27,7 @@ import { alert, more } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
 import moment from 'moment'
 import Style from '../../style'
+import Bar from '../../partials/bar'
 
 const FIREBASE = firebaseService.database();
 
@@ -105,6 +106,7 @@ export default class Post extends Component {
                         </Button>
                     </Right>
                 </Header>
+                <Bar />
                 <Content>
                     <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 50}>
                     <Card>

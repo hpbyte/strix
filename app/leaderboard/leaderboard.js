@@ -19,6 +19,7 @@ import {
 } from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import { user, search } from '../partials/icons'
+import Sheader from '../partials/sheader'
 import Bar from '../partials/bar'
 import Style from '../style';
 
@@ -42,24 +43,7 @@ export default class Leaderboard extends Component {
   render() {
     return (
       <Container>
-        <Header style={Style.header}>
-          <Left style={{ flex: 1 }}>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.navigate('Profile')}>
-              <Ionicons name={user} size={26} style={Style.black}/>
-            </Button>
-          </Left>
-          <Body style={Style.flexCenter}>
-            <Title style={Style.title}>Strix</Title>
-          </Body>
-          <Right style={{ flex: 1 }}>
-            <Button transparent
-              onPress={() => this.props.navigation.navigate('Search')}>
-              <Ionicons name={search} size={26} style={Style.black}/>
-            </Button>
-          </Right>
-        </Header>
+        <Sheader navigation={this.props.navigation} />
         <Bar />
         <Content>
           <Card style={{ marginLeft: 0 }}>
