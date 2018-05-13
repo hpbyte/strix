@@ -69,7 +69,8 @@ export default class Info extends Component {
                             <Ionicons name={call} size={25} color="#fff" />
                         </Col>
                         <Col style={Style.itemCenter}>
-                            <Ionicons name={chat} size={25} color="#fff" />
+                            <Ionicons name={chat} size={25} color="#fff"
+                                onPress={() => this.props.navigation.navigate('Chat')} />
                         </Col>
                         <Col style={Style.itemCenter}>
                             <Ionicons name={mail} size={25} color="#fff" />
