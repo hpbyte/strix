@@ -47,8 +47,10 @@ const Tab1 = (props) => (
               <Text>{item.val().name}</Text>
             </Body>
             <Right>
-              <Ionicons name={right} size={27} color="#000"
-                onPress={() => props.navigation.navigate('Info', { userId: item.key })} />
+              <Button transparent
+                onPress={() => props.navigation.navigate('Info', { userId: item.key })} >
+                <Ionicons name={right} size={27} color="#000" />
+              </Button>
             </Right>
           </ListItem>
         </View>

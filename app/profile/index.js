@@ -23,7 +23,7 @@ import {
 } from 'native-base';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
-import { logout, chat, pulse, menu, quote, camera } from '../partials/icons'
+import { logout, chat, pulse, menu, quote, camera, back } from '../partials/icons'
 import { signedOut } from '../auth/check'
 import Bar from '../partials/bar'
 import Style from '../style'
@@ -181,7 +181,7 @@ export default class Profile extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.goBack()}>
-              <Ionicons name='ios-arrow-back' size={28} color='#fff' />
+              <Ionicons name={back} size={28} color='#fff' />
             </Button>
           </Left>
           <Body style={Style.flexCenter}>

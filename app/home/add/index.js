@@ -19,7 +19,7 @@ import {
 } from 'native-base';
 import { Grid, Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
-import { alert, more } from '../../partials/icons'
+import { alert, more, back } from '../../partials/icons'
 import Bar from '../../partials/bar'
 import Style from '../../style'
 import firebaseService from '../../service/firebase'
@@ -71,9 +71,9 @@ export default class Add extends Component {
                     <Header style={[Style.header, Style.bgGrey]}>
                         <Left style={{ flex: 1 }}>
                             <Button
-                            transparent
-                            onPress={() => this.props.navigation.goBack()}>
-                                <Ionicons name='ios-arrow-back' size={26} style={Style.white} />
+                                transparent
+                                onPress={() => this.props.navigation.goBack()}>
+                                <Ionicons name={back} size={26} style={Style.white} />
                             </Button>
                         </Left>
                         <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

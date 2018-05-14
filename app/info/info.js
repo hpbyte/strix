@@ -4,7 +4,7 @@ import { Container, Content, Header, Thumbnail, Body, Left, Right, Button, Text,
 import firebaseService from '../service/firebase'
 import { Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
-import { school, work, chat, mail, call } from '../partials/icons'
+import { school, work, chat, mail, call, back } from '../partials/icons'
 import { BarChart, LineChart, YAxis, Grid } from 'react-native-svg-charts'
 import Style from '../style'
 
@@ -51,7 +51,7 @@ export default class Info extends Component {
                         <Button
                         transparent
                         onPress={() => this.props.navigation.goBack()}>
-                            <Ionicons name='ios-arrow-back' size={28} color='#fff' />
+                            <Ionicons name={back} size={28} color='#fff' />
                         </Button>
                     </Left>
                     <Body style={Style.flexCenter}>
@@ -65,15 +65,23 @@ export default class Info extends Component {
                         {image !== null ? (<Thumbnail large source={{ uri: image }} />) : (<Thumbnail large source={require('../../assets/default.png')} />)}
                     </Row>
                     <Row size={10} style={Style.bgGrey}>
-                        <Col style={Style.itemCenter}>
-                            <Ionicons name={call} size={25} color="#fff" />
+                        <Col>
+                            <Button style={[Style.iconBtn, {backgroundColor: '#43a047'}]}>
+                                <Ionicons name={call} size={25} color="#fff" />
+                            </Button>
                         </Col>
-                        <Col style={Style.itemCenter}>
-                            <Ionicons name={chat} size={25} color="#fff"
-                                onPress={() => this.props.navigation.navigate('Chat')} />
+                        <Col>
+                            <Button style={[Style.iconBtn, {backgroundColor: '#039be5'}]} onPress={() => this.props.navigation.navigate('Chat', {
+                                    userId: uId,
+                                    userName: name
+                                })} >
+                                <Ionicons name={chat} size={25}  color="#fff" />
+                            </Button>
                         </Col>
-                        <Col style={Style.itemCenter}>
-                            <Ionicons name={mail} size={25} color="#fff" />
+                        <Col>
+                            <Button style={[Style.iconBtn, {backgroundColor: '#e53935'}]}>
+                                <Ionicons name={mail} size={25} color="#fff" />
+                            </Button>
                         </Col>
                     </Row>
                     <Row size={10} style={[Style.itemCenter, Style.bgDgrey, {flexDirection: 'column'}]}>

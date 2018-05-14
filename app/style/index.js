@@ -1,11 +1,11 @@
 export default {
     header: {
       backgroundColor: '#fff',
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 1.5,
-      elevation: 9
+      // shadowColor: "#000",
+      // shadowOffset: { width: 0, height: 2 },
+      // shadowOpacity: 0.1,
+      // shadowRadius: 1.5,
+      // elevation: 9
     },
     bgWhite: {
       backgroundColor: '#fff'
@@ -96,4 +96,11 @@ export default {
     alignSelf: 'center',
     marginTop: 5
   },
+  iconBtn: {
+    padding: 13,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 50,
+    alignSelf: 'center',
+  }
 }

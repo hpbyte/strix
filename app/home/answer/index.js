@@ -24,7 +24,7 @@ import {
 import { Row, Col } from 'react-native-easy-grid'
 import moment from 'moment'
 import { Ionicons } from '@expo/vector-icons'
-import { more, up, down, send } from '../../partials/icons'
+import { more, up, down, send, back } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
 import Style from '../../style'
 import Bar from '../../partials/bar'
@@ -130,7 +130,7 @@ export default class Answer extends Component {
                         <Button
                         transparent
                         onPress={() => this.props.navigation.goBack()}>
-                            <Ionicons name='ios-arrow-back' size={26} style={Style.black} />
+                            <Ionicons name={back} size={26} style={Style.black} />
                         </Button>
                         <Button transparent style={{ marginLeft: 10 }}>
                             <Thumbnail small source={require("../../../assets/default.png")} />

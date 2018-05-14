@@ -23,7 +23,7 @@ import {
     ActionSheet
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
-import { alert, more } from '../../partials/icons'
+import { alert, more, back } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
 import moment from 'moment'
 import Style from '../../style'
@@ -92,9 +92,9 @@ export default class Post extends Component {
                 <Header style={Style.header}>
                     <Left style={{ flex: 1 }}>
                         <Button
-                        transparent
-                        onPress={() => this.props.navigation.goBack()}>
-                            <Ionicons name='ios-arrow-back' size={26} style={Style.black} />
+                            transparent
+                            onPress={() => this.props.navigation.goBack()}>
+                            <Ionicons name={back} size={26} style={Style.black} />
                         </Button>
                     </Left>
                     <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

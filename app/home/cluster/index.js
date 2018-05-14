@@ -15,7 +15,7 @@ import {
   Thumbnail
 } from 'native-base';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { discuss, add, more } from '../../partials/icons'
+import { discuss, add, more, back } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
 import moment from 'moment'
 import Style from '../../style';
@@ -55,7 +55,7 @@ export default class Cluster extends Component {
             <Button
               transparent
               onPress={() => this.props.navigation.goBack()}>
-              <Ionicons name='ios-arrow-back' size={26} style={Style.black} />
+              <Ionicons name={back} size={26} style={Style.black} />
             </Button>
           </Left>
           <Body style={Style.flexCenter}>
