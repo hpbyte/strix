@@ -3,8 +3,12 @@ import { TouchableOpacity } from 'react-native'
 import { Content, Body, Text, Thumbnail, Button, SwipeRow, View } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 import { trash } from '../partials/icons'
+import firebaseService from '../service/firebase'
 import Style from '../style'
 import style from './style'
+
+const FIREBASE = firebaseService.database()
+const FIRECHAT = firebaseService.database().ref('chats')
 
 const chats = [
     {
@@ -42,6 +46,49 @@ const chats = [
 export default class Chats extends Component {
     constructor(props) {
         super(props)
+    }
+
+    _getUserChatHistory = async() => {
+        const userId = this.state.uId
+        let chatArr = []
+
+        try {
+            await FIRECHAT.once('value', snapshot => {
+
+                snapshot.forEach(snap => {
+                    if(userId === snap.val().user_1) {
+                        chatArr.push(snap.val().user_2)
+                    } else if(userId === snap.val().user_2) {
+                        chatArr.push(snap.val().user_1)
+                    }
+                })
+            }).then(() => {
+                this.setState({ chats: chatArr })
+                this._getUsers()
+            })
+        }
+        catch(error) { alert(error.message) }
+    }
+
+    _getUsers = () => {
+        const chats = this.state.chats
+        let userArr = []
+
+        chats.forEach(chat => {
+            let name = ''
+            let image = ''
+            FIREBASE.ref('users').child(chat).once('value', snapshot => {
+                name = snapshot.name
+                image = snapshot.image
+            }).then(() => {
+                userArr.push({
+                    name: name,
+                    image: image
+                })
+            })
+        })
+
+        this.setState({ users: userArr })
     }
 
     render() {

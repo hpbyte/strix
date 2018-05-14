@@ -84,7 +84,11 @@ export default class Booster extends Component {
     let uArr = []
     await FIREBASE.ref('users').orderByChild('name')
       .once('value', snapshot => {
-        snapshot.forEach(snap => { uArr.push(snap) })
+        snapshot.forEach(snap => {
+          if(snap.key !== firebaseService.auth().currentUser.uid) {
+            uArr.push(snap)
+          }
+        })
       })
       .then(() => { this.setState({ users: uArr }) })
       .catch(error => alert(error))

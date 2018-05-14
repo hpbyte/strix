@@ -7,6 +7,7 @@ import { back, more, send } from '../partials/icons'
 import Bar from '../partials/bar'
 import Style from '../style'
 
+const FIREBASE = firebaseService.database()
 const FIRECHAT = firebaseService.database().ref('chats')
 
 export default class Chat extends Component {
@@ -23,20 +24,35 @@ export default class Chat extends Component {
       chatroom: null,
       receiverId: receiverId,
       receiverName: receiverName,
-      sender: firebaseService.auth().currentUser.uid,
+      senderId: firebaseService.auth().currentUser.uid,
+      senderName: '',
+      senderImage: ''
     }
 
     this.onSend = this.onSend.bind(this)
     this.renderBubble = this.renderBubble.bind(this)
-    this.createChatRoom = this.createChatRoom.bind(this)
   }
 
   componentDidMount() {
     this.checkRoomExist()
+    this.getSenderDetail()
+  }
+
+  getSenderDetail = () => {
+    const senderId = this.state.senderId
+
+    try {
+      FIREBASE.ref('users').child(senderId).once('value', snapshot => {
+        this.setState({
+          senderName: snapshot.val().name,
+          senderImage: snapshot.val().image
+        })
+      })
+    } catch(error) { alert(error.message) }
   }
 
   checkRoomExist = () => {
-    const { sender, receiverId } = this.state
+    const { senderId, receiverId } = this.state
     let exists = false
     let room = ''
     
@@ -46,7 +62,7 @@ export default class Chat extends Component {
           user1 = snap.val().user_1
           user2 = snap.val().user_2
   
-          if((sender === user1 && receiverId === user2) || (sender === user2 && receiverId === user1)) {
+          if((senderId === user1 && receiverId === user2) || (senderId === user2 && receiverId === user1)) {
             exists = true
             room = snap.key
           }
@@ -63,12 +79,12 @@ export default class Chat extends Component {
     } catch(error) { alert(error.message) }  
   }
 
-  async createChatRoom() {
-    const { sender, receiverId } = this.state
+  createChatRoom = async() => {
+    const { senderId, receiverId } = this.state
 
     try {
       const newRoomKey = await FIRECHAT.push({
-        user_1: sender,
+        user_1: senderId,
         user_2: receiverId
       }).key
 
@@ -79,7 +95,9 @@ export default class Chat extends Component {
 
   loadMessages = async() => {
     try{
-      await FIRECHAT.child(this.state.chatroom).child('messages').on('value', snapshot => {
+      await FIRECHAT.child(this.state.chatroom).child('messages')
+        .orderByKey()
+        .on('value', snapshot => {
         let msgArr = []
   
         snapshot.forEach(snap => { msgArr.push(snap.val()) })
@@ -89,8 +107,23 @@ export default class Chat extends Component {
     } catch(error) { alert(error.message) }
   }
 
-  onSend() {
-    
+  async onSend() {
+    const { senderId, senderName, senderImage, msg } = this.state
+
+    try {
+      await FIRECHAT.child(this.state.chatroom).child('messages').push({
+        _id: Math.round(Math.random() * 1000000),
+        createdAt: Date.now(),
+        text: msg,
+        user: {
+          _id: senderId,
+          name: senderName
+        },
+        sent: true
+      }).then(() => {
+        // alert('Sent!')
+      })
+    } catch(error) { alert(error.message) }
   }
 
   renderBubble(props) {
@@ -126,13 +159,11 @@ export default class Chat extends Component {
         </Header>
         <Bar />
         <GiftedChat
-          messages={this.state.messages}
+          messages={this.state.messages.reverse()}
           text={this.state.msg}
           onInputTextChanged={msg => this.setState({ msg })}
           onSend={this.onSend}
-
-          user={{ _id: this.state.sender }}
-
+          user={{ _id: this.state.senderId }}
           renderBubble={this.renderBubble}
         />
       </Container>
