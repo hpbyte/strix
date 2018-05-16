@@ -21,11 +21,11 @@ import {
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { user, search, camera, right } from '../partials/icons'
 import firebaseService from '../service/firebase'
+import moment from 'moment'
 import Bar from '../partials/bar'
 import Style from '../style'
 
 const FIREBASE = firebaseService.database()
-const STORAGE = firebaseService.storage()
 
 const Tab1 = (props) => (
   <Card style={{marginLeft: 0}}>
@@ -49,7 +49,7 @@ const Tab1 = (props) => (
             <Right>
               <Button transparent
                 onPress={() => props.navigation.navigate('Info', { userId: item.key })} >
-                <Ionicons name={right} size={27} color="#000" />
+                <Ionicons name={right} size={30} color="#000" style={{ marginLeft: 15 }} />
               </Button>
             </Right>
           </ListItem>
@@ -61,11 +61,24 @@ const Tab1 = (props) => (
 
 const Tab2 = (props) => (
   <Card>
-    <CardItem>
-      <Body>
-        <Text>This is Tab 2 adfadfasdfsfasddddddddddddddddddddddddddddddddddd</Text>
-      </Body>
-    </CardItem>
+    <List
+      dataArray={props.appointments}
+      renderRow={(item) => {
+        return(
+          <ListItem>
+            <Left style={{ flex: 1 }}>
+              <Ionicons name={user} size={30} color="#000" />
+            </Left>
+            <Body style={{ flex: 2 }}>
+              <Text>{item.status}</Text>
+            </Body>
+            <Right style={{ flex: 1 }}>
+              <Text note>{item.startTime}</Text>
+            </Right>
+          </ListItem>
+        )
+      }}>
+    </List>
   </Card>
 )
 
@@ -73,19 +86,22 @@ export default class Booster extends Component {
   constructor(props) {
     super(props)
     
-    this.state = { users: [] }
+    this.state = { users: [], userId: firebaseService.auth().currentUser.uid, appoints: [] }
   }
 
   componentDidMount() {
     this._getUsers()
+    this._findAppointments()
   }
 
   _getUsers = async() => {
+    const uId = this.state.userId
     let uArr = []
+    
     await FIREBASE.ref('users').orderByChild('name')
       .once('value', snapshot => {
         snapshot.forEach(snap => {
-          if(snap.key !== firebaseService.auth().currentUser.uid) {
+          if(snap.key !== uId) {
             uArr.push(snap)
           }
         })
@@ -94,8 +110,57 @@ export default class Booster extends Component {
       .catch(error => alert(error))
   }
 
+  _findAppointments = async() => {
+    const uId = this.state.userId
+    let exists = false
+    let boosterIds = []
+
+    await FIREBASE.ref('booster')
+      .once('value', snapshot => {
+        snapshot.forEach(snap => {
+          pupil = snap.val().pupil
+          mentor = snap.val().mentor
+
+          if(uId === pupil || uId === mentor) {
+            exists = true
+            boosterIds.push(snap.key)
+          }
+        })
+      })
+      .then(() => {
+        if(exists) {
+          this._getAppointments(boosterIds)
+        }
+      })
+      .catch(error => alert(error))
+  }
+
+  _getAppointments = (boosterIds) => {
+    let appArr = []
+
+    for(let key in boosterIds) {
+      let arr = []
+
+      try {
+        FIREBASE.ref('booster').child(boosterIds[key]).child('appointments')
+          .once('value', snapshot => {
+            snapshot.forEach(snap => {
+              arr.push(snap.val())
+            })
+          })
+          .then(() => {
+            // append arrays
+            appArr = appArr.concat(arr)
+            this.setState({ appoints: appArr })
+          })
+          .catch(error => alert(error))
+      }
+      catch(error) { alert(error.message) }
+    }
+  }
+
   render() {
-    const { users } = this.state
+    const { users, appoints } = this.state
 
     return (
       <Container>
@@ -126,7 +191,7 @@ export default class Booster extends Component {
             </Tab>
             <Tab heading="My Appointments" textStyle={Style.black} activeTextStyle={Style.blue}
               tabStyle={Style.bgWhite} activeTabStyle={Style.bgWhite}>
-              <Tab2 />
+              <Tab2 appointments={appoints} navigation={this.props.navigation} />
             </Tab>
           </Tabs>
           <TouchableHighlight style={Style.fab}

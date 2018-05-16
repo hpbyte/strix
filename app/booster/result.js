@@ -27,7 +27,9 @@ export default class Result extends Component {
               style={{ alignSelf: 'center' }} 
               name="sort-down" size={45} color="#ccc" 
               onPress={onDone} />
-              
+            <View style={Style.flexCenter}>
+              <Text style={{ fontSize: 45, textAlign: 'center' }}>Started!</Text>
+            </View>
           </Col>
         </Grid>
       </Modal>
