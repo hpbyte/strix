@@ -19,7 +19,7 @@ import {
     CardItem,
 } from 'native-base';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { user, search, camera, right } from '../partials/icons'
+import { user, search, camera, right, calendar } from '../partials/icons'
 import firebaseService from '../service/firebase'
 import moment from 'moment'
 import Bar from '../partials/bar'
@@ -67,13 +67,15 @@ const Tab2 = (props) => (
         return(
           <ListItem>
             <Left style={{ flex: 1 }}>
-              <Ionicons name={user} size={30} color="#000" />
+              <Ionicons name={calendar} size={50} color="#0d47a1" />
+              <Body style={{ marginLeft: 16 }}>
+                {/* <Text style={{ fontSize: 17 }}>{moment(item.startTime).format('dddd MMM Do YYYY, h:mm a')}</Text> */}
+                <Text style={{ fontSize: 19 }}>{moment(item.startTime).format('Do')}</Text>
+                <Text style={{ fontSize: 13 }}>{moment(item.startTime).format('MMM / YYYY')}</Text>
+              </Body>
             </Left>
-            <Body style={{ flex: 2 }}>
-              <Text>{item.status}</Text>
-            </Body>
             <Right style={{ flex: 1 }}>
-              <Text note>{item.startTime}</Text>
+              <Text note>{moment(item.startTime).format('dddd h:mm a')}</Text>
             </Right>
           </ListItem>
         )

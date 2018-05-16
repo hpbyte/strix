@@ -39,33 +39,76 @@ export default class Answer extends Component {
         const quiz = params ? params.quiz : null
         const quizId = params ? params.quizId : null
         const qTime = params ? params.time : null
+        const qName = params ? params.qUserName : null
+        const qImage = params ? params.qUserImg : null
 
         this.state = { 
             answer: '',
             question: quiz,
             questionId: quizId,
             questionTime: qTime,
+            questionName: qName,
+            questionImg: qImage,
             answers: [],
             isUpClicked: false,
-            isDownClicked: false
+            isDownClicked: false,
+            userId: firebaseService.auth().currentUser.uid,
+            userName: '',
+            userImg: ''
         }
 
         this._voteUp = this._voteUp.bind(this)
         this._voteDown = this._voteDown.bind(this)
     }
 
-    _submitAnswer = async() => {
-        const ans = this.state.answer
-        const uId = firebaseService.auth().currentUser.uid
+    componentDidMount() {
+        this._getUserDetails()
+        this._getAnswers()
+    }
 
-        if(ans !== '') {
-            await FIREBASE.ref("answers").child(this.state.questionId).push(
+    _getUserDetails = async() => {
+        const uId = this.state.userId
+        let name = ''
+        let image = ''
+
+        try {
+            await FIREBASE.ref('users').child(uId).once('value', snapshot => {
+                name = snapshot.val().name
+                image = snapshot.val().image
+            }).then(() => {
+                this.setState({ userName: name, userImg: image })
+            }).catch(error => alert(error))
+        }
+        catch(error) { alert(error.message) }
+    }
+
+    _getAnswers = async() => {
+        try {
+            await FIREBASE.ref("answers").child(this.state.questionId).on('value', snapshot => {
+                let ansArr = []
+    
+                snapshot.forEach(snap => { ansArr.push(snap) })
+    
+                this.setState({ answers: ansArr })
+            })
+        } catch(error) { alert(error.message) }
+    }
+
+    _submitAnswer = async() => {
+        const { questionId, answer, userId, userName, userImg } = this.state
+
+        if(answer !== '') {
+            await FIREBASE.ref("answers").child(questionId).push(
                 {
-                    answer: ans,
-                    userId: uId,
+                    answer: answer,
                     timestamp: moment().format("YYYY-MM-DD HH:mm"),
                     upvote: 0,
-                    downvote: 0
+                    downvote: 0,
+                    user: {
+                        _id: userId,
+                        name: userName,
+                        image: userImg
+                    }
                 }, (error) => {
                     if(error) alert(error.message)
                 }
@@ -104,18 +147,6 @@ export default class Answer extends Component {
         })
     }
 
-    componentDidMount() {
-        try {
-            FIREBASE.ref("answers").child(this.state.questionId).on('value', snapshot => {
-                let ansArr = []
-    
-                snapshot.forEach(snap => { ansArr.push(snap) })
-    
-                this.setState({ answers: ansArr })
-            })
-        } catch(error) { alert(error.message) }
-    }
-
     componentWillUnmount() {
         Toast.toastInstance = null
         ActionSheet.actionsheetInstance = null
@@ -133,10 +164,10 @@ export default class Answer extends Component {
                             <Ionicons name={back} size={26} style={Style.black} />
                         </Button>
                         <Button transparent style={{ marginLeft: 10 }}>
-                            <Thumbnail small source={require("../../../assets/default.png")} />
+                            <Thumbnail small source={{ uri: this.state.questionImg }} />
                         </Button>
                         <View style={{ marginLeft: 7 }}>
-                            <Text>Luffy</Text>
+                            <Text>{ this.state.questionName }</Text>
                             <Text style={{ fontSize: 12 }}>{moment(this.state.questionTime).fromNow()}</Text>
                         </View>
                     </Left>
@@ -156,11 +187,11 @@ export default class Answer extends Component {
                             return (
                                 <Row key={key} style={{ margin: 10 }}>
                                     <Col size={10}>
-                                        <Thumbnail small source={require("../../../assets/default.png")} />
+                                        <Thumbnail small source={{ uri: prop.val().user.image }} />
                                     </Col>
                                     <Col size={90} style={{ marginLeft: 10 }}>
                                         <Row style={style.ansRow}>
-                                            <Text style={style.nameTxt}>Luffy</Text>
+                                            <Text style={style.nameTxt}>{prop.val().user.name}</Text>
                                             <Text style={style.ansTxt}>{prop.val().answer}</Text>
                                         </Row>
                                         <Row>
@@ -244,6 +275,7 @@ const style = StyleSheet.create({
     },
     ansTxt: {
         fontSize: 15,
+        marginTop: 5,
         marginBottom: 10,
         marginLeft: 15
     },

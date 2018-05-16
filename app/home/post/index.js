@@ -38,7 +38,30 @@ export default class Post extends Component {
         const { params } = this.props.navigation.state
         const clust = params ? params.cluster : null
 
-        this.state = { showToast: false, selected: 'What', quiz: '', duration: '', cluster: clust }
+        this.state = { 
+            showToast: false, selected: 'What', quiz: '', duration: '', cluster: clust,
+            userId: firebaseService.auth().currentUser.uid, userName: '', userImg: ''
+        }
+    }
+
+    componentDidMount() {
+        this._getUserDetails()
+    }
+
+    _getUserDetails = async() => {
+        const uId = this.state.userId
+        let name = ''
+        let image = ''
+
+        try {
+            await FIREBASE.ref('users').child(uId).once('value', snapshot => {
+                name = snapshot.val().name
+                image = snapshot.val().image
+            }).then(() => {
+                this.setState({ userName: name, userImg: image })
+            }).catch(error => alert(error))
+        }
+        catch(error) { alert(error.message) }
     }
 
     onValueChange(value) {
@@ -46,15 +69,19 @@ export default class Post extends Component {
     }
 
     _postQuiz = async() => {
-        const { selected, quiz, duration, cluster } = this.state
+        const { selected, quiz, duration, cluster, userId, userName, userImg } = this.state
 
         if(quiz !== '') {
             await FIREBASE.ref('questions').child(cluster).push(
                 {
                     quiz: selected+" "+quiz,
-                    userId: firebaseService.auth().currentUser.uid,
                     duration: '12-2-2019',
-                    timestamp: moment().format("YYYY-MM-DD HH:mm")
+                    timestamp: moment().format("YYYY-MM-DD HH:mm"),
+                    user: {
+                        _id: userId,
+                        name: userName,
+                        image: userImg
+                    }
                 }, (error) => {
                     if(error) alert(error.message)
                 }

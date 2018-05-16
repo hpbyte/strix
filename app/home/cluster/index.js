@@ -34,10 +34,14 @@ export default class Cluster extends Component {
   }
 
   componentDidMount() {
+    this._getQuestions()
+  }
+
+  _getQuestions = async() => {
     const cluster = this.state.cluster
 
     try {
-      FIREBASE.ref('questions').child(cluster).on('value', (snapshot) => {
+      await FIREBASE.ref('questions').child(cluster).on('value', (snapshot) => {
         let qArr = []
 
         snapshot.forEach((snap) => { qArr.push(snap) })
@@ -78,9 +82,9 @@ export default class Cluster extends Component {
                 <Card key={key}>
                   <CardItem>
                     <Left>
-                      <Thumbnail source={require("../../../assets/default.png")} />
+                      {prop.val().user.image !== '' ? <Thumbnail source={{ uri: prop.val().user.image }} /> : <Thumbnail source={require("../../../assets/default.png")} />}
                       <Body>
-                        <Text>Luffy</Text>
+                        <Text>{prop.val().user.name}</Text>
                       </Body>
                     </Left>
                     <Right>
@@ -96,10 +100,12 @@ export default class Cluster extends Component {
                         onPress={() => this.props.navigation.navigate('Answer', {
                           quizId: prop.key,
                           quiz: prop.val().quiz,
-                          time: prop.val().timestamp
+                          time: prop.val().timestamp,
+                          qUserImg: prop.val().user.image,
+                          qUserName: prop.val().user.name
                         })}>
                         <Ionicons name={discuss} size={23} />
-                        <Text>4 Answers</Text>
+                        <Text>Answers</Text>
                       </Button>
                     </Left>
                     <Right>
