@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, TouchableHighlight, TouchableOpacity } from 'react-native';
+import {
+  View, TouchableHighlight, TouchableOpacity, ImageBackground, Dimensions
+} from 'react-native';
 import {
   Container,
   Header,
@@ -22,6 +24,8 @@ import Sheader from '../partials/sheader'
 import Style from '../style';
 
 const FIREBASE = firebaseService.database()
+const WIDTH = Dimensions.get('screen').width / 1.02
+const HEIGHT = Dimensions.get('screen').height / 3.7
 const colors = [
   '#757575', '#3949ab', '#00897b', '#546e7a', '#4527a0', '#1388e5', 
   '#616161', '#303f9f', '#00796b', '#455a64', '#311b92', '#1976d2',
@@ -75,10 +79,16 @@ export default class Clusters extends Component {
                     onPress={() => this.props.navigation.navigate('Cluster', { cluster: prop.cluster })}>
                     <Row style={[Style.itemCenter, {height:200, backgroundColor: colors[this.generateRandomColor()]}]}>
                         <View>
-                            {/* <Ionicons name='logo-nodejs' size={55} color="#fff" /> */}
                             <Text style={[Style.white, {fontSize: 25}]}>{prop.cluster}</Text>
                         </View>
                     </Row>
+                    {/* <View style={{ borderRadius: 20 }}>
+                      <ImageBackground source={{ uri: prop.bgimg }} style={[
+                        Style.itemCenter, { width: WIDTH, height: HEIGHT, margin: 5, padding: 0
+                        }]}>
+                        <Text style={[Style.white, {fontSize: 25, margin: 30}]}>{prop.cluster}</Text>
+                      </ImageBackground>
+                    </View> */}
                   </TouchableOpacity>
                 )
               })}

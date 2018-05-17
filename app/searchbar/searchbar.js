@@ -3,6 +3,7 @@ import { View, Platform } from 'react-native'
 import { Container, Header, Item, Input, Button, Text } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
 import { search } from '../partials/icons'
+import Bar from '../partials/bar'
 import Style from '../style'
 
 export default class Search extends Component {
@@ -19,6 +20,7 @@ export default class Search extends Component {
             <Text>Cancel</Text>
           </Button>
         </Header>
+        <Bar />
       </Container>
     );
   }

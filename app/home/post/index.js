@@ -135,7 +135,7 @@ export default class Post extends Component {
                 </Header>
                 <Bar />
                 <Content>
-                    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 50}>
+                    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 30}>
                     <Card>
                         <CardItem>
                             <Ionicons name={alert} color="red" size={35} />

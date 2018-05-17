@@ -19,7 +19,7 @@ import {
     CardItem,
 } from 'native-base';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { user, search, camera, right, calendar } from '../partials/icons'
+import { user, search, camera, right, calendar, menu } from '../partials/icons'
 import firebaseService from '../service/firebase'
 import moment from 'moment'
 import Bar from '../partials/bar'
@@ -69,13 +69,22 @@ const Tab2 = (props) => (
             <Left style={{ flex: 1 }}>
               <Ionicons name={calendar} size={50} color="#0d47a1" />
               <Body style={{ marginLeft: 16 }}>
-                {/* <Text style={{ fontSize: 17 }}>{moment(item.startTime).format('dddd MMM Do YYYY, h:mm a')}</Text> */}
-                <Text style={{ fontSize: 19 }}>{moment(item.startTime).format('Do')}</Text>
-                <Text style={{ fontSize: 13 }}>{moment(item.startTime).format('MMM / YYYY')}</Text>
+                <Text style={{ fontSize: 19 }}>{moment(item.val().startTime).format('Do')}</Text>
+                <Text style={{ fontSize: 13 }}>{moment(item.val().startTime).format('MMM / YYYY')}</Text>
               </Body>
             </Left>
             <Right style={{ flex: 1 }}>
-              <Text note>{moment(item.startTime).format('dddd h:mm a')}</Text>
+              {/* <Text note>{moment(item.val().startTime).format('ddd h:mm a')}</Text> */}
+              <Button transparent
+                onPress={() => props.navigation.navigate('End', {
+                  appointmentId: item.key,
+                  startTime: item.val().startTime,
+                  endTime: item.val().endTime,
+                  totalTime: item.val().totalTime,
+                  status: item.val().status,
+                })}>
+                <Ionicons name={menu} size={25} color='#000' style={{ marginLeft: 20 }} />
+              </Button>
             </Right>
           </ListItem>
         )
@@ -88,7 +97,9 @@ export default class Booster extends Component {
   constructor(props) {
     super(props)
     
-    this.state = { users: [], userId: firebaseService.auth().currentUser.uid, appoints: [] }
+    this.state = {
+      users: [], userId: firebaseService.auth().currentUser.uid, appoints: []
+    }
   }
 
   componentDidMount() {
@@ -147,7 +158,7 @@ export default class Booster extends Component {
         FIREBASE.ref('booster').child(boosterIds[key]).child('appointments')
           .once('value', snapshot => {
             snapshot.forEach(snap => {
-              arr.push(snap.val())
+              arr.push(snap)
             })
           })
           .then(() => {

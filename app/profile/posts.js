@@ -18,11 +18,17 @@ class Posts extends Component {
     }
 
     componentDidMount() {
+        this._getMyPosts()
+    }
+
+    _getMyPosts = async() => {
+        const uId = firebaseService.auth().currentUser.uid
         let qArr = []
-        FIREBASE.ref("questions").once("value", snapshot => {
+        
+        await FIREBASE.ref("questions").once("value", snapshot => {
             snapshot.forEach(snap => {
                 snap.forEach(snp => {
-                    if(snp.val().userId === firebaseService.auth().currentUser.uid) {
+                    if(snp.val().user._id === uId) {
                         qArr.push(snp)
                     }
                 })
@@ -48,9 +54,11 @@ class Posts extends Component {
                                         onPress={() => this.props.navigation.navigate('Answer', {
                                             quizId: q.key,
                                             quiz: q.val().quiz,
-                                            time: q.val().timestamp
+                                            time: q.val().timestamp,
+                                            qUserImg: q.val().user.image,
+                                            qUserName: q.val().user.name
                                         })}>
-                                        <Ionicons name={right} size={28} />
+                                        <Ionicons name={right} size={28} style={{ marginLeft: 15 }}/>
                                     </Button>
                                 </Right>
                             </ListItem>

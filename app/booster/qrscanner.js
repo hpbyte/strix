@@ -129,8 +129,6 @@ export default class QRScanner extends PureComponent {
         <Result 
           show={modalVisible}
           onDone={this._handleDone}
-          data={data}
-          type={type}
         />
         <BarCodeScanner
           type={isBack ? 'back' : 'front'}

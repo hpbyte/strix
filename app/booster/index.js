@@ -1,6 +1,6 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation'
-import Result from './result'
+import End from './end'
 import Info from '../info/info'
 import Booster from './booster'
 import Chat from '../chat/chat'
@@ -8,7 +8,7 @@ import QRScanner from './qrscanner'
 
 const BoostStack = StackNavigator(
     {
-        Result: { screen: Result },
+        End: { screen: End },
         Info: { screen: Info },
         Chat: { screen: Chat },
         Booster: { screen: Booster },

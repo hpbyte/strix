@@ -22,12 +22,12 @@ import {
     Footer
 } from 'native-base'
 import { Row, Col } from 'react-native-easy-grid'
-import moment from 'moment'
+import firebaseService from '../../service/firebase'
 import { Ionicons } from '@expo/vector-icons'
 import { more, up, down, send, back } from '../../partials/icons'
-import firebaseService from '../../service/firebase'
-import Style from '../../style'
+import moment from 'moment'
 import Bar from '../../partials/bar'
+import Style from '../../style'
 
 const FIREBASE = firebaseService.database()
 
@@ -115,14 +115,6 @@ export default class Answer extends Component {
             ).then(() => {
                 // clear the answer input field
                 this.setState({ answer: '' })
-                // successfully submitted
-                Toast.show({
-                    text: 'Successfully Submitted!',
-                    buttonText: 'OK',
-                    duration: 3000,
-                    type: 'success',
-                    position: 'top'
-                })
             }).catch(error => alert(error))
         } else {
             Toast.show({
@@ -264,7 +256,7 @@ const style = StyleSheet.create({
     },
     ansRow: {
         flexDirection: 'column',
-        borderRadius: 30,
+        borderRadius: 20,
         backgroundColor: '#fff'
     },
     nameTxt: {

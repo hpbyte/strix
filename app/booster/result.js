@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal } from 'react-native';
+import { Modal, TouchableOpacity } from 'react-native';
 import { Container, Content, Text, View } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
 import { Grid, Col, Row } from 'react-native-easy-grid'
@@ -13,7 +13,7 @@ export default class Result extends Component {
   }
 
   render() {
-    const { show, onDone, data, type } = this.props
+    const { show, onDone } = this.props
 
     return(
       <Modal
