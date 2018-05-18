@@ -148,6 +148,7 @@ export default class Answer extends Component {
         return(
         <Root>
             <Container>
+                {Platform.OS === 'ios' ? <View style={{height: 10, backgroundColor: '#fff'}} /> : null}
                 <Header noShadow style={style.ansHeader} >
                     <Left style={{ flex: 1, flexDirection: 'row' }}>
                         <Button
@@ -170,51 +171,51 @@ export default class Answer extends Component {
                     </Right>
                 </Header>
                 <Bar />
+                <View style={{ backgroundColor: '#fff' }}>
+                    <Text style={style.quizTxt}>{ this.state.question }</Text>
+                </View>
                 <Content>
-                    <View style={{ backgroundColor: '#fff' }}>
-                        <Text style={style.quizTxt}>{ this.state.question }</Text>
-                    </View>
                     <View>
-                        {this.state.answers.map((prop, key) => {
-                            return (
-                                <Row key={key} style={{ margin: 10 }}>
-                                    <Col size={10}>
-                                        <Thumbnail small source={{ uri: prop.val().user.image }} />
-                                    </Col>
-                                    <Col size={90} style={{ marginLeft: 10 }}>
-                                        <Row style={style.ansRow}>
-                                            <Text style={style.nameTxt}>{prop.val().user.name}</Text>
-                                            <Text style={style.ansTxt}>{prop.val().answer}</Text>
-                                        </Row>
-                                        <Row>
-                                            <Col size={60}>
-                                                <Text style={style.dateTxt}>{moment(prop.val().timestamp).fromNow()}</Text>
-                                            </Col>
-                                            <Col size={10}>
-                                                <Button transparent style={style.updownBtn}
-                                                    disabled={this.state.isUpClicked ? true : false}
-                                                    onPress={() => this._voteUp(prop.key)}>
-                                                    <Ionicons name={up} size={27} />
-                                                </Button>
-                                            </Col>
-                                            <Col size={10}>
-                                                <Text style={[Style.blue, style.updownTxt]}>+{prop.val().upvote}</Text>
-                                            </Col>
-                                            <Col size={10}>
-                                                <Button transparent style={style.updownBtn}
-                                                    disabled={this.state.isDownClicked ? true : false}
-                                                    onPress={() => this._voteDown(prop.key)}>
-                                                    <Ionicons name={down} size={27} />
-                                                </Button>
-                                            </Col>
-                                            <Col size={10}>
-                                                <Text style={[Style.red, style.updownTxt]}>-{prop.val().downvote}</Text>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            )
-                        })}
+                    {this.state.answers.map((prop, key) => {
+                        return (
+                            <Row key={key} style={{ margin: 10 }}>
+                                <Col size={10}>
+                                    <Thumbnail small source={{ uri: prop.val().user.image }} />
+                                </Col>
+                                <Col size={90} style={{ marginLeft: 10 }}>
+                                    <Row style={style.ansRow}>
+                                        <Text style={style.nameTxt}>{prop.val().user.name}</Text>
+                                        <Text style={style.ansTxt}>{prop.val().answer}</Text>
+                                    </Row>
+                                    <Row>
+                                        <Col size={60}>
+                                            <Text style={style.dateTxt}>{moment(prop.val().timestamp).fromNow()}</Text>
+                                        </Col>
+                                        <Col size={10}>
+                                            <Button transparent style={style.updownBtn}
+                                                disabled={this.state.isUpClicked ? true : false}
+                                                onPress={() => this._voteUp(prop.key)}>
+                                                <Ionicons name={up} size={27} />
+                                            </Button>
+                                        </Col>
+                                        <Col size={10}>
+                                            <Text style={[Style.blue, style.updownTxt]}>+{prop.val().upvote}</Text>
+                                        </Col>
+                                        <Col size={10}>
+                                            <Button transparent style={style.updownBtn}
+                                                disabled={this.state.isDownClicked ? true : false}
+                                                onPress={() => this._voteDown(prop.key)}>
+                                                <Ionicons name={down} size={27} />
+                                            </Button>
+                                        </Col>
+                                        <Col size={10}>
+                                            <Text style={[Style.red, style.updownTxt]}>-{prop.val().downvote}</Text>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        )
+                    })}
                     </View>
                 </Content>
                 {Platform.OS === 'ios' ? (<KeyboardAvoidingView behavior="padding">

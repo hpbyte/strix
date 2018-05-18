@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, TouchableHighlight, TouchableOpacity, ImageBackground, Dimensions
+  View, TouchableHighlight, TouchableOpacity, ImageBackground, Dimensions, FlatList, StyleSheet
 } from 'react-native';
 import {
   Container,
@@ -23,42 +23,113 @@ import Bar from '../partials/bar'
 import Sheader from '../partials/sheader'
 import Style from '../style';
 
-const FIREBASE = firebaseService.database()
-const WIDTH = Dimensions.get('screen').width / 1.02
-const HEIGHT = Dimensions.get('screen').height / 3.7
-const colors = [
-  '#757575', '#3949ab', '#00897b', '#546e7a', '#4527a0', '#1388e5', 
-  '#616161', '#303f9f', '#00796b', '#455a64', '#311b92', '#1976d2',
-  '#424242', '#283593', '#00695c', '#37474f', '#4e342e', '#1565c0',
-  '#212121', '#1a237e', '#004d40', '#263238', '#3e2723', '#0d47a1',
+const FIRELUST = firebaseService.database().ref('clusters')
+const WIDTH = Dimensions.get('screen').width / 1.2
+const HEIGHT = Dimensions.get('screen').height / 4
+const quotes = [
+  'if you fear failure, you will never go anywhere',
+  'yesterday, you said tommorrow',
+  'we do not see things as they are, we see things as we are',
+  'you can feel sore tomorrow or you can feel sorry tomorrow, you choose',
+  'it is never too late to be what you might have been',
+  'creativity is intelligence having fun',
+  'never give up on a dream just because of the time it will take to accomplish it. the time will pass anyway',
+  'life isn’t about finding yourself. Life is about creating yourself',
+  'a year from now you will wish you had started today',
+  'be kind whenever possible. It is always possible',
+  'it is not the years in your life that count. it is the life in your years',
+  'the best way to find out if you can trust somebody is to trust them',
+  'failure is simply the opportunity to begin again, this time more intelligently',
+  'the privilege of a lifetime is being who you are',
+  'keep your goals away from the trolls',
+  "don't compare your beginning to someone else's middle",
+  'if you can dream it, you can do it',
+  'adventure is worthwhile in itself',
+  "if it ain't fun, don't do it",
+  "it is not the load that breaks you down. it's the way you carry it"
 ]
 
 export default class Clusters extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { clusters: [] }
-    this.generateRandomColor.bind(this)
+    this.state = { clusters: [], cs: [], notcs: [] }
+
+    this.generateRandomNum.bind(this)
+    this.generateRandomQuote.bind(this)
   }
 
-  generateRandomColor = () => {
-    return Math.floor(Math.random() * colors.length)
+  generateRandomQuote = () => {
+    return quotes[Math.floor(Math.random() * quotes.length)]
+  }
+
+  generateRandomNum = () => {
+    return Math.floor(Math.random() * 100)
   }
 
   componentDidMount() {
+    // this._getAllClusters()
+    this._getCSclusters()
+    this._getNotCsClusters()
+  }
+
+  // _getAllClusters = async() => {
+  //   let arr = []
+
+  //   try {
+  //     await FIRELUST.once('value', (snapshot) => {
+
+  //       snapshot.forEach(s => {
+  //         s.forEach(ss => {
+  //           ss.forEach(sss => {
+  //             arr.push(sss)
+  //           })
+  //         })      
+  //       })
+  //     }).then(() => {
+  //       this.setState({ clusters: arr })
+  //     })
+  //   } catch(error) { alert(error) }
+  // }
+
+  _getCSclusters = async() => {
+    let arr = []
+
     try {
-      FIREBASE.ref('clusters/').once('value', (snapshot) => {
-        let cArr = []
+      await FIRELUST.once('value', (snapshot) => {
 
-        snapshot.forEach((s) => {
-          s.forEach(ss => {
-            ss.forEach(sss => {
-              cArr.push(sss.val())
+        snapshot.forEach(s => {
+          if(s.key === 'COMPUTER SCIENCE') {
+            s.forEach(ss => {
+              ss.forEach(sss => {
+                arr.push(sss)
+              })
             })
-          })
+          }
         })
+      }).then(() => {
+        this.setState({ cs: arr })
+      })
+    } catch(error) { alert(error) }
+  }
 
-        this.setState({ clusters: cArr })
+  _getNotCsClusters = async() => {
+    let arr = []
+
+    try {
+      await FIRELUST.once('value', (snapshot) => {
+
+        snapshot.forEach(s => {
+          if(s.key !== 'COMPUTER SCIENCE') {
+            s.forEach(ss => {
+              ss.forEach(sss => {
+                arr.push(sss)
+              })
+            })
+          }
+        })
+      }).then(() => {
+        this.setState({ notcs: arr })
       })
     } catch(error) { alert(error) }
   }
@@ -68,33 +139,60 @@ export default class Clusters extends Component {
       <Container>
         <Sheader navigation={this.props.navigation} />
         <Bar />
-        <View style={{flex: 1}}>
-          <Content>
-            <Grid>
-              <Col>
-              {this.state.clusters.map((prop, key) => {
-                return (
-                  <TouchableOpacity
-                    key={key}
-                    onPress={() => this.props.navigation.navigate('Cluster', { cluster: prop.cluster })}>
-                    <Row style={[Style.itemCenter, {height:200, backgroundColor: colors[this.generateRandomColor()]}]}>
-                        <View>
-                            <Text style={[Style.white, {fontSize: 25}]}>{prop.cluster}</Text>
+        <View style={[Style.bgWhite, {flex: 1}]}>
+          <View style={{ height: 10 }} />
+          <Grid>
+            <Row size={20}>
+              <Text style={style.welTxt}>Clusters of your Interests</Text>
+            </Row>
+            <Row size={10}>
+              <Text style={style.welNotetxt}># {this.generateRandomQuote()}</Text>
+            </Row>
+            <Row size={35} style={style.marLft7}>
+              <FlatList
+                data={this.state.cs}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({item}) => {
+                  return(
+                    <TouchableOpacity
+                      id={item.key}
+                      onPress={() => this.props.navigation.navigate('Cluster', { cluster: item.val().cluster })}>
+                      <ImageBackground source={{ uri: item.val().bgimg }} style={style.bgImg} borderRadius={10}>
+                        <View style={[Style.flexCenter, style.bgImgDarken]}>
+                          <Text style={style.clusTxt}># {item.val().cluster}</Text>
+                          <Text style={{ fontSize: 14, color: '#fff' }}>{this.generateRandomNum()} people this week</Text>
                         </View>
-                    </Row>
-                    {/* <View style={{ borderRadius: 20 }}>
-                      <ImageBackground source={{ uri: prop.bgimg }} style={[
-                        Style.itemCenter, { width: WIDTH, height: HEIGHT, margin: 5, padding: 0
-                        }]}>
-                        <Text style={[Style.white, {fontSize: 25, margin: 30}]}>{prop.cluster}</Text>
                       </ImageBackground>
-                    </View> */}
-                  </TouchableOpacity>
-                )
-              })}
-              </Col>
-            </Grid>
-          </Content>
+                    </TouchableOpacity>
+                  )
+                }}
+              />
+            </Row>
+            <Row size={35} style={style.marLft7}>
+              <FlatList
+                data={this.state.notcs}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({item}) => {
+                  return(
+                    <TouchableOpacity
+                      id={item.key}
+                      onPress={() => this.props.navigation.navigate('Cluster', { cluster: item.val().cluster })}>
+                      <ImageBackground source={{ uri: item.val().bgimg }} style={[style.bgImg, {
+                          width: WIDTH / 1.2, height: HEIGHT / 1.2
+                        }]} borderRadius={10}>
+                        <View style={[Style.flexCenter, style.bgImgDarken]}>
+                          <Text style={style.clusTxt}># {item.val().cluster}</Text>
+                          <Text style={{ fontSize: 14, color: '#fff' }}>{this.generateRandomNum()} people this week</Text>
+                        </View>
+                      </ImageBackground>
+                    </TouchableOpacity>
+                  )
+                }}
+              />
+            </Row>
+          </Grid>
           <TouchableHighlight style={Style.fab}
             onPress={() => this.props.navigation.navigate('Add')}>
             <Ionicons name={add} color='#fff' size={30} />
@@ -104,3 +202,34 @@ export default class Clusters extends Component {
     );
   }
 }
+
+const style = StyleSheet.create({
+  bgImg: {
+    width: WIDTH,
+    height: HEIGHT,
+    margin: 5,
+    padding: 0
+  },
+  bgImgDarken: {
+    backgroundColor: 'rgba(0,0,0,.6)',
+    borderRadius: 10
+  },
+  clusTxt: {
+    fontSize: 20,
+    color: '#fff'
+  },
+  welTxt: {
+    margin: 15,
+    marginRight: 25,
+    fontSize: 35,
+    fontWeight: 'bold',
+    // fontFamily: 'permanent'
+  },
+  welNotetxt: {
+    marginLeft: 15,
+    color: '#000'
+  },
+  marLft7: {
+    marginLeft: 7
+  }
+})

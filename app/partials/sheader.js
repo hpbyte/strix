@@ -15,7 +15,7 @@ import Style from '../style'
 export default class Sheader extends React.Component {
     render() {
         return(
-        <Header style={Style.header}>
+        <Header style={Style.header} noShadow>
             <Left style={{ flex: 1 }}>
                 <Button
                     transparent

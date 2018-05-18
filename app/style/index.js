@@ -1,6 +1,7 @@
 export default {
     header: {
       backgroundColor: '#fff',
+      borderBottomWidth: 0
       // shadowColor: "#000",
       // shadowOffset: { width: 0, height: 2 },
       // shadowOpacity: 0.1,
