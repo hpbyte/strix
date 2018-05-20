@@ -1,28 +1,29 @@
-import { Dimensions } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 export const MAR_TOP = Dimensions.get('window').height / 11
 
 export default {
+    verticalCenter: {
+        justifyContent: 'center'
+    },
     strix: {
         fontSize: 70,
         fontFamily: 'pacifico',
-        textAlign: 'center',
-        marginTop: MAR_TOP
+        alignSelf: 'center'
     },
-    item: {
-        marginTop: 30,
-        marginLeft: 10,
-        marginRight: 10,
-        backgroundColor: '#fafafacc'
+    inputView: {
+        justifyContent: 'center',
+        marginLeft: 15,
+        marginRight: 15,
+        backgroundColor: '#fff',
+        borderRadius: 50
     },
     input: {
-        marginLeft: 10
+        fontSize: 16,
     },
     inputIcon: {
-        marginLeft: 15
+        alignSelf: 'center',
     },
     btn: {
-        marginTop: 40,
-        justifyContent: 'center',
         alignSelf: 'center'
     },
     txtLogin: {
@@ -33,7 +34,7 @@ export default {
     },
     errorTxt: {
         color: 'red',
-        marginLeft: 30,
+        marginLeft: 40,
         marginTop: 5
     }
 }

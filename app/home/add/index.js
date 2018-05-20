@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet, Dimensions, ScrollView, Animated, View, Image, TextInput, TouchableWithoutFeedback, Keyboard,
-    KeyboardAvoidingView
+    StyleSheet, Dimensions, ScrollView, Animated, View, Image, TextInput, KeyboardAvoidingView, Platform
 } from 'react-native';
 import {
-    Container, Header, Text, Left, Right, Body, Title, Button, Toast, ActionSheet, Root, Card, CardItem, List, Item, ListItem, Content
+    Container, Header, Text, Left, Right, Body, Title, Button, Toast, ActionSheet, Root, List, ListItem, Content
 } from 'native-base';
 import { Grid, Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
@@ -221,7 +220,10 @@ export default class Add extends Component {
                                     <KeyboardAvoidingView behavior="padding" enabled>
                                         <Image resizeMode="contain" source={require('../../../assets/root.jpg')} style={style.rootImg} />
                                         <Text style={style.text}>First, tell us what is the original field of your cluster</Text>
-                                        <TextInput autoCapitalize='words' value={this.state.root} style={style.input} 
+                                        <TextInput autoCapitalize='words'
+                                            style={style.input}
+                                            underlineColorAndroid="transparent"
+                                            value={this.state.root}
                                             onChangeText={root => this.setState({root})} />
                                     </KeyboardAvoidingView>
                                 </Content>
@@ -233,7 +235,10 @@ export default class Add extends Component {
                                     <KeyboardAvoidingView behavior="padding" enabled>
                                         <Image resizeMode="contain" source={require('../../../assets/branch.jpg')} style={style.rootImg} />
                                         <Text style={style.text}>Tell us the descendent of the original field that your cluster belongs to</Text>
-                                        <TextInput autoCapitalize='words' value={this.state.branch} style={style.input}
+                                        <TextInput autoCapitalize='words'
+                                            style={style.input}
+                                            underlineColorAndroid="transparent"
+                                            value={this.state.branch}
                                             onChangeText={branch => this.setState({branch})} />
                                     </KeyboardAvoidingView>
                                 </Content>
@@ -245,7 +250,10 @@ export default class Add extends Component {
                                     <KeyboardAvoidingView behavior="padding" enabled>
                                         <Image resizeMode="contain" source={require('../../../assets/tree.jpg')} style={style.rootImg} />
                                         <Text style={style.text}>What will be the name of your cluster and choose an image</Text>
-                                        <TextInput autoCapitalize='words' value={this.state.cluster} style={style.input}
+                                        <TextInput autoCapitalize='words'
+                                            style={style.input}
+                                            underlineColorAndroid="transparent"
+                                            value={this.state.cluster}
                                             onChangeText={cluster => this.setState({cluster})} />
                                         <Button transparent style={style.camBtn}
                                             onPress={this._pickImage}>
@@ -297,7 +305,7 @@ const style = StyleSheet.create({
         backgroundColor: '#eceff1',
         borderRadius: 50,
         paddingLeft: 25,
-        padding: 15,
+        padding: Platform.OS === 'ios' ? 15 : 10,
         fontSize: 16
     },
     list: {

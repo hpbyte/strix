@@ -171,10 +171,11 @@ export default class Answer extends Component {
                     </Right>
                 </Header>
                 <Bar />
-                <View style={{ backgroundColor: '#fff' }}>
-                    <Text style={style.quizTxt}>{ this.state.question }</Text>
-                </View>
+                <View style={{ height: 10, backgroundColor: '#fff' }} />
                 <Content>
+                    <View style={{ backgroundColor: '#fff' }}>
+                        <Text style={style.quizTxt}>{ this.state.question }</Text>
+                    </View>
                     <View>
                     {this.state.answers.map((prop, key) => {
                         return (
