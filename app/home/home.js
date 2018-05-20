@@ -16,7 +16,7 @@ import {
   CardItem
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { add, user } from '../partials/icons'
+import { add, user, quote } from '../partials/icons'
 import { Grid, Col, Row } from "react-native-easy-grid";
 import firebaseService from '../service/firebase'
 import Bar from '../partials/bar'
@@ -37,7 +37,7 @@ const quotes = [
   'life isn’t about finding yourself. Life is about creating yourself',
   'a year from now you will wish you had started today',
   'be kind whenever possible. It is always possible',
-  'it is not the years in your life that count. it is the life in your years',
+  "it's not the years in your life that count. it's the life in your years",
   'the best way to find out if you can trust somebody is to trust them',
   'failure is simply the opportunity to begin again, this time more intelligently',
   'the privilege of a lifetime is being who you are',
@@ -46,21 +46,23 @@ const quotes = [
   'if you can dream it, you can do it',
   'adventure is worthwhile in itself',
   "if it ain't fun, don't do it",
-  "it is not the load that breaks you down. it's the way you carry it"
+  "it is not the load that breaks you down. it's the way you carry it",
+  "If you lose, don't lose the lesson",
+  'Dream big dreams. Small dreams have no magic'
 ]
 
 export default class Clusters extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { clusters: [], cs: [], notcs: [] }
+    this.state = { cs: [], notcs: [], quote: '' }
 
     this.generateRandomNum.bind(this)
-    this.generateRandomQuote.bind(this)
   }
 
-  generateRandomQuote = () => {
-    return quotes[Math.floor(Math.random() * quotes.length)]
+  _generateRandomQuote = () => {
+    let rand = Math.floor(Math.random() * quotes.length)
+    this.setState({ quote: quotes[rand] })
   }
 
   generateRandomNum = () => {
@@ -68,32 +70,13 @@ export default class Clusters extends Component {
   }
 
   componentDidMount() {
-    // this._getAllClusters()
-    this._getCSclusters()
-    this._getNotCsClusters()
+    this._getClusters()
+    this._generateRandomQuote()
   }
 
-  // _getAllClusters = async() => {
-  //   let arr = []
-
-  //   try {
-  //     await FIRELUST.once('value', (snapshot) => {
-
-  //       snapshot.forEach(s => {
-  //         s.forEach(ss => {
-  //           ss.forEach(sss => {
-  //             arr.push(sss)
-  //           })
-  //         })      
-  //       })
-  //     }).then(() => {
-  //       this.setState({ clusters: arr })
-  //     })
-  //   } catch(error) { alert(error) }
-  // }
-
-  _getCSclusters = async() => {
-    let arr = []
+  _getClusters = async() => {
+    let arr1 = []
+    let arr2 = []
 
     try {
       await FIRELUST.once('value', (snapshot) => {
@@ -102,34 +85,19 @@ export default class Clusters extends Component {
           if(s.key === 'COMPUTER SCIENCE') {
             s.forEach(ss => {
               ss.forEach(sss => {
-                arr.push(sss)
+                arr1.push(sss)
               })
             })
-          }
-        })
-      }).then(() => {
-        this.setState({ cs: arr })
-      })
-    } catch(error) { alert(error) }
-  }
-
-  _getNotCsClusters = async() => {
-    let arr = []
-
-    try {
-      await FIRELUST.once('value', (snapshot) => {
-
-        snapshot.forEach(s => {
-          if(s.key !== 'COMPUTER SCIENCE') {
+          } else {
             s.forEach(ss => {
               ss.forEach(sss => {
-                arr.push(sss)
+                arr2.push(sss)
               })
             })
           }
         })
       }).then(() => {
-        this.setState({ notcs: arr })
+        this.setState({ cs: arr1, notcs: arr2 })
       })
     } catch(error) { alert(error) }
   }
@@ -142,13 +110,13 @@ export default class Clusters extends Component {
         <View style={[Style.bgWhite, {flex: 1}]}>
           <View style={{ height: 10 }} />
           <Grid>
-            <Row size={20}>
+            <Row size={22} style={Style.verticalCenter}>
               <Text style={style.welTxt}>Clusters of your Interests</Text>
             </Row>
-            <Row size={10}>
-              <Text style={style.welNotetxt}># {this.generateRandomQuote()}</Text>
+            <Row size={13} style={Style.verticalCenter}>
+              <Text style={style.welNotetxt}><Ionicons name={quote} size={20} />  {this.state.quote}</Text>
             </Row>
-            <Row size={35} style={style.marLft7}>
+            <Row size={35} style={[style.marLft7, Style.verticalCenter]}>
               <FlatList
                 data={this.state.cs}
                 horizontal={true}
@@ -169,7 +137,7 @@ export default class Clusters extends Component {
                 }}
               />
             </Row>
-            <Row size={35} style={style.marLft7}>
+            <Row size={30} style={[style.marLft7, Style.verticalCenter]}>
               <FlatList
                 data={this.state.notcs}
                 horizontal={true}
@@ -211,7 +179,7 @@ const style = StyleSheet.create({
     padding: 0
   },
   bgImgDarken: {
-    backgroundColor: 'rgba(0,0,0,.6)',
+    backgroundColor: 'rgba(0,0,0,.5)',
     borderRadius: 10
   },
   clusTxt: {
@@ -219,14 +187,14 @@ const style = StyleSheet.create({
     color: '#fff'
   },
   welTxt: {
-    margin: 15,
+    marginLeft: 15,
     marginRight: 25,
     fontSize: 35,
     fontWeight: 'bold',
-    // fontFamily: 'permanent'
   },
   welNotetxt: {
     marginLeft: 15,
+    marginRight: 15,
     color: '#000'
   },
   marLft7: {

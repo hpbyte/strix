@@ -45,7 +45,7 @@ export default class Leaderboard extends Component {
       <Container>
         <Sheader navigation={this.props.navigation} />
         <Bar />
-        <Content>
+        <Content style={Style.bgWhite}>
           <Card style={{ marginLeft: 0 }}>
             <List
               dataArray={data}
