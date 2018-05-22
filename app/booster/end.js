@@ -8,8 +8,10 @@ import firebaseService from '../service/firebase'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { back } from '../partials/icons';
 import Bar from '../partials/bar'
+import moment from 'moment'
 import Style from '../style'
 
+const FIREBASE = firebaseService.database()
 const FIRESTER = firebaseService.database().ref('booster')
 
 export default class End extends Component {
@@ -24,9 +26,14 @@ export default class End extends Component {
         const stus = params ? params.status : null
 
         this.state = {
+            boosterId: '',
             appointmentId: appmntId,
             pupil: '',
+            pupilName: '',
+            pupilImg: null,
             mentor: '',
+            mentorName: '',
+            mentorImg: null,
             status: stus,
             totalTime: total,
             startTime: start,
@@ -40,18 +47,67 @@ export default class End extends Component {
 
     _findBoosterId = async() => {
         const appId = this.state.appointmentId
+        let pu = ''
+        let men = ''
+        let bId = ''
 
         try{
             await FIRESTER.once('value', snapshot => {
                 snapshot.forEach(snap => {
                     snap.child('appointments').forEach(snp => {
                         if(appId === snp.key) {
-                            //
+                            bId = snap.key
+                            pu = snap.val().pupil
+                            men = snap.val().mentor
                         }
                     })
                 })
             }).then(() => {
-                this.setState({ pupil: pu, mentor: men })
+                this.setState({ boosterId: bId, pupil: pu, mentor: men })
+                this._getUserDetails(pu, men)
+            }).catch(error => alert(error))
+        }
+        catch(error) { alert(error.message) }
+    }
+
+    _getUserDetails = (pId, mId) => {
+        let pName = ''
+        let pImg = ''
+        let mName = ''
+        let mImg = ''
+
+        try {
+            // get pupil
+            FIREBASE.ref('users').child(pId).once('value', snapshot => {
+                pName = snapshot.val().name
+                pImg = snapshot.val().image
+            }).then(() => {
+                this.setState({ pupilName: pName, pupilImg: pImg })
+            }).catch(error => alert(error))
+
+            // get mentor
+            FIREBASE.ref('users').child(mId).once('value', snapshot => {
+                mName = snapshot.val().name
+                mImg = snapshot.val().image
+            }).then(() => {
+                this.setState({ mentorName: mName, mentorImg: mImg })
+            }).catch(error => alert(error))
+        }
+        catch(error) { alert(error.message) }
+    }
+
+    _onPressEnd = async() => {
+        const { status, boosterId, appointmentId, totalTime, startTime } = this.state
+        const end = moment().format("YYYY-MM-DD HH:mm")
+        const total = moment(end).diff(startTime, 'hours')
+
+        try {
+            await FIRESTER.child(boosterId).child('appointments').child(appointmentId).update({
+                status: false,
+                endTime: end,
+                totalTime: total
+            }).then(() => {
+                this.setState({ status: false, endTime: end, totalTime: total })
             }).catch(error => alert(error))
         }
         catch(error) { alert(error.message) }
@@ -59,12 +115,13 @@ export default class End extends Component {
 
     render() {
         const {
-            appointmentId, status, startTime, endTime, totalTime
+            appointmentId, status, startTime, endTime, totalTime, mentor, pupil,
+            pupilName, pupilImg, mentorName, mentorImg
         } = this.state
 
         return(
             <Container>
-                <Header style={{ backgroundColor: 'transparent' }} noShadow>
+                <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} noShadow>
                     <Left>
                         <Button transparent
                             onPress={() => this.props.navigation.goBack()}>
@@ -78,23 +135,22 @@ export default class End extends Component {
                 <Grid>
                     <Row size={20}>
                         <Col style={Style.itemCenter}>
-                            <Thumbnail large source={require('../../assets/default.png')} />
-                            <Text>{mentor}</Text>
+                            <Thumbnail large source={{ uri: mentorImg }} />
+                            <Text style={style.namae}>{mentorName}</Text>
                         </Col>
                         <Col style={Style.itemCenter}>
-                            <Thumbnail large source={require('../../assets/default.png')} />
-                            <Text>{pupil}</Text>
+                            <Thumbnail large source={{ uri: pupilImg }} />
+                            <Text style={style.namae}>{pupilName}</Text>
                         </Col>
                     </Row>
-                    <Row size={20}>
-                        <Text style={Style.black}>{appointmentId}</Text>
-                        {/* <Text style={Style.black}>{startTime}</Text>
-                        <Text style={Style.black}>{endTime}</Text>
-                        <Text style={Style.black}>{totalTime}</Text>
-                        <Text style={Style.black}>{status ? 'TRUE' : 'FALSE'}</Text> */}
+                    <Row size={20} style={[Style.itemCenter, style.info]}>
+                        <Text style={style.infoTxt}>Started on {moment(startTime).format('Do MMM / YYYY')}</Text>
+                        <Text style={style.infoTxt}>{status ? 'On Going' : 'Ended'}</Text>
+                        <Text style={style.infoTxt}>{totalTime} hr</Text>
+                        <Text style={style.infoTxt}>Ended on {moment(endTime).format('Do MMM / YYYY')}</Text>
                     </Row>
                     <Row size={60} style={Style.itemCenter}>
-                        <TouchableOpacity onPress={() => alert('Ended')}
+                        <TouchableOpacity onPress={this._onPressEnd.bind(this)} disabled={status ? false : true}
                             style={[Style.itemCenter, Style.bgWhite, style.btn]}>
                             <Text style={style.end}>End</Text>
                         </TouchableOpacity>
@@ -115,5 +171,15 @@ const style = StyleSheet.create({
     end: {
         fontSize: 40,
         color: '#d32f2f'
+    },
+    info: {
+        flexDirection: 'column'
+    },
+    infoTxt: {
+        fontSize: 19,
+        color: '#000'
+    },
+    namae: {
+        marginTop: 10
     }
 })

@@ -4,7 +4,7 @@ import { Container, Content, Header, Thumbnail, Body, Left, Right, Button, Text,
 import firebaseService from '../service/firebase'
 import { Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
-import { school, work, chat, mail, call, back } from '../partials/icons'
+import { school, work, chat, mail, call, back, quote } from '../partials/icons'
 import { BarChart, LineChart, YAxis, Grid } from 'react-native-svg-charts'
 import Style from '../style'
 
@@ -64,6 +64,7 @@ export default class Info extends Component {
                     <Row size={20} style={[Style.avater, Style.bgGrey]}>
                         {image !== null ? (<Thumbnail large source={{ uri: image }} />) : (<Thumbnail large source={require('../../assets/default.png')} />)}
                     </Row>
+                    <Row size={4} style={Style.bgGrey}></Row>
                     <Row size={10} style={Style.bgGrey}>
                         <Col>
                             <Button style={[Style.iconBtn, {backgroundColor: '#43a047'}]}>
@@ -84,15 +85,19 @@ export default class Info extends Component {
                             </Button>
                         </Col>
                     </Row>
-                    <Row size={10} style={[Style.itemCenter, Style.bgDgrey, {flexDirection: 'column'}]}>
-                        <Text style={{ fontSize: 15, margin: 15, color: '#fff', textAlign: 'center' }}>
-                            " {bio}
-                        </Text>
-                    </Row>
-                    <Row size={60}>
+                    <Row size={1} style={Style.bgDgrey}></Row>
+                    <Row size={65}>
                         <Content>
                             <Col>
                                 <Card>
+                                    <CardItem header bordered>
+                                        <Text>Basic Info</Text>
+                                    </CardItem>
+                                    <CardItem bordered>
+                                        <Text style={{ fontSize: 15, margin: 10 }}>
+                                            <Ionicons name={quote} size={20} />     {bio}
+                                        </Text>
+                                    </CardItem>
                                     <CardItem>
                                         <Ionicons name={school} size={27} color="#E64A19" />
                                         <Text style={Style.pdlf}>{skool}</Text>
@@ -125,20 +130,6 @@ export default class Info extends Component {
                                                 <Grid/>
                                             </LineChart>
                                         </View>
-                                    </CardItem>
-                                </Card>
-                                <Card>
-                                    <CardItem header bordered>
-                                        <Text>Activities</Text>
-                                    </CardItem>
-                                    <CardItem>
-                                        <BarChart
-                                            style={{ width: (Dimensions.get('screen').width)/1.1, height: 250 }}
-                                            data={ barData }
-                                            svg={{ fill }}
-                                            contentInset={{ top: 30, bottom: 30 }} >
-                                            <Grid/>
-                                        </BarChart>
                                     </CardItem>
                                 </Card>
                             </Col>

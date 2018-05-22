@@ -19,10 +19,11 @@ import {
     CardItem,
 } from 'native-base';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { user, search, camera, right, calendar, menu } from '../partials/icons'
+import { user, search, camera, right } from '../partials/icons'
 import firebaseService from '../service/firebase'
 import moment from 'moment'
 import Bar from '../partials/bar'
+import Tab2 from './tab2'
 import Style from '../style'
 
 const FIREBASE = firebaseService.database()
@@ -59,52 +60,17 @@ const Tab1 = (props) => (
   </Card>
 )
 
-const Tab2 = (props) => (
-  <Card>
-    <List
-      dataArray={props.appointments}
-      renderRow={(item) => {
-        return(
-          <ListItem>
-            <Left style={{ flex: 1 }}>
-              <Ionicons name={calendar} size={50} color="#0d47a1" />
-              <Body style={{ marginLeft: 16 }}>
-                <Text style={{ fontSize: 19 }}>{moment(item.val().startTime).format('Do')}</Text>
-                <Text style={{ fontSize: 13 }}>{moment(item.val().startTime).format('MMM / YYYY')}</Text>
-              </Body>
-            </Left>
-            <Right style={{ flex: 1 }}>
-              {/* <Text note>{moment(item.val().startTime).format('ddd h:mm a')}</Text> */}
-              <Button transparent
-                onPress={() => props.navigation.navigate('End', {
-                  appointmentId: item.key,
-                  startTime: item.val().startTime,
-                  endTime: item.val().endTime,
-                  totalTime: item.val().totalTime,
-                  status: item.val().status,
-                })}>
-                <Ionicons name={menu} size={25} color='#000' style={{ marginLeft: 20 }} />
-              </Button>
-            </Right>
-          </ListItem>
-        )
-      }}>
-    </List>
-  </Card>
-)
-
 export default class Booster extends Component {
   constructor(props) {
     super(props)
     
     this.state = {
-      users: [], userId: firebaseService.auth().currentUser.uid, appoints: []
+      users: [], userId: firebaseService.auth().currentUser.uid
     }
   }
 
   componentDidMount() {
     this._getUsers()
-    this._findAppointments()
   }
 
   _getUsers = async() => {
@@ -123,57 +89,8 @@ export default class Booster extends Component {
       .catch(error => alert(error))
   }
 
-  _findAppointments = async() => {
-    const uId = this.state.userId
-    let exists = false
-    let boosterIds = []
-
-    await FIREBASE.ref('booster')
-      .once('value', snapshot => {
-        snapshot.forEach(snap => {
-          pupil = snap.val().pupil
-          mentor = snap.val().mentor
-
-          if(uId === pupil || uId === mentor) {
-            exists = true
-            boosterIds.push(snap.key)
-          }
-        })
-      })
-      .then(() => {
-        if(exists) {
-          this._getAppointments(boosterIds)
-        }
-      })
-      .catch(error => alert(error))
-  }
-
-  _getAppointments = (boosterIds) => {
-    let appArr = []
-
-    for(let key in boosterIds) {
-      let arr = []
-
-      try {
-        FIREBASE.ref('booster').child(boosterIds[key]).child('appointments')
-          .once('value', snapshot => {
-            snapshot.forEach(snap => {
-              arr.push(snap)
-            })
-          })
-          .then(() => {
-            // append arrays
-            appArr = appArr.concat(arr)
-            this.setState({ appoints: appArr })
-          })
-          .catch(error => alert(error))
-      }
-      catch(error) { alert(error.message) }
-    }
-  }
-
   render() {
-    const { users, appoints } = this.state
+    const { users } = this.state
 
     return (
       <Container>
@@ -204,7 +121,7 @@ export default class Booster extends Component {
             </Tab>
             <Tab heading="My Appointments" textStyle={Style.black} activeTextStyle={Style.blue}
               tabStyle={Style.bgWhite} activeTabStyle={Style.bgWhite}>
-              <Tab2 appointments={appoints} navigation={this.props.navigation} />
+              <Tab2 navigation={this.props.navigation} />
             </Tab>
           </Tabs>
           <TouchableHighlight style={Style.fab}

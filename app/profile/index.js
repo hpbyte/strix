@@ -175,7 +175,7 @@ export default class Profile extends Component {
 
     return(
       <Container>
-        {Platform.OS === 'ios' ? <View style={{height: 20, backgroundColor: '#fff'}} /> : null}
+        {Platform.OS === 'ios' ? <View style={{height: 20, backgroundColor: '#000', color: '#fff'}} /> : null}
         <Header noShadow style={[Style.bgBlack, { borderBottomWidth: 0, paddingTop: 0 }]}>
           <Left style={{ flex: 1 }}>
             <Button
