@@ -66,8 +66,6 @@ export default class Signup extends Component {
                             style={style.input} placeholder="Name"
                             placeholderTextColor="#000"
                             underlineColorAndroid="transparent"
-                            clearButtonMode="while-editing"
-                            keyboardAppearance='dark'
                             returnKeyType='next'
                         />
                     </Col>
@@ -84,9 +82,7 @@ export default class Signup extends Component {
                             style={style.input} placeholder="Email"
                             placeholderTextColor="#000"
                             underlineColorAndroid="transparent"
-                            clearButtonMode="while-editing"
                             keyboardType='email-address'
-                            keyboardAppearance='dark'
                             returnKeyType='next'
                         />
                     </Col>
@@ -106,8 +102,6 @@ export default class Signup extends Component {
                             secureTextEntry style={style.input} placeholder="Password"
                             placeholderTextColor="#000"
                             underlineColorAndroid="transparent"
-                            clearButtonMode="while-editing"
-                            keyboardAppearance='dark'
                             returnKeyType='done'
                         />
                     </Col>

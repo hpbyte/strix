@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, View, Dimensions } from 'react-native';
+import { Platform, View, Dimensions, StatusBar } from 'react-native';
 import { Container, Content, Header, Thumbnail, Body, Left, Right, Button, Text, Title, Card, CardItem } from 'native-base'
 import firebaseService from '../service/firebase'
 import { Row, Col } from 'react-native-easy-grid'
@@ -45,7 +45,7 @@ export default class Info extends Component {
 
         return(
             <Container>
-                {Platform.OS === 'ios' ? <View style={{height: 20, backgroundColor: '#fff'}} /> : null}
+                {Platform.OS === 'ios' ? <View style={{height: 20, backgroundColor: '#424242'}} /> : null}
                 <Header noShadow style={[Style.bgGrey, { borderBottomWidth: 0, paddingTop: 0 }]}>
                     <Left style={{ flex: 1 }}>
                         <Button
@@ -60,6 +60,7 @@ export default class Info extends Component {
                     <Right style={{ flex: 1 }} />
                 </Header>
                 <Bar />
+                {Platform.OS === 'ios' ? <StatusBar barStyle="light-content" /> : null}
                 <Col>
                     <Row size={20} style={[Style.avater, Style.bgGrey]}>
                         {image !== null ? (<Thumbnail large source={{ uri: image }} />) : (<Thumbnail large source={require('../../assets/default.png')} />)}

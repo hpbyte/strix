@@ -1,24 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, View, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
 import {
-  Root,
-  Container,
-  Content,
-  Left,
-  Body,
-  Right,
-  Text,
-  Button,
-  List,
-  ListItem,
-  Card,
-  CardItem,
-  Form,
-  Item,
-  Input,
-  Textarea,
-  Toast,
-  ActionSheet
+  Modal, View, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TextInput
+} from 'react-native'
+import {
+  Root, Container, Content, Left, Body, Right, Text, Button, List, ListItem, Card, CardItem, Toast, ActionSheet
 } from 'native-base';
 import QRCode from 'react-native-qrcode'
 import firebaseService from '../service/firebase';
@@ -100,8 +85,8 @@ export default class Detail extends Component {
 
   render() {
     return(
-      <Root>
-        <Container>
+    <Root>
+      <Container>
         <Content>
           <Card>
             <CardItem header bordered>
@@ -165,70 +150,126 @@ export default class Detail extends Component {
             </CardItem>
           </Card>
         </Content>
-          <Modal
-            animationType="slide"
-            transparent={false}
-            visible={this.state.modalVisible}
-            onRequestClose={() => { this.setModalVisible(!this.state.modalVisible) }}>
-            <Grid>
-              <Col>    
-                <FontAwesome
-                  style={{ alignSelf: 'center' }} 
-                  name="sort-down" size={45} color="#ccc" 
-                  onPress={() => this.setModalVisible(!this.state.modalVisible)} />
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                  <Content>
-                  <Form style={{ marginTop: 25 }}>
-                    <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
-                      <Item style={style.item}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => { this.setModalVisible(!this.state.modalVisible) }}>
+          <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+              <Grid>
+                <Row size={10}>
+                  <Col>
+                    <FontAwesome
+                      style={{ alignSelf: 'center' }} 
+                      name="sort-down" size={50} color="#ccc" 
+                      onPress={() => this.setModalVisible(!this.state.modalVisible)}
+                    />
+                  </Col>
+                </Row>
+                <Row size={5} />
+                <Row size={85}>
+                  <Col>
+                    <Row size={10} style={style.item}>
+                      <Col size={10} style={Style.itemCenter}>
                         <Ionicons name={user} size={30} color="#303F9F" />
-                        <Input style={style.input} placeholder={this.state.name} 
+                      </Col>
+                      <Col size={90} style={style.verticalCenter}>
+                        <TextInput
+                          style={style.input}
+                          placeholder={this.state.name} 
                           clearButtonMode="while-editing"
-                          value={this.state.name} onChangeText={name => this.setState({name})}/>
-                      </Item>
-                      <Item style={style.item}>
+                          value={this.state.name}
+                          onChangeText={name => this.setState({name})}
+                        />
+                      </Col>
+                    </Row>
+                    <Row size={10} style={style.item}>
+                      <Col size={10} style={Style.itemCenter}>
                         <Ionicons name={mail} size={30} color="#D32F2F" />
-                        <Input style={style.input} placeholder={this.state.email}
+                      </Col>
+                      <Col size={90} style={style.verticalCenter}>
+                        <TextInput
+                          style={style.input}
+                          placeholder={this.state.email}
                           clearButtonMode="while-editing"
-                          value={this.state.email} onChangeText={email => this.setState({email})}/>
-                      </Item>
-                      <Item style={style.item}>
+                          value={this.state.email}
+                          onChangeText={email => this.setState({email})}
+                        />
+                      </Col>
+                    </Row>
+                    <Row size={10} style={style.item}>
+                      <Col size={10} style={Style.itemCenter}>
                         <Ionicons name={card} size={30} color="#388E3C" />
-                        <Input style={style.input} placeholder={this.state.dob}
+                      </Col>
+                      <Col size={90} style={style.verticalCenter}>
+                        <TextInput
+                          style={style.input}
+                          placeholder={this.state.dob}
                           clearButtonMode="while-editing"
-                          value={this.state.dob} onChangeText={dob => this.setState({dob})}/>
-                      </Item>
-                      <Item style={style.item}>
+                          value={this.state.dob}
+                          onChangeText={dob => this.setState({dob})}
+                        />
+                      </Col>
+                    </Row>
+                    <Row size={10} style={style.item}>
+                      <Col size={10} style={Style.itemCenter}>
                         <Ionicons name={school} size={30} color="#E64A19" />
-                        <Input style={style.input} placeholder={this.state.school}
+                      </Col>
+                      <Col size={90} style={style.verticalCenter}>
+                        <TextInput 
+                          style={style.input}
+                          placeholder={this.state.school}
                           clearButtonMode="while-editing"
-                          value={this.state.school} onChangeText={school => this.setState({school})}/>
-                      </Item>
-                      <Item style={style.item}>
+                          value={this.state.school}
+                          onChangeText={school => this.setState({school})}
+                        />
+                      </Col>
+                    </Row>
+                    <Row size={10} style={style.item}>
+                      <Col size={10} style={Style.itemCenter}>
                         <Ionicons name={school} size={30} color="#00796B" />
-                        <Input style={style.input} placeholder={this.state.uni}
+                      </Col>
+                      <Col size={90} style={style.verticalCenter}>
+                        <TextInput 
+                          style={style.input}
+                          placeholder={this.state.uni}
                           clearButtonMode="while-editing"
-                          value={this.state.uni} onChangeText={uni => this.setState({uni})}/>
-                      </Item>
-                      <Item style={style.item}>
+                          value={this.state.uni}
+                          onChangeText={uni => this.setState({uni})}
+                        />
+                      </Col>
+                    </Row>
+                    <Row size={10} style={style.item}>
+                      <Col size={10} style={Style.itemCenter}>
                         <Ionicons name={work} size={30} color="#AFB42B" />
-                        <Input style={style.input} placeholder={this.state.job}
+                      </Col>
+                      <Col size={90} style={style.verticalCenter}>
+                        <TextInput 
+                          style={style.input}
+                          placeholder={this.state.job}
                           clearButtonMode="while-editing"
-                          value={this.state.job} onChangeText={job => this.setState({job})}/>
-                      </Item>
-                      <Button rounded style={style.editBtn}
-                        onPress={this._editProfile.bind(this)}>
-                        <Text>Submit Change</Text>
-                      </Button>
-                    </KeyboardAvoidingView>
-                  </Form>
-                  </Content>
-                </TouchableWithoutFeedback>
-              </Col>
-            </Grid>
-          </Modal>
-        </Container>
-      </Root>
+                          value={this.state.job}
+                          onChangeText={job => this.setState({job})}
+                        />                    
+                      </Col>
+                    </Row>
+                    <Row size={40}>
+                      <Col>
+                        <Button rounded style={style.editBtn}
+                          onPress={this._editProfile.bind(this)} >
+                          <Text>Submit Change</Text>
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Grid>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+        </Modal>
+      </Container>
+    </Root>
     );
   }
 }

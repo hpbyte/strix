@@ -55,7 +55,6 @@ export default class Signin extends Component {
                             style={style.input} placeholder="Email"
                             placeholderTextColor="#000"
                             underlineColorAndroid="transparent"
-                            clearButtonMode="while-editing"
                             keyboardType='email-address'
                             returnKeyType='next'
                         />
@@ -76,7 +75,6 @@ export default class Signin extends Component {
                             secureTextEntry={true} style={style.input}
                             placeholder="Password" placeholderTextColor="#000"
                             underlineColorAndroid="transparent"
-                            clearButtonMode="while-editing"
                             returnKeyType='done'
                         /> 
                     </Col>

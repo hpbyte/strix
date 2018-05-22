@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, View } from 'react-native';
+import { Platform, View, StatusBar } from 'react-native';
 import { TabNavigator } from 'react-navigation'
 import { ImagePicker, Permissions } from 'expo'
 import {
@@ -175,7 +175,7 @@ export default class Profile extends Component {
 
     return(
       <Container>
-        {Platform.OS === 'ios' ? <View style={{height: 20, backgroundColor: '#000', color: '#fff'}} /> : null}
+        {Platform.OS === 'ios' ? <View style={{height: 20, backgroundColor: '#000' }} /> : null}
         <Header noShadow style={[Style.bgBlack, { borderBottomWidth: 0, paddingTop: 0 }]}>
           <Left style={{ flex: 1 }}>
             <Button
@@ -196,6 +196,7 @@ export default class Profile extends Component {
           </Right>
         </Header>
         <Bar />
+        {Platform.OS === 'ios' ? <StatusBar barStyle="light-content" /> : null}
         <Grid>
           <Row size={25} style={Style.avater}>
             {image !== null ? (<Thumbnail large source={{ uri: image }} />) : (<Thumbnail large source={require('../../assets/default.png')} />)}

@@ -10,13 +10,14 @@ export default {
         alignItems: 'flex-start'
     },
     item: {
-        borderBottomWidth: 0,
-        marginBottom: 15,
+        margin: 15,
+        marginTop: 0
     },
     input: {
         marginLeft: 15,
-        marginRight: 15,
         paddingLeft: 15,
+        height: 50,
+        fontSize: 16,
         backgroundColor: '#f7f7f7'
     },
     editBtn: {
@@ -27,5 +28,8 @@ export default {
     postItem: {
         marginLeft: 0,
         backgroundColor: '#fff'
+    },
+    verticalCenter: {
+        justifyContent: 'center'
     }
 }
