@@ -50,15 +50,12 @@ export default class Post extends Component {
 
     _getUserDetails = async() => {
         const uId = this.state.userId
-        let name = ''
-        let image = ''
 
         try {
-            await FIREBASE.ref('users').child(uId).once('value', snapshot => {
-                name = snapshot.val().name
-                image = snapshot.val().image
-            }).then(() => {
-                this.setState({ userName: name, userImg: image })
+            await FIREBASE.ref('users').child(uId).once('value').then((snapshot) => {
+                this.setState({
+                    userName: snapshot.val().name, userImg: snapshot.val().image
+                })
             }).catch(error => alert(error))
         }
         catch(error) { alert(error.message) }

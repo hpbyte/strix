@@ -42,12 +42,12 @@ export default class Chat extends Component {
     const senderId = this.state.senderId
 
     try {
-      FIREBASE.ref('users').child(senderId).once('value', snapshot => {
+      FIREBASE.ref('users').child(senderId).once('value').then((snapshot) => {
         this.setState({
           senderName: snapshot.val().name,
           senderImage: snapshot.val().image
         })
-      })
+      }).catch(error => alert(error))
     } catch(error) { alert(error.message) }
   }
 

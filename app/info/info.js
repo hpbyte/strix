@@ -25,7 +25,7 @@ export default class Info extends Component {
     }
 
     _getUserInfo = async() => {
-        await FIREBASE.ref('users').child(this.state.uId).once('value', snapshot => {
+        await FIREBASE.ref('users').child(this.state.uId).once('value').then((snapshot) => {
             this.setState({
                 name: snapshot.val().name,
                 skool: snapshot.val().school,
@@ -34,7 +34,7 @@ export default class Info extends Component {
                 bio: snapshot.val().bio,
                 image: snapshot.val().image
             })
-        })
+        }).catch(error => alert(error))
     }
 
     render() {
