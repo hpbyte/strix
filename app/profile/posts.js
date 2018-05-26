@@ -55,8 +55,11 @@ class Posts extends Component {
                                             quizId: q.key,
                                             quiz: q.val().quiz,
                                             time: q.val().timestamp,
+                                            dur: q.val().duration,
+                                            status: q.val().status,
                                             qUserImg: q.val().user.image,
-                                            qUserName: q.val().user.name
+                                            qUserName: q.val().user.name,
+                                            // cluster: this.state.cluster
                                         })}>
                                         <Ionicons name={right} size={28} style={{ marginLeft: 15 }}/>
                                     </Button>

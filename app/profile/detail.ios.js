@@ -3,7 +3,7 @@ import {
   Modal, View, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TextInput
 } from 'react-native'
 import {
-  Root, Container, Content, Left, Body, Right, Text, Button, List, ListItem, Card, CardItem, Toast, ActionSheet
+  Root, Container, Content, Left, Body, Right, Text, Button, List, ListItem, Card, CardItem, Toast, ActionSheet, Textarea
 } from 'native-base';
 import QRCode from 'react-native-qrcode'
 import firebaseService from '../service/firebase';
@@ -27,6 +27,7 @@ export default class Detail extends Component {
       school: '', 
       uni: '', 
       job: '', 
+      bio: '',
       showToast: false, 
       modalVisible: false }
   }
@@ -46,7 +47,8 @@ export default class Detail extends Component {
               dob: snapshot.val().dob,
               school: snapshot.val().school,
               uni: snapshot.val().uni,
-              job: snapshot.val().job
+              job: snapshot.val().job,
+              bio: snapshot.val().bio
             })
           })
         } catch(error) { alert(error) }
@@ -78,6 +80,22 @@ export default class Detail extends Component {
     }).catch(err => alert(err))
   }
 
+  _editBio = async() => {
+    const { uId, bio } = this.state
+
+    await FIREBASE.ref("users/"+uId).update({
+      bio: bio
+    }).then(() => {
+      Toast.show({
+        text: 'Bio Changed!',
+        buttonText: 'OK',
+        duration: 3000,
+        type: 'success',
+        position: 'top'
+      })
+    }).catch(err => alert(err))
+  }
+
   componentWillUnmount() {
     Toast.toastInstance = null
     ActionSheet.actionsheetInstance = null
@@ -89,6 +107,21 @@ export default class Detail extends Component {
       <Container>
         <Content>
           <Card>
+            <CardItem header bordered>
+              <Text>About Me</Text>            
+            </CardItem>
+            <CardItem>
+              <Textarea rowSpan={2} placeholder="write a little about you ..." 
+                value={this.state.bio} onChangeText={bio => this.setState({bio})} />
+            </CardItem>
+            <CardItem bordered>
+              <Left />
+              <Right>
+                <Button small onPress={this._editBio.bind(this)}>
+                  <Text>Change</Text>
+                </Button>
+              </Right>
+            </CardItem>
             <CardItem header bordered>
               <Text onPress={() => { this.setModalVisible(true) }}>Edit Profile</Text>
             </CardItem>

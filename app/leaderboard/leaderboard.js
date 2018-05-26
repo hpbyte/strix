@@ -20,26 +20,39 @@ import {
 import {Ionicons} from '@expo/vector-icons';
 import { user, search } from '../partials/icons'
 import Sheader from '../partials/sheader'
+import firebaseService from '../service/firebase'
 import Bar from '../partials/bar'
 import Style from '../style';
 
-const data = [
-  'Monkey D. Luffy',
-  'Roronoa Zorro',
-  'Sanji',
-  'Tony Tony Chopper',
-  'Nami',
-  'Usopp',
-  'Franky',
-  'Brook',
-  'Nico Robin',
-  'Trafalgar D. Water Law',
-  'Gold D. Roger',
-  'Portgas D. Ace'
-];
+const FIREUSER = firebaseService.database().ref('users')
+
 const dataIndex = 0;
 
 export default class Leaderboard extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { users: [] }
+  }
+
+  componentDidMount() {
+    this._getUsers()
+  }
+
+  _getUsers = async() => {
+    try{
+      FIREUSER.orderByChild('points').on('value', snapshot => {
+        let uArr = []
+
+        snapshot.forEach(snap => {
+          uArr.push(snap)
+        })
+
+        this.setState({ users: uArr })
+      })
+    } catch(error) { alert(error.message) }
+  }
+
   render() {
     return (
       <Container>
@@ -48,13 +61,13 @@ export default class Leaderboard extends Component {
         <Content style={Style.bgWhite}>
           <Card style={{ marginLeft: 0 }}>
             <List
-              dataArray={data}
+              dataArray={this.state.users.reverse()}
               renderRow={(item) => 
               <View style={Style.listItem}>
                 <ListItem>
-                  <Thumbnail square size={80} source={require('../../assets/default.png')} />
+                  <Thumbnail size={80} source={{ uri: item.val().image }} />
                   <Body>
-                    <Text>{item}</Text>
+                    <Text>{item.val().name}</Text>
                   </Body>
                   <Right>
                     <Badge style={Style.bgBlue}>

@@ -1,18 +1,7 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableHighlight } from 'react-native';
+import { View, Image, TouchableHighlight, FlatList } from 'react-native';
 import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Left,
-  Right,
-  Body,
-  Text,
-  Card,
-  CardItem,
-  Thumbnail
+  Container, Header, Title, Content, Button, Left, Right, Body, Text, Card, CardItem, Thumbnail
 } from 'native-base';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { discuss, add, more, back } from '../../partials/icons'
@@ -31,6 +20,8 @@ export default class Cluster extends Component {
     const clust = params ? params.cluster : null
     
     this.state = { questions: [], cluster: clust }
+
+    this._countAnswers.bind(this)
   }
 
   componentDidMount() {
@@ -41,14 +32,44 @@ export default class Cluster extends Component {
     const cluster = this.state.cluster
 
     try {
-      await FIREBASE.ref('questions').child(cluster).on('value', (snapshot) => {
+      await FIREBASE.ref('questions').child(cluster)
+        .orderByKey()
+        .on('value', (snapshot) => {
         let qArr = []
 
-        snapshot.forEach((snap) => { qArr.push(snap) })
+        snapshot.forEach((snap) => {
+          if(( snap.val().duration < moment().format("YYYY-MM-DD HH:mm") ) && snap.val().status) {
+            // question is expired
+            this._setExpired(snap.key)
+            qArr.push(snap)
+          } else {
+            qArr.push(snap)
+          }
+        })
 
         this.setState({ questions: qArr })
       })
     } catch(error) { alert(error) }
+  }
+
+  _setExpired = (qId) => {
+    const cluster = this.state.cluster
+
+    try {
+      FIREBASE.ref('questions').child(cluster).child(qId).update({
+        status: false
+      })
+    } catch(error) { alert(error) }
+  }
+
+  _countAnswers(param) {
+    let count = 0
+
+    for(let key in param) {
+      count++
+    }
+
+    return count
   }
 
   render() {
@@ -77,44 +98,52 @@ export default class Cluster extends Component {
         <Bar />
         <View style={{ flex: 1}}>
           <Content>
-            {this.state.questions.map((prop, key) => {
-              return(
-                <Card key={key}>
-                  <CardItem>
-                    <Left>
-                      {prop.val().user.image !== '' ? <Thumbnail source={{ uri: prop.val().user.image }} /> : <Thumbnail source={require("../../../assets/default.png")} />}
-                      <Body>
-                        <Text>{prop.val().user.name}</Text>
-                      </Body>
-                    </Left>
-                    <Right>
-                      <Ionicons name={more} size={25} color='#000' />
-                    </Right>
-                  </CardItem>
-                  <CardItem>
-                    <Text>{prop.val().quiz}</Text>
-                  </CardItem>
-                  <CardItem>
-                    <Left>
-                      <Button transparent
-                        onPress={() => this.props.navigation.navigate('Answer', {
-                          quizId: prop.key,
-                          quiz: prop.val().quiz,
-                          time: prop.val().timestamp,
-                          qUserImg: prop.val().user.image,
-                          qUserName: prop.val().user.name
-                        })}>
-                        <Ionicons name={discuss} size={23} />
-                        <Text>Answers</Text>
-                      </Button>
-                    </Left>
-                    <Right>
-                      <Text>{moment(prop.val().timestamp).fromNow()}</Text>
-                    </Right>
-                  </CardItem>
-                </Card>
-              )
-            })}
+            <FlatList 
+              data={this.state.questions.reverse()}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => {
+                return(
+                  <Card key={item.key}>
+                    <CardItem>
+                      <Left>
+                        {item.val().user.image !== '' ? <Thumbnail source={{ uri: item.val().user.image }} /> : <Thumbnail source={require("../../../assets/default.png")} />}
+                        <Body>
+                          <Text>{item.val().user.name}</Text>
+                          {item.val().status ? null : <Text note style={Style.red}>closed</Text>}
+                        </Body>
+                      </Left>
+                      <Right>
+                        <Ionicons name={more} size={25} color='#000' />
+                      </Right>
+                    </CardItem>
+                    <CardItem>
+                      <Text>{item.val().quiz}</Text>
+                    </CardItem>
+                    <CardItem>
+                      <Left>
+                        <Button transparent
+                          onPress={() => this.props.navigation.navigate('Answer', {
+                            quizId: item.key,
+                            quiz: item.val().quiz,
+                            time: item.val().timestamp,
+                            dur: item.val().duration,
+                            status: item.val().status,
+                            qUserImg: item.val().user.image,
+                            qUserName: item.val().user.name,
+                            cluster: this.state.cluster
+                          })}>
+                          <Ionicons name={discuss} size={23} />
+                          <Text>{this._countAnswers(item.val().answers)} Answers</Text>
+                        </Button>
+                      </Left>
+                      <Right>
+                        <Text>{moment(item.val().timestamp).fromNow()}</Text>
+                      </Right>
+                    </CardItem>
+                  </Card>
+                )
+              }}
+            />
           </Content>
           <TouchableHighlight style={Style.fab}
             onPress={() => this.props.navigation.navigate('Post', { cluster: this.state.cluster })}>

@@ -39,16 +39,22 @@ export default class Answer extends Component {
         const quiz = params ? params.quiz : null
         const quizId = params ? params.quizId : null
         const qTime = params ? params.time : null
+        const qDur = params ? params.dur : null
+        const qStus = params ? params.status : null
         const qName = params ? params.qUserName : null
         const qImage = params ? params.qUserImg : null
+        const cluster = params ? params.cluster : null
 
         this.state = { 
             answer: '',
             question: quiz,
             questionId: quizId,
             questionTime: qTime,
+            questionDur: qDur,
+            questionStus : qStus,
             questionName: qName,
             questionImg: qImage,
+            qCluster: cluster,
             answers: [],
             isUpClicked: false,
             isDownClicked: false,
@@ -62,9 +68,24 @@ export default class Answer extends Component {
     }
 
     componentDidMount() {
-        this._getUserDetails()
-        this._getAnswers()
+        const { questionDur, questionStus } = this.state
+
+        if(( questionDur < moment().format("YYYY-MM-DD HH:mm") ) && questionStus) {
+            this._setExpired()
+        } else {
+            this._getUserDetails()
+            this._getAnswers()
+        }
     }
+
+    _setExpired = async() => {
+        const { qCluster, questionId } = this.state
+        try {
+          await FIREBASE.ref('questions').child(qCluster).child(questionId).update({
+            status: false
+          })
+        } catch(error) { alert(error) }
+      }
 
     _getUserDetails = async() => {
         const uId = this.state.userId
@@ -80,8 +101,11 @@ export default class Answer extends Component {
     }
 
     _getAnswers = async() => {
+        const { questionId, qCluster } = this.state
+
         try {
-            await FIREBASE.ref("answers").child(this.state.questionId).on('value', snapshot => {
+            await FIREBASE.ref('questions').child(qCluster).child(questionId).child('answers')
+                .on('value', snapshot => {
                 let ansArr = []
     
                 snapshot.forEach(snap => { ansArr.push(snap) })
@@ -92,11 +116,11 @@ export default class Answer extends Component {
     }
 
     _submitAnswer = async() => {
-        const { questionId, answer, userId, userName, userImg } = this.state
+        const { questionId, qCluster, answer, userId, userName, userImg } = this.state
 
         if(answer !== '') {
-            await FIREBASE.ref("answers").child(questionId).push(
-                {
+            await FIREBASE.ref('questions').child(qCluster).child(questionId).child('answers')
+                .push({
                     answer: answer,
                     timestamp: moment().format("YYYY-MM-DD HH:mm"),
                     upvote: 0,
@@ -108,11 +132,11 @@ export default class Answer extends Component {
                     }
                 }, (error) => {
                     if(error) alert(error.message)
-                }
-            ).then(() => {
-                // clear the answer input field
-                this.setState({ answer: '' })
-            }).catch(error => alert(error))
+                })
+                .then(() => {
+                    // clear the answer input field
+                    this.setState({ answer: '' })
+                }).catch(error => alert(error))
         } else {
             Toast.show({
                 text: 'Please type your answer first!',
@@ -125,13 +149,17 @@ export default class Answer extends Component {
     }
 
     _voteUp = async(ansId) => {
-        await FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/upvote").transaction(up => {
+        const { questionId, qCluster } = this.state
+
+        await FIREBASE.ref("questions/"+qCluster+"/"+questionId+"/answers/"+ansId+"/upvote").transaction(up => {
             return up + 1
         })
     }
 
     _voteDown = async(ansId) => {
-        await FIREBASE.ref("answers/"+this.state.questionId+"/"+ansId+"/downvote").transaction(down => {
+        const { questionId, qCluster } = this.state
+        
+        await FIREBASE.ref("questions/"+qCluster+"/"+questionId+"/answers/"+ansId+"/downvote").transaction(down => {
             return down + 1
         })
     }
@@ -158,7 +186,7 @@ export default class Answer extends Component {
                         </Button>
                         <View style={{ marginLeft: 7 }}>
                             <Text>{ this.state.questionName }</Text>
-                            <Text style={{ fontSize: 12 }}>{moment(this.state.questionTime).fromNow()}</Text>
+                            {this.state.questionStus ? <Text note>{moment(this.state.questionTime).fromNow()}</Text> : <Text note style={Style.red}>closed</Text>}
                         </View>
                     </Left>
                     <Right style={{ flex: 1 }}>
@@ -192,7 +220,8 @@ export default class Answer extends Component {
                                         <Col size={10}>
                                             <Button transparent style={style.updownBtn}
                                                 disabled={this.state.isUpClicked ? true : false}
-                                                onPress={() => this._voteUp(prop.key)}>
+                                                onPress={() => this._voteUp(prop.key)}
+                                                disabled={this.state.questionStus ? false : true} >
                                                 <Ionicons name={up} size={27} />
                                             </Button>
                                         </Col>
@@ -202,7 +231,8 @@ export default class Answer extends Component {
                                         <Col size={10}>
                                             <Button transparent style={style.updownBtn}
                                                 disabled={this.state.isDownClicked ? true : false}
-                                                onPress={() => this._voteDown(prop.key)}>
+                                                onPress={() => this._voteDown(prop.key)}
+                                                disabled={this.state.questionStus ? false : true} >
                                                 <Ionicons name={down} size={27} />
                                             </Button>
                                         </Col>
@@ -218,8 +248,14 @@ export default class Answer extends Component {
                 </Content>
                 {Platform.OS === 'ios' ? (<KeyboardAvoidingView behavior="padding">
                 <Item regular style={{ padding: 5, backgroundColor: '#fff' }}>
-                    <Input multiline={true} placeholder='your answer here ...' clearButtonMode='while-editing'
-                        value={this.state.answer} onChangeText={answer => this.setState({answer})}/>
+                    <Input 
+                        multiline={true}
+                        placeholder='your answer here ...'
+                        clearButtonMode='while-editing'
+                        value={this.state.answer}
+                        onChangeText={answer => this.setState({answer})}
+                        disabled={this.state.questionStus ? false : true}
+                    />
                     <Button transparent
                         onPress={this._submitAnswer.bind(this)}>
                         <Ionicons name={send} size={28} style={{ marginRight: 10 }} />
@@ -228,8 +264,13 @@ export default class Answer extends Component {
             </KeyboardAvoidingView>) : (<Form style={{ backgroundColor: '#fff'}}>
                     <KeyboardAvoidingView behavior="position" enabled>
                         <Item regular style={{ padding: 5, backgroundColor: '#fff' }}>
-                            <Input multiline={true} placeholder='your answer here ...' clearButtonMode='while-editing'
-                                value={this.state.answer} onChangeText={answer => this.setState({answer})} />
+                            <Input
+                                multiline={true}
+                                placeholder='your answer here ...'
+                                value={this.state.answer}
+                                onChangeText={answer => this.setState({answer})}
+                                disabled={this.state.questionStus ? false : true}
+                            />
                             <Button transparent
                                 onPress={this._submitAnswer.bind(this)}>
                                 <Ionicons name={send} size={28} style={{ marginRight: 10 }} />

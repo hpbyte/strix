@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { Platform, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
 import {
     Root,
     Container,
@@ -22,6 +22,7 @@ import {
     Toast,
     ActionSheet
 } from 'native-base';
+import DateTimePicker from 'react-native-modal-datetime-picker'
 import { Ionicons } from '@expo/vector-icons'
 import { alert, more, back } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
@@ -40,12 +41,23 @@ export default class Post extends Component {
 
         this.state = { 
             showToast: false, selected: 'What', quiz: '', duration: '', cluster: clust,
-            userId: firebaseService.auth().currentUser.uid, userName: '', userImg: ''
+            userId: firebaseService.auth().currentUser.uid, userName: '', userImg: '',
+            isDateTimePickerVisible: false
         }
     }
 
     componentDidMount() {
         this._getUserDetails()
+    }
+
+    _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true })
+    
+    _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false })
+
+    _handleDatePicked = (date) => {        
+        this.setState({ duration: moment(date).format("YYYY-MM-DD HH:mm") })
+        
+        this._hideDateTimePicker()
     }
 
     _getUserDetails = async() => {
@@ -72,8 +84,9 @@ export default class Post extends Component {
             await FIREBASE.ref('questions').child(cluster).push(
                 {
                     quiz: selected+" "+quiz,
-                    duration: '12-2-2019',
+                    duration: duration,
                     timestamp: moment().format("YYYY-MM-DD HH:mm"),
+                    status: true,
                     user: {
                         _id: userId,
                         name: userName,
@@ -159,6 +172,9 @@ export default class Post extends Component {
                                 <Picker.Item label="Why" value="Why" />
                                 <Picker.Item label="How" value="How" />
                             </Picker>
+                            <TouchableOpacity style={{ margin: 10 }} onPress={this._showDateTimePicker}>
+                                <Text style={{ fontSize: 15 }}>Choose Expiration</Text>
+                            </TouchableOpacity>
                             <Textarea rowSpan={7} style={style.txtArea}
                                 placeholder="your question here ..."
                                 value={this.state.quiz}
@@ -172,6 +188,12 @@ export default class Post extends Component {
                     </KeyboardAvoidingView>
                 </Content>
             </Container>
+            <DateTimePicker
+                isVisible={this.state.isDateTimePickerVisible}
+                onConfirm={this._handleDatePicked}
+                onCancel={this._hideDateTimePicker}
+                mode="datetime"
+            />
         </Root>
         )
     }
