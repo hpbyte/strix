@@ -3,17 +3,7 @@ import {
   View, TouchableHighlight, TouchableOpacity, ImageBackground, Dimensions, FlatList, StyleSheet
 } from 'react-native';
 import {
-  Container,
-  Header,
-  Content,
-  Left,
-  Right,
-  Body,
-  Title,
-  Text,
-  Button,
-  Card,
-  CardItem
+  Container, Header, Content, Left, Right, Body, Title, Text, Button
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { add, user, quote } from '../partials/icons'
@@ -27,28 +17,29 @@ const FIRELUST = firebaseService.database().ref('clusters')
 const WIDTH = Dimensions.get('screen').width / 1.2
 const HEIGHT = Dimensions.get('screen').height / 4
 const quotes = [
-  'if you fear failure, you will never go anywhere',
-  'yesterday, you said tommorrow',
-  'we do not see things as they are, we see things as we are',
-  'you can feel sore tomorrow or you can feel sorry tomorrow, you choose',
-  'it is never too late to be what you might have been',
-  'creativity is intelligence having fun',
-  'never give up on a dream just because of the time it will take to accomplish it. the time will pass anyway',
-  'life isn’t about finding yourself. Life is about creating yourself',
-  'a year from now you will wish you had started today',
-  'be kind whenever possible. It is always possible',
-  "it's not the years in your life that count. it's the life in your years",
-  'the best way to find out if you can trust somebody is to trust them',
-  'failure is simply the opportunity to begin again, this time more intelligently',
-  'the privilege of a lifetime is being who you are',
-  'keep your goals away from the trolls',
-  "don't compare your beginning to someone else's middle",
-  'if you can dream it, you can do it',
-  'adventure is worthwhile in itself',
-  "if it ain't fun, don't do it",
-  "it is not the load that breaks you down. it's the way you carry it",
+  'If you fear failure, you will never go anywhere',
+  'Yesterday, you said tommorrow',
+  "We don't see things as they are, we see things as we are",
+  'You can feel sore tomorrow or you can feel sorry tomorrow, you choose',
+  "It's never too late to be what you might have been",
+  'Creativity is intelligence having fun',
+  'Life isn’t about finding yourself. Life is about creating yourself',
+  'A year from now you will wish you had started today',
+  'Be kind whenever possible. It is always possible',
+  "It's not the years in your life that count. it's the life in your years",
+  'The best way to find out if you can trust somebody is to trust them',
+  'Failure is simply the opportunity to begin again, this time more intelligently',
+  'The privilege of a lifetime is being who you are',
+  'Keep your goals away from the trolls',
+  "Don't compare your beginning to someone else's middle",
+  'If you can dream it, you can do it',
+  'Adventure is worthwhile in itself',
+  "If it ain't fun, don't do it",
+  "It's not the load that breaks you down. it's the way you carry it",
   "If you lose, don't lose the lesson",
-  'Dream big dreams. Small dreams have no magic'
+  'Dream big dreams. Small dreams have no magic',
+  "Don't let the success of others discourage you. Let it inspire you",
+  "Success is the ability to go from failure to failure without losing your enthusiasm"
 ]
 
 export default class Clusters extends Component {

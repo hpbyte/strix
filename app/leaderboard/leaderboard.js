@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { StackNavigator } from 'react-navigation'
 import {
   Container,
   Header,
@@ -22,13 +23,14 @@ import { user, search } from '../partials/icons'
 import Sheader from '../partials/sheader'
 import firebaseService from '../service/firebase'
 import Bar from '../partials/bar'
+import Info from '../info/info'
 import Style from '../style';
 
 const FIREUSER = firebaseService.database().ref('users')
 
 const dataIndex = 0;
 
-export default class Leaderboard extends Component {
+class Leaderboard extends Component {
   constructor(props) {
     super(props)
 
@@ -84,3 +86,14 @@ export default class Leaderboard extends Component {
       );
   }
 }
+
+export default Leaderboard = StackNavigator(
+  {
+    Leaderboard: { screen: Leaderboard },
+    Info: { screen: Info }
+  },
+  {
+    headerMode: 'none',
+    initialRouteName: 'Leaderboard'
+  }
+)

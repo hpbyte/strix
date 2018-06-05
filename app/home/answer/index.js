@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native'
+import { View, StyleSheet, Platform, KeyboardAvoidingView, FlatList } from 'react-native'
 import {
     Root,
     Container,
@@ -24,7 +24,7 @@ import {
 import { Row, Col } from 'react-native-easy-grid'
 import firebaseService from '../../service/firebase'
 import { Ionicons } from '@expo/vector-icons'
-import { more, up, down, send, back } from '../../partials/icons'
+import { more, up, down, send, back, correct } from '../../partials/icons'
 import moment from 'moment'
 import Bar from '../../partials/bar'
 import Style from '../../style'
@@ -60,7 +60,15 @@ export default class Answer extends Component {
             isDownClicked: false,
             userId: firebaseService.auth().currentUser.uid,
             userName: '',
-            userImg: ''
+            userImg: '',
+            mostAid: '',
+            mostAns: '',
+            mostDown: '',
+            mostTime: '',
+            mostUp: '',
+            mostUid: '',
+            mostUimg: '',
+            mostUname: ''
         }
 
         this._voteUp = this._voteUp.bind(this)
@@ -70,6 +78,7 @@ export default class Answer extends Component {
     componentDidMount() {
         const { questionDur, questionStus } = this.state
 
+        this._getMostVoted()
         if(( questionDur < moment().format("YYYY-MM-DD HH:mm") ) && questionStus) {
             this._setExpired()
         } else {
@@ -112,6 +121,31 @@ export default class Answer extends Component {
     
                 this.setState({ answers: ansArr })
             })
+        } catch(error) { alert(error.message) }
+    }
+
+    _getMostVoted = async() => {
+        const { questionId, qCluster } = this.state
+
+        try {
+            let ansArr = []
+            await FIREBASE.ref('questions/'+qCluster+"/"+questionId+"/answers")
+                .orderByChild('upvote')
+                .on('value', snapshot => {    
+                    snapshot.forEach(snap => { ansArr.push(snap) })
+
+                    let most = ansArr[ansArr.length-1]
+                    this.setState({
+                        mostAid: most.key,
+                        mostAns: most.val().answer,
+                        mostDown: most.val().downvote,
+                        mostTime: most.val().timestamp,
+                        mostUp: most.val().upvote,
+                        mostUid: most.val().user._id,
+                        mostUimg: most.val().user.image,
+                        mostUname: most.val().user.name
+                    })
+                })
         } catch(error) { alert(error.message) }
     }
 
@@ -169,7 +203,11 @@ export default class Answer extends Component {
         ActionSheet.actionsheetInstance = null
     }
 
-    render() {        
+    render() {
+        const {
+            answers, mostAid, mostAns, mostDown, mostTime, mostUp, mostUid, mostUimg, mostUname
+        } = this.state
+
         return(
         <Root>
             <Container>
@@ -202,7 +240,50 @@ export default class Answer extends Component {
                         <Text style={style.quizTxt}>{ this.state.question }</Text>
                     </View>
                     <View>
-                    {this.state.answers.map((prop, key) => {
+                    <Row style={{ margin: 10 }}>
+                        <Col size={10}>
+                            <Thumbnail small source={{ uri: mostUimg }} />
+                        </Col>
+                        <Col size={90} style={{ marginLeft: 10 }}>
+                            <Row style={[style.ansRow, {flexDirection: 'row'}]}>
+                                <Col size={90}>
+                                    <Text style={style.nameTxt}>{mostUname}</Text>
+                                    <Text style={style.ansTxt}>{mostAns}</Text>
+                                </Col>
+                                <Col size={10}>
+                                    <Ionicons name={correct} style={style.correct} size={20} color="green" />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col size={60}>
+                                    <Text style={style.dateTxt}>{moment(mostTime).fromNow()}</Text>
+                                </Col>
+                                <Col size={10}>
+                                    <Button transparent style={style.updownBtn}
+                                        disabled={this.state.isUpClicked ? true : false}
+                                        onPress={() => this._voteUp(mostAid)}
+                                        disabled={this.state.questionStus ? false : true} >
+                                        <Ionicons name={up} size={27} />
+                                    </Button>
+                                </Col>
+                                <Col size={10}>
+                                    <Text style={[Style.blue, style.updownTxt]}>+{mostUp}</Text>
+                                </Col>
+                                <Col size={10}>
+                                    <Button transparent style={style.updownBtn}
+                                        disabled={this.state.isDownClicked ? true : false}
+                                        onPress={() => this._voteDown(mostAid)}
+                                        disabled={this.state.questionStus ? false : true} >
+                                        <Ionicons name={down} size={27} />
+                                    </Button>
+                                </Col>
+                                <Col size={10}>
+                                    <Text style={[Style.red, style.updownTxt]}>-{mostDown}</Text>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    {answers.map((prop, key) => {
                         return (
                             <Row key={key} style={{ margin: 10 }}>
                                 <Col size={10}>
@@ -324,5 +405,8 @@ const style = StyleSheet.create({
         fontSize: 14,
         marginTop: 3,
         marginLeft: 10
+    },
+    correct: {
+        marginTop: 20
     }
 })
