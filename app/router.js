@@ -1,12 +1,7 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import {
-  Footer,
-  FooterTab,
-  Button,
-  Badge,
-  Text,
-  Icon
+  Footer, FooterTab, Button, Badge, Text, Icon
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { podium, link, noti } from './partials/icons';
@@ -29,6 +24,7 @@ export const AuthTaber = TabNavigator(
     tabBarPosition: 'bottom',
     swipeEnabled: true,
     animationEnabled: true,
+    lazy: true,
     tabBarComponent: props => {
       return(
         <Footer>
@@ -65,6 +61,7 @@ export const MenuTaber = TabNavigator(
     tabBarPosition: 'bottom',
     swipeEnabled: false,
     animationEnabled: true,
+    lazy: true,
     tabBarComponent: props => {
       return(
         <Footer>
@@ -96,7 +93,7 @@ export const MenuTaber = TabNavigator(
               onPress={() => props.navigation.navigate('Noti')}>
               <Badge><Text>7</Text></Badge>
               <Icon name={noti} style={Style.white} />
-              <Text style={Style.grey}>Noti</Text>
+              <Text style={Style.grey}>Events</Text>
             </Button>
           </FooterTab>
         </Footer>
