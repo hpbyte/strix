@@ -180,6 +180,7 @@ export default class Profile extends Component {
           <Left style={{ flex: 1 }}>
             <Button
               transparent
+              style={Style.leftBtn}
               onPress={() => this.props.navigation.goBack()}>
               <Ionicons name={back} size={28} color='#fff' />
             </Button>
@@ -190,6 +191,7 @@ export default class Profile extends Component {
           <Right style={{ flex: 1 }}>
             <Button
               transparent
+              style={Style.rightBtn}
               onPress={this._signOut.bind(this)}>
               <Ionicons name={logout} size={27} color='#fff' />
             </Button>

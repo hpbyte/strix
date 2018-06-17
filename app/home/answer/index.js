@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Platform, KeyboardAvoidingView, FlatList } from 'react-native'
+import { View, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native'
 import {
     Root,
     Container,
@@ -8,18 +8,13 @@ import {
     Button,
     Header,
     Left,
-    Body,
     Right,
     Text,
-    Title,
-    Card,
-    CardItem,
     Form,
     Item,
     Input,
     Toast,
-    ActionSheet,
-    Footer
+    ActionSheet
 } from 'native-base'
 import { Row, Col } from 'react-native-easy-grid'
 import firebaseService from '../../service/firebase'
@@ -215,8 +210,9 @@ export default class Answer extends Component {
                 <Header noShadow style={style.ansHeader} >
                     <Left style={{ flex: 1, flexDirection: 'row' }}>
                         <Button
-                        transparent
-                        onPress={() => this.props.navigation.goBack()}>
+                            transparent
+                            style={Style.leftBtn}
+                            onPress={() => this.props.navigation.goBack()}>
                             <Ionicons name={back} size={26} style={Style.black} />
                         </Button>
                         <Button transparent style={{ marginLeft: 10 }}>
@@ -228,8 +224,9 @@ export default class Answer extends Component {
                         </View>
                     </Left>
                     <Right style={{ flex: 1 }}>
-                        <Button transparent>
-                        <Ionicons name={more} size={26} style={Style.black} />
+                        <Button transparent
+                            style={Style.rightBtn}>
+                            <Ionicons name={more} size={26} style={Style.black} />
                         </Button>
                     </Right>
                 </Header>

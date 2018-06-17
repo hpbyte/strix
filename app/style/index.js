@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 export default {
   header: {
     backgroundColor: '#fff',
@@ -41,7 +43,16 @@ export default {
   title: {
     fontFamily: 'pacifico',
     fontSize: 32,
-    color: '#000'
+    color: '#000',
+    paddingLeft: 0
+  },
+  leftBtn: {
+    paddingLeft: 5,
+    marginLeft: Platform.OS === 'ios' ? 5 : null
+  },
+  rightBtn: {
+    paddingRight: 7,
+    marginRight: 0
   },
   fab: {
     flex: 1,

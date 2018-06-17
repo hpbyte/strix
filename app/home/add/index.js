@@ -170,6 +170,7 @@ export default class Add extends Component {
                         <Left style={{ flex: 1 }}>
                             <Button
                                 transparent
+                                style={Style.leftBtn}
                                 onPress={() => this.props.navigation.goBack()}>
                                 <Ionicons name={back} size={26} style={Style.black} />
                             </Button>
@@ -178,7 +179,8 @@ export default class Add extends Component {
                             <Title style={Style.black}>Add Cluster</Title>
                         </Body>
                         <Right style={{ flex: 1 }}>
-                            <Button transparent>
+                            <Button transparent
+                                style={Style.rightBtn}>
                                 <Ionicons name={more} size={26} style={Style.black} />
                             </Button>
                         </Right>

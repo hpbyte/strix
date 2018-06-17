@@ -144,7 +144,10 @@ export default class Chat extends Component {
       <Container>
         <Header noShadow style={Style.bgWhite}>
           <Left style={{ flex: 1 }}>
-            <Button transparent onPress={() => this.props.navigation.goBack()} >
+            <Button
+              transparent
+              style={Style.leftBtn}
+              onPress={() => this.props.navigation.goBack()} >
               <Ionicons name={back} size={26} color='#000' />
             </Button>
           </Left>
@@ -152,7 +155,9 @@ export default class Chat extends Component {
             <Title style={Style.black}>{this.state.receiverName}</Title>
           </Body>
           <Right style={{ flex: 1 }}>
-            <Button transparent>
+            <Button
+              transparent
+              style={Style.rightBtn}>
               <Ionicons name={more} size={26} color='#000' />
             </Button>
           </Right>

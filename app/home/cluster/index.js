@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableHighlight, FlatList } from 'react-native';
+import { View, TouchableHighlight, FlatList } from 'react-native';
 import {
   Container, Header, Title, Content, Button, Left, Right, Body, Text, Card, CardItem, Thumbnail
 } from 'native-base';
@@ -78,6 +78,7 @@ export default class Cluster extends Component {
         <Header style={Style.header}>
           <Left style={{ flex: 1 }}>
             <Button
+              style={Style.leftBtn}
               transparent
               onPress={() => this.props.navigation.goBack()}>
               <Ionicons name={back} size={26} style={Style.black} />
@@ -90,7 +91,8 @@ export default class Cluster extends Component {
             <Button transparent>
               <MaterialIcons name="sort" size={26} style={Style.black} />
             </Button>
-            <Button transparent>
+            <Button transparent
+              style={Style.rightBtn}>
               <Ionicons name={more} size={26} style={Style.black} />
             </Button>
           </Right>

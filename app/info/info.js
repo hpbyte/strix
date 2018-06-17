@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Platform, View, Dimensions, StatusBar } from 'react-native';
-import { Container, Content, Header, Thumbnail, Body, Left, Right, Button, Text, Title, Card, CardItem } from 'native-base'
+import {
+    Container, Content, Header, Thumbnail, Body, Left, Right, Button, Text, Title, Card, CardItem
+} from 'native-base'
 import firebaseService from '../service/firebase'
 import { Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
 import { school, work, chat, mail, call, back, quote } from '../partials/icons'
-import { BarChart, LineChart, YAxis, Grid } from 'react-native-svg-charts'
+import { LineChart, YAxis, Grid } from 'react-native-svg-charts'
 import Style from '../style'
 
 const FIREBASE = firebaseService.database()
@@ -49,8 +51,9 @@ export default class Info extends Component {
                 <Header noShadow style={[Style.bgGrey, { borderBottomWidth: 0, paddingTop: 0 }]}>
                     <Left style={{ flex: 1 }}>
                         <Button
-                        transparent
-                        onPress={() => this.props.navigation.goBack()}>
+                            transparent
+                            style={Style.leftBtn}
+                            onPress={() => this.props.navigation.goBack()}>
                             <Ionicons name={back} size={28} color='#fff' />
                         </Button>
                     </Left>

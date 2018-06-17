@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
+import { Platform, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 import {
     Root,
     Container,
@@ -12,10 +12,7 @@ import {
     Title,
     Button,
     Form, 
-    Item, 
-    Input, 
     Textarea,
-    Label,
     Picker,
     Card,
     CardItem,
@@ -130,6 +127,7 @@ export default class Post extends Component {
                     <Left style={{ flex: 1 }}>
                         <Button
                             transparent
+                            style={Style.leftBtn}
                             onPress={() => this.props.navigation.goBack()}>
                             <Ionicons name={back} size={26} style={Style.black} />
                         </Button>
@@ -138,7 +136,9 @@ export default class Post extends Component {
                         <Title style={Style.black}>Post a Quiz</Title>
                     </Body>
                     <Right style={{ flex: 1 }}>
-                        <Button transparent>
+                        <Button 
+                            transparent
+                            style={Style.rightBtn}>
                             <Ionicons name={more} size={26} style={Style.black} />
                         </Button>
                     </Right>

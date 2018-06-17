@@ -98,6 +98,7 @@ export default class Booster extends Component {
           <Left style={{ flex: 1 }}>
             <Button
               transparent
+              style={Style.leftBtn}
               onPress={() => this.props.navigation.navigate('Profile')}>
               <Ionicons name={user} size={26} style={Style.black}/>
             </Button>
@@ -106,7 +107,9 @@ export default class Booster extends Component {
             <Title style={Style.title}>Strix</Title>
           </Body>
           <Right style={{ flex: 1 }}>
-            <Button transparent
+            <Button 
+              transparent
+              style={Style.rightBtn}
               onPress={() => this.props.navigation.navigate('Search')}>
               <Ionicons name={search} size={26} style={Style.black}/>
             </Button>

@@ -123,7 +123,9 @@ export default class End extends Component {
             <Container>
                 <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} noShadow>
                     <Left>
-                        <Button transparent
+                        <Button
+                            transparent
+                            style={Style.leftBtn}
                             onPress={() => this.props.navigation.goBack()}>
                             <Ionicons name={back} size={26} color="#000" />
                         </Button>

@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import {
   View, TouchableHighlight, TouchableOpacity, ImageBackground, Dimensions, FlatList, StyleSheet
 } from 'react-native';
-import {
-  Container, Header, Content, Left, Right, Body, Title, Text, Button
-} from 'native-base';
+import { Container, Text } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { add, user, quote } from '../partials/icons'
-import { Grid, Col, Row } from "react-native-easy-grid";
+import { add, quote } from '../partials/icons'
+import { Grid, Row } from "react-native-easy-grid";
 import firebaseService from '../service/firebase'
 import Bar from '../partials/bar'
 import Sheader from '../partials/sheader'
