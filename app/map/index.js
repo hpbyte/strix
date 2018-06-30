@@ -32,13 +32,11 @@ export default class Map extends Component {
     }
 
     render() {
-        let mylocation = 'Waiting ...'
         const { location, error } = this.state
         if(error) {
             alert(error)
         } else if(location) {
-            mylocation = JSON.stringify(location)
-            alert(mylocation)
+            
         }
 
         return(
@@ -48,6 +46,11 @@ export default class Map extends Component {
                 showsMyLocationButton={true}
                 showsUserLocation={true}
                 showsCompass={true}
+                showsScale={true}
+                showsIndoors={true}
+                loadingEnabled={true}
+                loadingIndicatorColor='#000'
+                followsUserLocation={true}
             />
         )
     }

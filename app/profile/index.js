@@ -6,28 +6,23 @@ import {
   Container,
   Header,
   Title,
-  Content,
   Left,
   Body,
   Right,
   Thumbnail,
   Text,
   Button,
-  List,
-  ListItem,
   Footer,
   FooterTab,
   Toast,
-  ActionSheet,
-  Spinner
+  ActionSheet
 } from 'native-base';
-import { Grid, Col, Row } from 'react-native-easy-grid';
+import { Grid, Row } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
 import { logout, chat, pulse, menu, quote, camera, back } from '../partials/icons'
 import { signedOut } from '../auth/check'
 import Bar from '../partials/bar'
 import Style from '../style'
-import style from './style'
 import firebaseService from '../service/firebase'
 
 const FIREBASE = firebaseService.database()
@@ -39,52 +34,56 @@ import Messages from './msg'
 import Posts from './posts'
 
 const ProfileTaber = TabNavigator(
-    {
-      Detail: { screen: Detail },
-      Activity: { screen: Activity },
-      Posts: { screen: Posts },
-      Messages: { screen: Messages }
-    },
-    {
-      tabBarPosition: 'top',
-      swipeEnabled: false,
-      animationEnabled: true,
-      tabBarComponent: props => {
-          return (
-            <Footer style={{ borderBottomColor: '#000', borderBottomWidth: 0.3 }}>
-                <FooterTab style={Style.bgWhite}>
-                    <Button vertical
-                        onPress={() => props.navigation.navigate('Detail')}>
-                        <Ionicons name={menu} size={28} color="#000" />
-                        <Text style={Style.black}>Detail</Text>
-                    </Button>
-                    <Button vertical
-                        onPress={() => props.navigation.navigate('Activity')}>
-                        <Ionicons name={pulse} size={28} color="#000" />
-                        <Text style={Style.black}>Activity</Text>
-                    </Button>
-                    <Button vertical
-                        onPress={() => props.navigation.navigate('Posts')}>
-                        <Ionicons name={quote} size={28} color="#000" />
-                        <Text style={Style.black}>Posts</Text>
-                    </Button>
-                    <Button vertical
-                        onPress={() => props.navigation.navigate('Messages')}>
-                        <Ionicons name={chat} size={28} color="#000" />
-                        <Text style={Style.black}>Chats</Text>
-                    </Button>
-                </FooterTab>
-            </Footer>
-          )
-      }
+  {
+    Detail: { screen: Detail },
+    Activity: { screen: Activity },
+    Posts: { screen: Posts },
+    Messages: { screen: Messages }
+  },
+  {
+    tabBarPosition: 'top',
+    swipeEnabled: false,
+    animationEnabled: true,
+    tabBarComponent: props => {
+        return (
+          <Footer style={{ borderBottomColor: '#000', borderBottomWidth: 0.3 }}>
+              <FooterTab style={Style.bgWhite}>
+                  <Button vertical
+                      onPress={() => props.navigation.navigate('Detail')}>
+                      <Ionicons name={menu} size={28} color="#000" />
+                      <Text style={Style.black}>Detail</Text>
+                  </Button>
+                  <Button vertical
+                      onPress={() => props.navigation.navigate('Activity')}>
+                      <Ionicons name={pulse} size={28} color="#000" />
+                      <Text style={Style.black}>Activity</Text>
+                  </Button>
+                  <Button vertical
+                      onPress={() => props.navigation.navigate('Posts')}>
+                      <Ionicons name={quote} size={28} color="#000" />
+                      <Text style={Style.black}>Posts</Text>
+                  </Button>
+                  <Button vertical
+                      onPress={() => props.navigation.navigate('Messages')}>
+                      <Ionicons name={chat} size={28} color="#000" />
+                      <Text style={Style.black}>Chats</Text>
+                  </Button>
+              </FooterTab>
+          </Footer>
+        )
     }
+  }
 )
 
 export default class Profile extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { uId: firebaseService.auth().currentUser.uid, image: null, hasCamerRollPermission: null }
+    this.state = {
+      uId: firebaseService.auth().currentUser.uid,
+      image: null,
+      hasCamerRollPermission: null
+    }
   }
 
   async componentDidMount() {

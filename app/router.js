@@ -1,10 +1,10 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import {
-  Footer, FooterTab, Button, Badge, Text, Icon
+  Footer, FooterTab, Button, Badge, Text
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { podium, link, noti } from './partials/icons';
+import { podium, link, navi } from './partials/icons';
 import Style from './style';
 import Leaderboard from './leaderboard/leaderboard';
 import Search from './searchbar/searchbar'
@@ -13,7 +13,7 @@ import Booster from './booster/'
 import Signup from './auth/signup';
 import Signin from './auth/signin';
 import Home from './home';
-import Noti from './noti/noti'
+import EventStacker from './event'
 
 export const AuthTaber = TabNavigator(
   {
@@ -55,7 +55,7 @@ export const MenuTaber = TabNavigator(
     Home: { screen: Home },
     Leaderboard: { screen: Leaderboard },
     Booster: { screen: Booster },
-    Noti: { screen: Noti }
+    EventStacker: { screen: EventStacker }
   },
   {
     tabBarPosition: 'bottom',
@@ -90,9 +90,8 @@ export const MenuTaber = TabNavigator(
             <Button
               badge vertical
               // active={props.navigationState.index === 3}
-              onPress={() => props.navigation.navigate('Noti')}>
-              <Badge><Text>7</Text></Badge>
-              <Icon name={noti} style={Style.white} />
+              onPress={() => props.navigation.navigate('EventStacker')}>
+              <Ionicons name={navi}size={25} style={Style.white} />
               <Text style={Style.grey}>Events</Text>
             </Button>
           </FooterTab>

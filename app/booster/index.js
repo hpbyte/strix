@@ -1,4 +1,3 @@
-import React from 'react';
 import { StackNavigator } from 'react-navigation'
 import End from './end'
 import Info from '../info/info'

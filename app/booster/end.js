@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import {
-    Container, Text, View, Header, Left, Body, Right, Button, Thumbnail
+    Container, Text, Badge, Header, Left, Body, Right, Button, Thumbnail, List, ListItem
 } from 'native-base'
 import { Grid, Row, Col } from 'react-native-easy-grid'
 import firebaseService from '../service/firebase'
@@ -145,13 +145,19 @@ export default class End extends Component {
                             <Text style={style.namae}>{pupilName}</Text>
                         </Col>
                     </Row>
-                    <Row size={20} style={[Style.itemCenter, style.info]}>
-                        <Text style={style.infoTxt}>Started on {moment(startTime).format('Do MMM / YYYY')}</Text>
-                        <Text style={style.infoTxt}>{status ? 'On Going' : 'Ended'}</Text>
-                        <Text style={style.infoTxt}>{totalTime} hr</Text>
-                        <Text style={style.infoTxt}>Ended on {moment(endTime).format('Do MMM / YYYY')}</Text>
+                    <Row size={10} style={style.info}>
+                        {status ? <Badge style={style.txtCenter} success><Text>On Going</Text></Badge> : <Badge style={style.txtCenter}><Text>Ended</Text></Badge>}
                     </Row>
-                    <Row size={60} style={Style.itemCenter}>
+                    <Row size={20} style={style.info}>
+                        <List>
+                            <ListItem style={style.listItem}>
+                                <Text>Started on {moment(startTime).format('Do MMM / YYYY HH:mm')}</Text>
+                            </ListItem>
+                            {status ? null : <ListItem style={style.listItem}><Text>Ended on {moment(endTime).format('Do MMM / YYYY HH:mm')}</Text></ListItem>}
+                            {status ? null : <ListItem style={style.listItem}><Text>Total Time {totalTime} hr</Text></ListItem>}
+                        </List>
+                    </Row>
+                    <Row size={50} style={Style.itemCenter}>
                         <TouchableOpacity onPress={this._onPressEnd.bind(this)} disabled={status ? false : true}
                             style={[Style.itemCenter, Style.bgWhite, style.btn]}>
                             <Text style={style.end}>End</Text>
@@ -169,19 +175,26 @@ const style = StyleSheet.create({
         height: 200,
         elevation: 9,
         borderRadius: 100,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 5, height: 5 },
+        shadowRadius: 1.1
     },
     end: {
         fontSize: 40,
         color: '#d32f2f'
     },
     info: {
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'center'
     },
-    infoTxt: {
-        fontSize: 19,
-        color: '#000'
+    listItem: {
+        borderBottomWidth: 0
     },
     namae: {
         marginTop: 10
+    },
+    txtCenter: {
+        alignSelf: 'center'
     }
 })

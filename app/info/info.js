@@ -41,9 +41,7 @@ export default class Info extends Component {
 
     render() {
         const { uId, name, skool, uni, job, bio, image } = this.state
-        const fill = '#2a4ff0'
         const lineData = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
-        const barData   = [ 50, 10, 40, 95, -4, -24, null, 85, undefined, 0, 35, 53, -53, 24, 50, -20, -80 ]
 
         return(
             <Container>
