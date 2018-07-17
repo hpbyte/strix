@@ -20,7 +20,8 @@ export default class App extends React.Component {
     await Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-      'pacifico': require('./assets/fonts/pacifico.ttf'),
+      'chelaone': require('./assets/fonts/chelaone.ttf'),
+      // 'pacifico': require('./assets/fonts/pacifico.ttf'),
     });
   
     this.setState({ loading: false });
