@@ -104,7 +104,7 @@ export default class Booster extends Component {
             </Button>
           </Left>
           <Body style={Style.flexCenter}>
-            <Title style={Style.title}>Strix</Title>
+            <Title style={Style.title}>Hippo</Title>
           </Body>
           <Right style={{ flex: 1 }}>
             <Button 

@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { MapView, Constants, Location, Permissions } from 'expo'
-
+  
 export default class Map extends Component {
-    state = {
-        location: null,
-        error: null
+    constructor(props) {
+        super(props)
+        
+        this.state = {
+            error: null,
+            lati: 0,
+            longi: 0
+        }
     }
 
     componentWillMount() {
@@ -28,17 +33,17 @@ export default class Map extends Component {
         }
 
         let location = await Location.getCurrentPositionAsync({})
-        this.setState({ location })
+        this.setState({ 
+            lati: location.coords.latitude,
+            longi: location.coords.longitude
+        })
     }
 
     render() {
-        const { location, error } = this.state
+        const { error, lati, longi } = this.state
         if(error) {
             alert(error)
-        } else if(location) {
-            
         }
-
         return(
             <MapView
                 style={{ flex: 1 }}
@@ -50,8 +55,15 @@ export default class Map extends Component {
                 showsIndoors={true}
                 loadingEnabled={true}
                 loadingIndicatorColor='#000'
-                followsUserLocation={true}
-            />
+                region={{
+                    latitude: lati,
+                    longitude: longi,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+            >
+                <MapView.Marker coordinate={{latitude: 45.524548, longitude: -122.6749817}} />
+            </MapView>
         )
     }
 }
