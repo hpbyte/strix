@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { MapView, Constants, Location, Permissions } from 'expo'
+import firebaseService from '../service/firebase'
+
+const FIREVENT = firebaseService.database().ref('events')
   
 export default class Map extends Component {
     constructor(props) {
@@ -9,7 +12,8 @@ export default class Map extends Component {
         this.state = {
             error: null,
             lati: 0,
-            longi: 0
+            longi: 0,
+            events: []
         }
     }
 
@@ -20,7 +24,17 @@ export default class Map extends Component {
             })
         } else {
             this._getLocation()
+            this._getEvents()
         }
+    }
+
+    _getEvents = async() => {
+        let arr = []
+        await FIREVENT.once('value', (snapshot) => {
+            snapshot.forEach(snap => { arr.push(snap.val()) })
+        }).then(() => {
+            this.setState({ events: arr })
+        })
     }
 
     _getLocation = async() => {
@@ -62,7 +76,17 @@ export default class Map extends Component {
                     longitudeDelta: 0.0421,
                 }}
             >
-                <MapView.Marker coordinate={{latitude: 45.524548, longitude: -122.6749817}} />
+                {this.state.events.map((event, index) => (
+                    <MapView.Marker 
+                        key={index}
+                        coordinate={{
+                            latitude: event.location.latitude, 
+                            longitude: event.location.longitude
+                        }}
+                        title={event.title}
+                        description={event.description}
+                    />
+                ))}
             </MapView>
         )
     }

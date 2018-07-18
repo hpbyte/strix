@@ -8,8 +8,29 @@ import Sheader from '../partials/sheader'
 import Bar from '../partials/bar'
 import Map from '../map'
 import Style from '../style'
+import firebaseService from '../service/firebase'
+
+const FIREVENT = firebaseService.database().ref('events')
 
 class Event extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            events: []
+        }
+    }
+
+
+    _getEvents = async() => {
+        let arr = []
+        await FIREVENT.once('value', (snapshot) => {
+            snapshot.forEach(snap => { arr.push(snap.val()) })
+        }).then(() => {
+            this.setState({ events: arr })
+        })
+    }
+
     render() {
         return(
             <Container>
@@ -17,7 +38,7 @@ class Event extends Component {
                 <Bar />
                 <View style={{ flex: 1 }}>
                     <Content>
-
+                        
                     </Content>
                     <TouchableHighlight style={Style.fab} 
                         onPress={() => this.props.navigation.navigate('Map')}>
