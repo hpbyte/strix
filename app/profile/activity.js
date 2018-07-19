@@ -44,7 +44,7 @@ export default class Activity extends Component {
         return(
             <Content padder>
                 <Card>
-                    <CardItem header> 
+                    <CardItem header bordered> 
                         <Text>Points + Status</Text>
                     </CardItem>
                     <CardItem> 
@@ -57,7 +57,7 @@ export default class Activity extends Component {
                     />
                 </Card>
                 <Card>
-                    <CardItem header>
+                    <CardItem header bordered>
                         <Text>Achievement Track</Text>
                     </CardItem>
                     <View style={{ height: 250, flexDirection: 'row', margin: 10 }}>
@@ -82,7 +82,7 @@ export default class Activity extends Component {
                     </View>
                 </Card>
                 <Card>
-                    <CardItem header>
+                    <CardItem header bordered>
                         <Text>By Cluster</Text>
                     </CardItem>
                     <PieChart

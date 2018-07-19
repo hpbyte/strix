@@ -11,6 +11,7 @@ import { map } from '../partials/icons'
 import Sheader from '../partials/sheader'
 import Bar from '../partials/bar'
 import Map from '../map'
+import Detail from './detail'
 import Style from '../style'
 import firebaseService from '../service/firebase'
 
@@ -52,7 +53,8 @@ class Event extends Component {
                     <FlatList
                         data={this.state.events}
                         renderItem={({item}) => (
-                            <TouchableOpacity id={item.key}>
+                            <TouchableOpacity id={item.key}
+                                onPress={() => this.props.navigation.navigate('Detail', { eventId: item.key })}>
                                 <ImageBackground source={{ uri: item.val().bgimg }} style={style.bgImg} borderRadius={8} >
                                     <Col>
                                         <Row size={65}></Row>
@@ -100,11 +102,13 @@ const style = StyleSheet.create({
 const EventStacker = StackNavigator(
     {
         Event: { screen: Event },
-        Map: { screen: Map }
+        Map: { screen: Map }, 
+        Detail: { screen: Detail }
     },
     {
         headerMode: 'none',
-        initialRouteName: 'Event'
+        initialRouteName: 'Event',
+        mode: 'modal'
     }
 )
 
