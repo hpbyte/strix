@@ -52,11 +52,11 @@ export default class Cluster extends Component {
     } catch(error) { alert(error) }
   }
 
-  _setExpired = (qId) => {
+  _setExpired = async(qId) => {
     const cluster = this.state.cluster
 
     try {
-      FIREBASE.ref('questions').child(cluster).child(qId).update({
+      await FIREBASE.ref('questions').child(cluster).child(qId).update({
         status: false
       })
     } catch(error) { alert(error) }

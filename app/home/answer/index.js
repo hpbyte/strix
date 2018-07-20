@@ -63,7 +63,8 @@ export default class Answer extends Component {
             mostUp: '',
             mostUid: '',
             mostUimg: '',
-            mostUname: ''
+            mostUname: '',
+            isThereAnsNotOne: false,
         }
 
         this._voteUp = this._voteUp.bind(this)
@@ -73,13 +74,13 @@ export default class Answer extends Component {
     componentDidMount() {
         const { questionDur, questionStus } = this.state
 
-        this._getMostVoted()
         if(( questionDur < moment().format("YYYY-MM-DD HH:mm") ) && questionStus) {
             this._setExpired()
         } else {
             this._getUserDetails()
             this._getAnswers()
         }
+        this._getMostVoted()
     }
 
     _setExpired = async() => {
@@ -114,34 +115,43 @@ export default class Answer extends Component {
     
                 snapshot.forEach(snap => { ansArr.push(snap) })
     
-                this.setState({ answers: ansArr })
+                if(Array.isArray(ansArr) && ansArr.length !== 0) {
+                    // is it array and not empty
+                    this.setState({ answers: ansArr })
+                    if(ansArr.length !== 1) {
+                        this.setState({ isThereAnsNotOne: true })
+                    }
+                }
             })
         } catch(error) { alert(error.message) }
     }
 
     _getMostVoted = async() => {
-        const { questionId, qCluster } = this.state
+        const { questionId, qCluster, isThereAnsNotOne } = this.state
 
-        try {
-            let ansArr = []
-            await FIREBASE.ref('questions/'+qCluster+"/"+questionId+"/answers")
-                .orderByChild('upvote')
-                .on('value', snapshot => {    
-                    snapshot.forEach(snap => { ansArr.push(snap) })
+        if(isThereAnsNotOne) {
+            // yes there are answers
+            try {
+                let ansArr = []
+                await FIREBASE.ref('questions/'+qCluster+"/"+questionId+"/answers")
+                    .orderByChild('upvote')
+                    .on('value', snapshot => {    
+                        snapshot.forEach(snap => { ansArr.push(snap) })
 
-                    let most = ansArr[ansArr.length-1]
-                    this.setState({
-                        mostAid: most.key,
-                        mostAns: most.val().answer,
-                        mostDown: most.val().downvote,
-                        mostTime: most.val().timestamp,
-                        mostUp: most.val().upvote,
-                        mostUid: most.val().user._id,
-                        mostUimg: most.val().user.image,
-                        mostUname: most.val().user.name
+                        let most = ansArr[ansArr.length-1]
+                        this.setState({
+                            mostAid: most.key,
+                            mostAns: most.val().answer,
+                            mostDown: most.val().downvote,
+                            mostTime: most.val().timestamp,
+                            mostUp: most.val().upvote,
+                            mostUid: most.val().user._id,
+                            mostUimg: most.val().user.image,
+                            mostUname: most.val().user.name
+                        })
                     })
-                })
-        } catch(error) { alert(error.message) }
+            } catch(error) { alert(error.message) }
+        }
     }
 
     _submitAnswer = async() => {
@@ -163,6 +173,8 @@ export default class Answer extends Component {
                     if(error) alert(error.message)
                 })
                 .then(() => {
+                    // increment points
+                    this._incrementPoint()
                     // clear the answer input field
                     this.setState({ answer: '' })
                 }).catch(error => alert(error))
@@ -175,6 +187,13 @@ export default class Answer extends Component {
                 position: 'top'
             })
         }
+    }
+
+    _incrementPoint = async() => {
+        // receive +10 points if answered
+        await FIREBASE.ref("users/"+this.state.userId+"/points").transaction(pt => {
+            return pt + 10
+        })
     }
 
     _voteUp = async(ansId) => {
@@ -200,7 +219,7 @@ export default class Answer extends Component {
 
     render() {
         const {
-            answers, mostAid, mostAns, mostDown, mostTime, mostUp, mostUid, mostUimg, mostUname
+            answers, mostAid, mostAns, mostDown, mostTime, mostUp, mostUid, mostUimg, mostUname, isThereAnsNotOne
         } = this.state
 
         return(
@@ -237,7 +256,7 @@ export default class Answer extends Component {
                         <Text style={style.quizTxt}>{ this.state.question }</Text>
                     </View>
                     <View>
-                    <Row style={{ margin: 10 }}>
+                    {isThereAnsNotOne ? (<Row style={{ margin: 10 }}>
                         <Col size={10}>
                             <Thumbnail small source={{ uri: mostUimg }} />
                         </Col>
@@ -279,7 +298,7 @@ export default class Answer extends Component {
                                 </Col>
                             </Row>
                         </Col>
-                    </Row>
+                    </Row>) : null}
                     {answers.map((prop, key) => {
                         return (
                             <Row key={key} style={{ margin: 10 }}>

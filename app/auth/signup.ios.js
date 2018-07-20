@@ -54,7 +54,7 @@ export default class Signup extends Component {
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <Grid>
               <Row size={30} style={style.verticalCenter}>
-                <Text style={style.strix}>Strix</Text>
+                <Text style={style.strix}>Hippo</Text>
               </Row>
               <Row size={5}></Row>
               <Row size={8} style={style.inputView}>
