@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Keyboard, TouchableWithoutFeedback, TextInput
+  Keyboard, TouchableWithoutFeedback, TextInput
 } from 'react-native';
 import { Container, Button, Text } from 'native-base'
 import { Grid, Col, Row } from 'react-native-easy-grid'
@@ -21,7 +21,7 @@ export default class Signup extends Component {
 
   _signUp = async() => {
     this.setState({ error: '', loading: true });
-    const { name, email, password, dob } = this.state;
+    const { name, email, password } = this.state;
 
     await firebaseService.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
@@ -34,7 +34,8 @@ export default class Signup extends Component {
             job: "",
             image: "",
             bio: "",
-            points: 0
+            points: 0,
+            phone: ""
         })
         // store that the user is logged in
         signedIn()

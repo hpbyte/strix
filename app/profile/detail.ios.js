@@ -3,12 +3,12 @@ import {
   Modal, View, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TextInput
 } from 'react-native'
 import {
-  Root, Container, Content, Left, Body, Right, Text, Button, List, ListItem, Card, CardItem, Toast, ActionSheet, Textarea
+  Root, Container, Content, Left, Body, Right, Text, Button, Card, CardItem, Toast, ActionSheet, Textarea
 } from 'native-base';
 import QRCode from 'react-native-qrcode'
 import firebaseService from '../service/firebase';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import { school, work, user, mail, card } from '../partials/icons'
+import { school, work, user, mail, card, call } from '../partials/icons'
 import { Grid, Row, Col } from 'react-native-easy-grid'
 import Style from '../style'
 import style from './style'
@@ -28,8 +28,10 @@ export default class Detail extends Component {
       uni: '', 
       job: '', 
       bio: '',
+      phone: '',
       showToast: false, 
-      modalVisible: false }
+      modalVisible: false 
+    }
   }
 
   setModalVisible(visible) {
@@ -48,7 +50,8 @@ export default class Detail extends Component {
               school: snapshot.val().school,
               uni: snapshot.val().uni,
               job: snapshot.val().job,
-              bio: snapshot.val().bio
+              bio: snapshot.val().bio,
+              phone: snapshot.val().phone
             })
           })
         } catch(error) { alert(error) }
@@ -59,14 +62,15 @@ export default class Detail extends Component {
   }
 
   _editProfile = async() => {
-    const { uId, name, email, dob, school, uni, job } = this.state
+    const { uId, name, dob, school, uni, job, phone } = this.state
     
     await FIREBASE.ref("users/"+uId).update({
       name: name,
       dob: dob,
       school: school,
       uni: uni,
-      job: job
+      job: job,
+      phone: phone
     }).then(() => {
       this.setModalVisible(!this.state.modalVisible)
 
@@ -144,6 +148,13 @@ export default class Detail extends Component {
               <Body>
                 <Text style={Style.pdlf}>Date-of-Birth</Text>
                 <Text style={Style.pdlf} note>{this.state.dob}</Text>
+              </Body>
+            </CardItem>
+            <CardItem>
+              <Ionicons name={call} size={30} color="#622E3C" />
+              <Body>
+                <Text style={Style.pdlf}>Phone</Text>
+                <Text style={Style.pdlf} note>{this.state.phone}</Text>
               </Body>
             </CardItem>
             <CardItem>
@@ -244,6 +255,20 @@ export default class Detail extends Component {
                           onChangeText={dob => this.setState({dob})}
                         />
                       </Col>
+                    </Row>
+                    <Row size={10} style={style.item}>
+                        <Col size={10} style={Style.itemCenter}>
+                        <Ionicons name={call} size={30} color="#622E3C" />
+                        </Col>
+                        <Col size={90} style={style.verticalCenter}>
+                        <TextInput
+                            style={style.input}
+                            placeholder={this.state.phone}
+                            underlineColorAndroid="transparent"
+                            value={this.state.phone}
+                            onChangeText={phone => this.setState({phone})}
+                        />
+                        </Col>
                     </Row>
                     <Row size={10} style={style.item}>
                       <Col size={10} style={Style.itemCenter}>

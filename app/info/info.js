@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, View, Dimensions, StatusBar } from 'react-native';
+import { Platform, View, Linking, StatusBar } from 'react-native';
 import {
     Container, Content, Header, Thumbnail, Body, Left, Right, Button, Text, Title, Card, CardItem
 } from 'native-base'
@@ -7,7 +7,9 @@ import firebaseService from '../service/firebase'
 import { Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
 import { school, work, chat, mail, call, back, quote } from '../partials/icons'
-import { LineChart, YAxis, Grid } from 'react-native-svg-charts'
+import { 
+    LineChart, YAxis, Grid, ProgressCircle, PieChart
+} from 'react-native-svg-charts'
 import Style from '../style'
 
 const FIREBASE = firebaseService.database()
@@ -19,11 +21,20 @@ export default class Info extends Component {
         const { params } = this.props.navigation.state
         const userId = params ? params.userId : null
 
-        this.state = { uId: userId, name: '', school: '', uni: '', job: '', image: null }
+        this.state = { 
+            uId: userId, name: '', school: '', uni: '', job: '', image: null, phone: '', email: ''
+        }
     }
 
     componentDidMount() {
         this._getUserInfo()
+        this._getUserPoints()
+    }
+
+    _getUserPoints = async() => {
+        await FIREBASE.ref('users').child(this.state.uId).once('value', (snapshot) => {
+            this.setState({ points: snapshot.val().points })
+        })
     }
 
     _getUserInfo = async() => {
@@ -34,14 +45,47 @@ export default class Info extends Component {
                 uni: snapshot.val().uni,
                 job: snapshot.val().job,
                 bio: snapshot.val().bio,
-                image: snapshot.val().image
+                image: snapshot.val().image,
+                phone: snapshot.val().phone
             })
         }).catch(error => alert(error))
     }
 
+    _makeACall = () => {
+        const ph = this.state.phone
+        if(ph === '') {
+            alert('Phone Number is not specified!')
+        } else {
+            Linking.openURL('tel:'+ph)
+        }
+    }
+
+    _sendAMail = () => {
+        const mail = this.state.email
+        if(mail === '') {
+            alert('Email is not specified!')
+        } else {
+            Linking.openURL('mailto:'+mail)
+        }
+    }
+
     render() {
-        const { uId, name, skool, uni, job, bio, image } = this.state
-        const lineData = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
+        const { uId, name, skool, uni, job, bio, image } = this.state        
+        const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
+        const data2 = [ 50, 10, 40, 95 ]
+        const contentInset = { top: 20, bottom: 20 }
+
+        const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7)
+        const pieData = data2
+            .filter(value => value > 0)
+            .map((value, index) => ({
+                value,
+                svg: {
+                    fill: randomColor(),
+                    onPress: () => console.log('press', index),
+                },
+                key: `pie-${index}`,
+            }))
 
         return(
             <Container>
@@ -69,7 +113,7 @@ export default class Info extends Component {
                     <Row size={4} style={Style.bgGrey}></Row>
                     <Row size={10} style={Style.bgGrey}>
                         <Col>
-                            <Button style={[Style.iconBtn, {backgroundColor: '#43a047'}]}>
+                            <Button style={[Style.iconBtn, {backgroundColor: '#43a047'}]} onPress={() => this._makeACall()}>
                                 <Ionicons name={call} size={25} color="#fff" />
                             </Button>
                         </Col>
@@ -82,7 +126,7 @@ export default class Info extends Component {
                             </Button>
                         </Col>
                         <Col>
-                            <Button style={[Style.iconBtn, {backgroundColor: '#e53935'}]}>
+                            <Button style={[Style.iconBtn, {backgroundColor: '#e53935'}]} onPress={() => this._sendAMail()}>
                                 <Ionicons name={mail} size={25} color="#fff" />
                             </Button>
                         </Col>
@@ -114,25 +158,51 @@ export default class Info extends Component {
                                     </CardItem>
                                 </Card>
                                 <Card>
+                                    <CardItem header bordered> 
+                                        <Text>Points + Status</Text>
+                                    </CardItem>
+                                    <CardItem> 
+                                        <Text style={{ fontSize: 21, color: '#d32f2f' }}>{this.state.points} XP</Text>
+                                    </CardItem>
+                                    <ProgressCircle
+                                        style={{ height: 100, marginBottom: 15 }}
+                                        progress={ 0.4 }
+                                        progressColor={'#2a4ff0'}
+                                    />
+                                </Card>
+                                <Card>
                                     <CardItem header bordered>
-                                        <Text>Frequency</Text>
+                                        <Text>Achievement Track</Text>
                                     </CardItem>
-                                    <CardItem>
-                                        <View style={{ width: (Dimensions.get('screen').width)/1.1, height: 200, flexDirection: 'row' }}>
-                                            <YAxis
-                                                data={ lineData }
-                                                contentInset={{ top: 20, bottom: 20 }}
-                                                svg={{ fill: 'grey', fontSize: 10 }}
-                                                numberOfTicks={ 10 }
-                                                formatLabel={ value => `${value}` } />
-                                            <LineChart
-                                                style={{ flex: 1, marginLeft: 16 }}
-                                                data={ lineData }
-                                                svg={{ stroke: 'rgb(134, 65, 244)' }} >
-                                                <Grid/>
-                                            </LineChart>
-                                        </View>
+                                    <View style={{ height: 250, flexDirection: 'row', margin: 10 }}>
+                                        <YAxis
+                                            data={ data }
+                                            contentInset={ contentInset }
+                                            svg={{
+                                                fill: '#000',
+                                                fontSize: 10,
+                                            }}
+                                            numberOfTicks={ 16 }
+                                            formatLabel={ value => `${value}` }
+                                        />
+                                        <LineChart
+                                            style={{ flex: 1, marginLeft: 16 }}
+                                            data={ data }
+                                            svg={{ stroke: '#2a4ff0' }}
+                                            contentInset={ contentInset }
+                                        >
+                                            <Grid/>
+                                        </LineChart>
+                                    </View>
+                                </Card>
+                                <Card>
+                                    <CardItem header bordered>
+                                        <Text>By Cluster</Text>
                                     </CardItem>
+                                    <PieChart
+                                        style={{ height: 200, margin: 15 }}
+                                        data={ pieData }
+                                    />
                                 </Card>
                             </Col>
                         </Content>
