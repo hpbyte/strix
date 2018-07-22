@@ -21,7 +21,6 @@ import {
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { user, search, camera, right } from '../partials/icons'
 import firebaseService from '../service/firebase'
-import moment from 'moment'
 import Bar from '../partials/bar'
 import Tab2 from './tab2'
 import Style from '../style'
@@ -43,7 +42,7 @@ const Tab1 = (props) => (
       renderRow={(item) => 
         <View style={Style.listItem}>
           <ListItem>
-            <Thumbnail small size={80} source={{ uri: item.val().image }} />
+            {item.val().image !== '' ? (<Thumbnail small size={80} source={{ uri: item.val().image }} />) : (<Thumbnail small size={80} source={require('../../assets/default.png')} />)}
             <Body>
               <Text>{item.val().name}</Text>
             </Body>
@@ -65,28 +64,36 @@ export default class Booster extends Component {
     super(props)
     
     this.state = {
-      users: [], userId: firebaseService.auth().currentUser.uid
+      users: [], userId: firebaseService.auth().currentUser.uid, currentUni: ''
     }
   }
 
   componentDidMount() {
+    this._getCurrentUserUni()
     this._getUsers()
   }
 
   _getUsers = async() => {
-    const uId = this.state.userId
     let uArr = []
     
     await FIREBASE.ref('users').orderByChild('name')
       .once('value', snapshot => {
         snapshot.forEach(snap => {
-          if(snap.key !== uId) {
+          if(snap.key !== this.state.userId) {
             uArr.push(snap)
           }
         })
       })
-      .then(() => { this.setState({ users: uArr }) })
+      .then(() => { 
+        this.setState({ users: uArr.filter(u => u.val().uni === this.state.currentUni) }) 
+      })
       .catch(error => alert(error))
+  }
+
+  _getCurrentUserUni = async() => {
+    await FIREBASE.ref('users').child(this.state.userId).once('value', snapshot => {
+      this.setState({ currentUni: snapshot.val().uni })
+    }).catch(err => alert(err))
   }
 
   render() {

@@ -80,7 +80,6 @@ export default class Answer extends Component {
             this._getUserDetails()
             this._getAnswers()
         }
-        this._getMostVoted()
     }
 
     _setExpired = async() => {
@@ -120,6 +119,8 @@ export default class Answer extends Component {
                     this.setState({ answers: ansArr })
                     if(ansArr.length !== 1) {
                         this.setState({ isThereAnsNotOne: true })
+                        // yes there are answers and not just one
+                        this._getMostVoted()
                     }
                 }
             })
@@ -127,31 +128,28 @@ export default class Answer extends Component {
     }
 
     _getMostVoted = async() => {
-        const { questionId, qCluster, isThereAnsNotOne } = this.state
+        const { questionId, qCluster } = this.state
 
-        if(isThereAnsNotOne) {
-            // yes there are answers
-            try {
-                let ansArr = []
-                await FIREBASE.ref('questions/'+qCluster+"/"+questionId+"/answers")
-                    .orderByChild('upvote')
-                    .on('value', snapshot => {    
-                        snapshot.forEach(snap => { ansArr.push(snap) })
+        try {
+            let ansArr = []
+            await FIREBASE.ref('questions/'+qCluster+"/"+questionId+"/answers")
+                .orderByChild('upvote')
+                .on('value', snapshot => {    
+                    snapshot.forEach(snap => { ansArr.push(snap) })
 
-                        let most = ansArr[ansArr.length-1]
-                        this.setState({
-                            mostAid: most.key,
-                            mostAns: most.val().answer,
-                            mostDown: most.val().downvote,
-                            mostTime: most.val().timestamp,
-                            mostUp: most.val().upvote,
-                            mostUid: most.val().user._id,
-                            mostUimg: most.val().user.image,
-                            mostUname: most.val().user.name
-                        })
+                    let most = ansArr[ansArr.length-1]
+                    this.setState({
+                        mostAid: most.key,
+                        mostAns: most.val().answer,
+                        mostDown: most.val().downvote,
+                        mostTime: most.val().timestamp,
+                        mostUp: most.val().upvote,
+                        mostUid: most.val().user._id,
+                        mostUimg: most.val().user.image,
+                        mostUname: most.val().user.name
                     })
-            } catch(error) { alert(error.message) }
-        }
+                })
+        } catch(error) { alert(error.message) }
     }
 
     _submitAnswer = async() => {

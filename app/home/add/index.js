@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet, Dimensions, ScrollView, Animated, View, Image, TextInput, KeyboardAvoidingView, Platform
+    StyleSheet, Dimensions, Animated, View, Image, TextInput, KeyboardAvoidingView, Platform
 } from 'react-native';
 import {
     Container, Header, Text, Left, Right, Body, Title, Button, Toast, ActionSheet, Root, List, ListItem, Content
 } from 'native-base';
-import { Grid, Row, Col } from 'react-native-easy-grid'
 import { Ionicons } from '@expo/vector-icons'
 import { alert, more, back, camera } from '../../partials/icons'
 import firebaseService from '../../service/firebase'
@@ -122,10 +121,10 @@ export default class Add extends Component {
         const img = STORAGE.ref("bg_pics/"+imgId)
 
         img.getDownloadURL().then(url => {
-            FIRELUST.child(root.toUpperCase()).child(branch.toUpperCase())
+            FIRELUST.child(root.toUpperCase().trim()).child(branch.toUpperCase().trim())
                 .push({
                     bgimg: url,
-                    cluster: cluster.toUpperCase()
+                    cluster: cluster.toUpperCase().trim()
                 })
                 .then(() => {
                     this.setState({ root: '', branch: '', cluster: '' })

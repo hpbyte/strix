@@ -67,7 +67,7 @@ class Leaderboard extends Component {
               renderRow={(item) => 
               <View style={Style.listItem}>
                 <ListItem>
-                  <Thumbnail size={80} source={{ uri: item.val().image }} />
+                  {item.val().image !== '' ? (<Thumbnail size={80} source={{ uri: item.val().image }} />) : (<Thumbnail size={80} source={require('../../assets/default.png')} />)}
                   <Body>
                     <Text>{item.val().name}</Text>
                   </Body>

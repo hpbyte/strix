@@ -4,7 +4,7 @@ import {
   Footer, FooterTab, Button, Badge, Text
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { podium, link, navi } from './partials/icons';
+import { podium, link, navi, calendar } from './partials/icons';
 import Style from './style';
 import Leaderboard from './leaderboard/leaderboard';
 import Search from './searchbar/searchbar'
@@ -15,7 +15,7 @@ import Signin from './auth/signin';
 import Home from './home';
 import EventStacker from './event'
 
-export const AuthTaber = TabNavigator(
+const AuthTaber = TabNavigator(
   {
     Signin: { screen: Signin },
     Signup: { screen: Signup }
@@ -50,7 +50,7 @@ export const AuthTaber = TabNavigator(
   }
 );
 
-export const MenuTaber = TabNavigator(
+const MenuTaber = TabNavigator(
   {
     Home: { screen: Home },
     Leaderboard: { screen: Leaderboard },
@@ -71,28 +71,28 @@ export const MenuTaber = TabNavigator(
               // active={props.navigationState.index === 0}
               onPress={() => props.navigation.navigate('Home')}>
               <Ionicons name='logo-buffer' size={25} style={Style.white} />
-              <Text style={Style.grey}>Clusters</Text>
+              {/* <Text style={Style.grey}>Clusters</Text> */}
             </Button>
             <Button
               vertical
               // active={props.navigationState.index === 1}
               onPress={() => props.navigation.navigate('Leaderboard')}>
               <Ionicons name={podium} size={25} style={Style.white} />
-              <Text style={Style.grey}>Rank</Text>
+              {/* <Text style={Style.grey}>Rank</Text> */}
             </Button>
             <Button
               vertical
               // active={props.navigationState.index === 2}
               onPress={() => props.navigation.navigate('Booster')}>
               <Ionicons name={link} size={25} style={Style.white} />
-              <Text style={Style.grey}>Appoint</Text>
+              {/* <Text style={Style.grey}>Appoint</Text> */}
             </Button>
             <Button
               badge vertical
               // active={props.navigationState.index === 3}
               onPress={() => props.navigation.navigate('EventStacker')}>
-              <Ionicons name={navi}size={25} style={Style.white} />
-              <Text style={Style.grey}>Events</Text>
+              <Ionicons name={calendar}size={25} style={Style.white} />
+              {/* <Text style={Style.grey}>Events</Text> */}
             </Button>
           </FooterTab>
         </Footer>
@@ -101,7 +101,7 @@ export const MenuTaber = TabNavigator(
   }
 );
 
-export const MainStacker = StackNavigator(
+const MainStacker = StackNavigator(
   {
     MenuTaber: { screen: MenuTaber },
     Profile: { screen: Profile },

@@ -65,12 +65,12 @@ export default class Detail extends Component {
     const { uId, name, dob, school, uni, job, phone } = this.state
     
     await FIREBASE.ref("users/"+uId).update({
-      name: name,
-      dob: dob,
-      school: school,
-      uni: uni,
-      job: job,
-      phone: phone
+      name: name.trim(),
+      dob: dob.trim(),
+      school: school.trim(),
+      uni: uni.trim(),
+      job: job.trim(),
+      phone: phone.trim()
     }).then(() => {
       this.setModalVisible(!this.state.modalVisible)
 

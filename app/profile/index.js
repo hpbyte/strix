@@ -81,7 +81,7 @@ export default class Profile extends Component {
 
     this.state = {
       uId: firebaseService.auth().currentUser.uid,
-      image: null,
+      image: '',
       hasCamerRollPermission: null
     }
   }
@@ -200,7 +200,7 @@ export default class Profile extends Component {
         {Platform.OS === 'ios' ? <StatusBar barStyle="light-content" /> : null}
         <Grid>
           <Row size={25} style={Style.avater}>
-            {image !== null ? (<Thumbnail large source={{ uri: image }} />) : (<Thumbnail large source={require('../../assets/default.png')} />)}
+            {image !== '' ? (<Thumbnail large source={{ uri: image }} />) : (<Thumbnail large source={require('../../assets/default.png')} />)}
             <Ionicons name={camera} size={27} color="#fff" style={Style.camera}
               onPress={this._pickImage} />
           </Row>
