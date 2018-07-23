@@ -97,9 +97,14 @@ export default class End extends Component {
     }
 
     _onPressEnd = async() => {
-        const { status, boosterId, appointmentId, totalTime, startTime } = this.state
+        const { boosterId, appointmentId, startTime } = this.state
         const end = moment().format("YYYY-MM-DD HH:mm")
-        const total = moment(end).diff(startTime, 'hours')
+        let total = moment(end).diff(startTime, 'hours')
+
+        if(total >= 4) {
+            alert('Your Total Time looks suspicious!')
+            total = 1
+        }
 
         try {
             await FIRESTER.child(boosterId).child('appointments').child(appointmentId).update({
@@ -107,16 +112,35 @@ export default class End extends Component {
                 endTime: end,
                 totalTime: total
             }).then(() => {
+                // increment user's score
+                this._incrementPoint(total)
+
                 this.setState({ status: false, endTime: end, totalTime: total })
             }).catch(error => alert(error))
         }
         catch(error) { alert(error.message) }
     }
 
+    _incrementPoint = async(totalHr) => {
+        const { pupil, mentor } = this.state
+
+        const pupilPt = totalHr * 50
+        const mentorPt = totalHr * 60
+        
+        // increase points of mentor according to total time
+        await FIREBASE.ref("users/"+mentor+"/points").transaction(pt => {
+            return pt + mentorPt
+        }).catch(err => alert(err))
+
+        // increase points of pupil according to total time
+        await FIREBASE.ref("users/"+pupil+"/points").transaction(pt => {
+            return pt + pupilPt
+        }).catch(err => alert(err))
+    }
+
     render() {
         const {
-            appointmentId, status, startTime, endTime, totalTime, mentor, pupil,
-            pupilName, pupilImg, mentorName, mentorImg
+            status, startTime, endTime, totalTime, pupilName, pupilImg, mentorName, mentorImg
         } = this.state
 
         return(
