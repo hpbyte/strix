@@ -89,7 +89,7 @@ export default class Answer extends Component {
             status: false
           })
         } catch(error) { alert(error) }
-      }
+    }
 
     _getUserDetails = async() => {
         const uId = this.state.userId

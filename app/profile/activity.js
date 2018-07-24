@@ -52,7 +52,7 @@ export default class Activity extends Component {
                     </CardItem>
                     <ProgressCircle
                         style={{ height: 100, marginBottom: 15 }}
-                        progress={ 0.4 }
+                        progress={ this.state.points / 2000 }
                         progressColor={'#2a4ff0'}
                     />
                 </Card>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { TouchableOpacity } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import {
   Container,
@@ -64,9 +65,9 @@ class Leaderboard extends Component {
           <Card style={{ marginLeft: 0 }}>
             <List
               dataArray={this.state.users.reverse()}
-              renderRow={(item) => 
+              renderRow={(item) =>
               <View style={Style.listItem}>
-                <ListItem>
+                <ListItem onPress={() => this.props.navigation.navigate('Info', { userId: item.key })}>
                   {item.val().image !== '' ? (<Thumbnail size={80} source={{ uri: item.val().image }} />) : (<Thumbnail size={80} source={require('../../assets/default.png')} />)}
                   <Body>
                     <Text>{item.val().name}</Text>
@@ -80,7 +81,7 @@ class Leaderboard extends Component {
               </View>
               }>
             </List>
-          </Card>    
+          </Card>
         </Content>
       </Container>
       );

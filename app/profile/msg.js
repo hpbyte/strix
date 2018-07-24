@@ -129,7 +129,7 @@ class Chats extends Component {
                                     userId: partnerIds[key],
                                     userName: partnerNames[key]
                                 })}>
-                                <Thumbnail source={{ uri: partnerImages[key] }} />
+                                {partnerImages[key] !== '' ? (<Thumbnail source={{ uri: partnerImages[key] }} />) : (<Thumbnail source={require('../../assets/default.png')} />)}
                                 <Body style={style.chatBody}>
                                     <Text>{partnerNames[key]}</Text>
                                     <Text style={{ marginTop: 3 }} note>{lastMsgs[key]}</Text>

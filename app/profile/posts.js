@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { TouchableOpacity, Alert } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-import { Content, Text, Left, Right, Body, List, ListItem, View, Button } from 'native-base'
-import { Ionicons } from '@expo/vector-icons'
-import { right } from '../partials/icons'
+import { Content, Text, Left, Right, Body, View, Button, Card, CardItem } from 'native-base'
+import { Row, Col } from 'react-native-easy-grid'
+import moment from 'moment'
 import firebaseService from '../service/firebase'
-import style from './style'
+import Style from '../style'
 
 import Answer from '../home/answer'
 
@@ -14,7 +15,7 @@ class Posts extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { questions: [] }
+        this.state = { questions: [], uId: firebaseService.auth().currentUser.uid }
     }
 
     componentDidMount() {
@@ -22,13 +23,12 @@ class Posts extends Component {
     }
 
     _getMyPosts = async() => {
-        const uId = firebaseService.auth().currentUser.uid
         let qArr = []
-        
+
         await FIREBASE.ref("questions").once("value", snapshot => {
             snapshot.forEach(snap => {
                 snap.forEach(snp => {
-                    if(snp.val().user._id === uId) {
+                    if(snp.val().user._id === this.state.uId) {
                         qArr.push(snp)
                     }
                 })
@@ -38,36 +38,47 @@ class Posts extends Component {
         }).catch(error => alert(error))
     }
 
+    async _deletePost(qId) {
+        try {
+            FIREBASE.ref("questions").child(qId).remove().then(() => {
+                Alert.alert('Post deleted')
+            })
+        }
+        catch(error) { alert(error.message) }
+    }
+
     render() {
         return(
-            <Content>
-                <List
-                    dataArray={this.state.questions}
-                    renderRow={q => 
-                        <View style={{ borderLeftColor: '#d32f2f', borderLeftWidth: 5 }}>
-                            <ListItem style={style.postItem}>
+            <Content padder>
+                {this.state.questions.map(q => (
+                    <Card key={q.key}>
+                        <CardItem>
+                            <Left>
                                 <Body>
-                                    <Text>{q.val().quiz}</Text>
+                                  <Text style={{ fontSize: 17 }}>{q.val().quiz}</Text>
                                 </Body>
-                                <Right>
-                                    <Button transparent
-                                        onPress={() => this.props.navigation.navigate('Answer', {
-                                            quizId: q.key,
-                                            quiz: q.val().quiz,
-                                            time: q.val().timestamp,
-                                            dur: q.val().duration,
-                                            status: q.val().status,
-                                            qUserImg: q.val().user.image,
-                                            qUserName: q.val().user.name,
-                                            // cluster: this.state.cluster
-                                        })}>
-                                        <Ionicons name={right} size={28} style={{ marginLeft: 15 }}/>
-                                    </Button>
-                                </Right>
-                            </ListItem>
-                        </View>
-                    }>
-                </List>
+                            </Left>
+                            <Right>
+                                <Text style={{ fontWeight: 'bold', fontSize: 17 }}>{moment(q.val().timestamp).format('Do')}</Text>
+                                <Text style={{ fontSize: 14 }}>{moment(q.val().timestamp).format('MMM / YYYY')}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem footer bordered>
+                            <Row>
+                                <Col style={Style.flexCenter}>
+                                    <TouchableOpacity>
+                                      <Text style={Style.blue}>Edit</Text>
+                                    </TouchableOpacity>
+                                </Col>
+                                <Col style={Style.flexCenter}>
+                                    <TouchableOpacity onPress={() => this._deletePost(q.key)}>
+                                      <Text style={Style.red}>Delete</Text>
+                                    </TouchableOpacity>
+                                </Col>
+                            </Row>
+                        </CardItem>
+                    </Card>
+                ))}
             </Content>
         )
     }
