@@ -42,7 +42,7 @@ export default class Signin extends Component {
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <Grid>
               <Row size={30} style={style.verticalCenter}>
-                <Text style={style.strix}>Hippo</Text>
+                <Text style={style.strix}>Strix</Text>
               </Row>
               <Row size={5}></Row>
               <Row size={8} style={style.inputView}>

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "strix",
+    "name": "Strix",
     "description": "This project is really great.",
     "slug": "strix",
     "privacy": "public",
@@ -21,7 +21,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.htoo511.strix"
+    },
+    "android": {
+      "package": "com.yourcompany.strix"
     },
     "androidStatusBar": {
       "backgroundColor": "#000000"

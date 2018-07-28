@@ -7,8 +7,8 @@ export default {
     },
     strix: {
         fontSize: 70,
-        // fontFamily: 'pacifico',
-        fontFamily: 'chelaone',
+        fontFamily: 'pacifico',
+        // fontFamily: 'chelaone',
         alignSelf: 'center'
     },
     inputView: {

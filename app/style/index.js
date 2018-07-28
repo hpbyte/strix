@@ -41,7 +41,7 @@ export default {
     color: '#d32f2f'
   },
   title: {
-    fontFamily: 'chelaone',
+    fontFamily: 'pacifico',
     fontSize: 32,
     color: '#000',
     paddingLeft: 0
